@@ -2,3 +2,45 @@
 @media(max-width:1000px){.hero-grid{grid-template-columns:1fr 1fr}.hero-name{grid-column:1/-1}.hero-card{grid-column:1}.discipline{grid-column:2}.hero-name h1{font-size:17vw}.hero-name h1.ghost{margin-left:28vw}.project-stage{gap:25px}.preview-wrap{height:520px}.achievement{grid-template-columns:110px 1fr}.availability{display:none}.topbar{grid-template-columns:1fr auto auto}.cap-layout{grid-template-columns:1fr}.cap-detail{min-height:400px}}
 @media(max-width:720px){.cursor{display:none}.topbar{left:12px;right:12px;top:10px;grid-template-columns:1fr auto}.wordmark em,.wordmark span,.top-cta{display:none}.menu-toggle{border-right:0}.hero{padding:82px 14px 20px;min-height:auto}.hero-meta{grid-template-columns:1fr 1fr;gap:8px}.hero-meta span:nth-child(n+2),.hero-meta a{padding-left:0}.hero-grid{display:block;padding-top:50px}.hero-name h1{font-size:24vw;line-height:.8}.hero-name h1.ghost{margin-left:0}.hero-card{width:82%;margin:35px 0 35px 9%;transform:rotate(-1deg)}.screen-visual{height:220px}.discipline{margin:0}.hero-foot{grid-template-columns:1fr 1fr;margin-top:20px}.hero-foot p{grid-column:1/-1;margin-top:16px}.scroll-cue{display:none}.intro{padding:80px 14px;display:block}.intro-statement{margin:40px 0}.intro-statement p{font-size:12vw}.work,.capabilities,.achievements,.about,.contact{padding:80px 14px}.section-title{display:block;margin:45px 0}.section-title h2,.cap-head h2,.achieve-head h2{font-size:20vw}.section-title>span{display:block;margin:15px 0}.project-stage{display:block}.project-row{grid-template-columns:32px 1fr auto}.project-row .year{display:none}.preview-wrap{position:relative;top:auto;height:420px;margin-top:30px}.preview-caption{display:block}.preview-caption span{display:block;margin-top:7px}.security-grid{grid-template-columns:1fr}.shield{width:110px;height:130px;font-size:60px;margin:auto}.threats span{padding:8px 0}.eval-ui{gap:14px}.paper{height:230px}.score strong{font-size:38px}.gesture-ui{transform:scale(.72)}.cap-head{display:block;margin:45px 0}.cap-head p{margin-top:30px}.cap-detail{grid-template-columns:1fr;min-height:530px}.achievement-grid{grid-template-columns:1fr}.achievement{min-height:280px;grid-template-columns:100px 1fr}.achieve-head{display:block;margin:45px 0}.about-grid{grid-template-columns:1fr;margin:55px 0 80px}.about h2{font-size:18vw}.stack-grid{grid-template-columns:1fr 1fr}.contact-main{margin:55px 0 80px}.contact-main>a{font-size:16vw}.contact-grid{grid-template-columns:1fr 1fr;gap:35px 20px}.footer-name{font-size:18vw;margin-top:70px}.contact footer{gap:12px;flex-wrap:wrap}.site-menu{padding-left:16px;padding-right:16px}.site-menu a{font-size:17vw}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}.loader{display:none}}
+
+/* Alignment and responsive QA corrections */
+section[id]{scroll-margin-top:78px}
+.cursor{width:14px;height:14px;transition:transform .25s var(--ease),width .25s var(--ease),height .25s var(--ease)}
+.cursor span{display:none}
+.cursor.active{width:74px;height:74px}
+.cursor.active span{display:block}
+.hero-name h1{font-size:clamp(82px,11.8vw,176px);line-height:.78;letter-spacing:-.075em}
+.hero-name h1.ghost{margin-left:10vw}
+.hero-card{width:min(88%,380px)}
+.discipline{margin-left:1vw}
+.hero-foot p{max-width:560px;justify-self:end}
+.project-stage{grid-template-columns:minmax(0,1fr) minmax(0,1.02fr)}
+.preview-caption{gap:20px}
+.footer-name{font-size:clamp(82px,12.8vw,190px);letter-spacing:-.075em;max-width:100%}
+.contact-grid a{overflow-wrap:anywhere}
+
+@media(max-width:1000px){
+  .hero-name h1{font-size:14.5vw;line-height:.8}
+  .hero-name h1.ghost{margin-left:8vw}
+  .hero-card{width:min(84%,350px)}
+  .discipline{margin-left:0}
+  .footer-name{font-size:12.4vw}
+}
+
+@media(max-width:720px){
+  section[id]{scroll-margin-top:68px}
+  .hero-name h1{font-size:22vw;line-height:.82;letter-spacing:-.07em}
+  .hero-name h1.ghost{margin-left:0}
+  .hero-card{width:88%;margin:30px 0 32px 6%}
+  .preview-wrap{height:440px}
+  .footer-name{font-size:19vw;white-space:normal;line-height:.78;margin-bottom:45px}
+}
+
+@media(max-width:520px){
+  .contact-grid{grid-template-columns:1fr}
+  .contact-grid>div{border-bottom:1px solid rgba(23,21,20,.25);padding-bottom:20px}
+  .contact-main>a{font-size:15.5vw;line-height:.84}
+  .stack-grid{grid-template-columns:1fr}
+  .achievement{grid-template-columns:82px 1fr;padding:20px;gap:14px}
+  .achievement .rank{font-size:45px}
+}
