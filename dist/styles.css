@@ -63,7 +63,7 @@ section[id]{scroll-margin-top:78px}
 .hero:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(23,21,20,.028) 4px)}
 .hero-meta,.hero-foot,.scroll-cue{position:relative;z-index:4}
 .hero-grid{display:block;min-height:75vh;position:relative;z-index:2}
-.hero-name{position:absolute;inset:0;z-index:1;width:100%;pointer-events:none}
+.hero-name{position:absolute;inset:0;z-index:4;width:100%;pointer-events:none;mix-blend-mode:multiply}
 .hero-name h1{position:absolute;font-size:clamp(82px,11.5vw,172px);line-height:.78;letter-spacing:-.075em}
 .hero-name h1:first-child{left:1%;top:3%}
 .hero-name h1.ghost{left:46%;top:43%;margin:0;color:rgba(23,21,20,.31)}
