@@ -63,10 +63,10 @@ section[id]{scroll-margin-top:78px}
 .hero:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(23,21,20,.028) 4px)}
 .hero-meta,.hero-foot,.scroll-cue{position:relative;z-index:4}
 .hero-grid{display:block;min-height:75vh;position:relative;z-index:2}
-.hero-name{position:absolute;inset:0;z-index:4;width:100%;pointer-events:none;mix-blend-mode:multiply}
+.hero-name{position:absolute;inset:0;top:0!important;bottom:0!important;height:100%!important;align-self:stretch!important;z-index:4;width:100%;pointer-events:none;mix-blend-mode:multiply}
 .hero-name h1{position:absolute;font-size:clamp(82px,11.5vw,172px);line-height:.78;letter-spacing:-.075em}
-.hero-name h1:first-child{left:1%;top:7%}
-.hero-name h1.ghost{left:auto;right:3%;top:auto;bottom:8%;margin:0;color:rgba(23,21,20,.31)}
+.hero-name h1:first-child{left:1%!important;top:3%!important;bottom:auto!important}
+.hero-name h1.ghost{left:auto!important;right:3%!important;top:auto!important;bottom:3%!important;margin:0;color:rgba(23,21,20,.31)}
 .hero-name h1.reveal{opacity:1;transform:none;filter:none;animation:heroTitleIn .9s var(--ease) both}
 .hero-name h1.ghost.reveal{animation-delay:.12s}
 .hero-card{position:absolute;left:2.5%;bottom:0;width:min(32vw,430px);z-index:3;justify-self:auto;align-self:auto}
@@ -90,8 +90,8 @@ section[id]{scroll-margin-top:78px}
   .topbar{grid-template-columns:auto auto 1fr auto}
   .hero-grid{min-height:70vh}
   .hero-name h1{font-size:14vw}
-  .hero-name h1:first-child{left:0;top:8%}
-  .hero-name h1.ghost{left:auto;right:1%;top:auto;bottom:12%;margin:0}
+  .hero-name h1:first-child{left:0!important;top:3%!important}
+  .hero-name h1.ghost{left:auto!important;right:1%!important;top:auto!important;bottom:4%!important;margin:0}
   .hero-card{left:0;width:min(40vw,370px)}
   .screen-visual{height:min(34vw,300px)}
   .discipline{right:0;top:18%;width:34vw}
