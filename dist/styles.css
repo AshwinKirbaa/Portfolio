@@ -56,6 +56,8 @@ section[id]{scroll-margin-top:78px}
 .menu-toggle{border:1px solid rgba(255,255,255,.16);border-radius:0 5px 5px 0}
 .availability{height:48px;border:1px solid rgba(255,255,255,.16);border-right:0;border-radius:5px 0 0 5px}
 .top-cta{height:48px;border:1px solid var(--ink);border-radius:0 5px 5px 0}
+.availability{grid-column:3}
+.top-cta{grid-column:4}
 
 .hero{overflow:hidden;background-size:25% 100%,100% 20%}
 .hero:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(23,21,20,.028) 4px)}
@@ -65,6 +67,8 @@ section[id]{scroll-margin-top:78px}
 .hero-name h1{position:absolute;font-size:clamp(82px,11.5vw,172px);line-height:.78;letter-spacing:-.075em}
 .hero-name h1:first-child{left:1%;top:3%}
 .hero-name h1.ghost{left:46%;top:43%;margin:0;color:rgba(23,21,20,.31)}
+.hero-name h1.reveal{opacity:1;transform:none;filter:none;animation:heroTitleIn .9s var(--ease) both}
+.hero-name h1.ghost.reveal{animation-delay:.12s}
 .hero-card{position:absolute;left:2.5%;bottom:0;width:min(32vw,430px);z-index:3;justify-self:auto;align-self:auto}
 .screen-visual{height:min(27vw,330px)}
 .discipline{position:absolute;right:0;top:12%;width:min(27vw,390px);margin:0;z-index:3}
@@ -80,6 +84,7 @@ section[id]{scroll-margin-top:78px}
 .achievement{transition:transform .35s var(--ease),filter .35s var(--ease)}
 .achievement:hover{transform:translateY(-5px);filter:contrast(1.03)}
 .cap-item{transition:padding .25s var(--ease),background .25s,color .25s}
+@keyframes heroTitleIn{from{opacity:0;transform:translateY(28px);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
 
 @media(max-width:1000px){
   .topbar{grid-template-columns:auto auto 1fr auto}
