@@ -1,112 +1,52 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A thoughtful designer and developer creating memorable digital experiences.">
-  <meta name="theme-color" content="#f3f0e8">
-  <title>Your Name — Designer & Developer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Portfolio of Ashwin Kirbaa B. — Computer Science student and developer building practical AI, computer vision, and full-stack systems."><meta name="theme-color" content="#ed3b24">
+  <meta property="og:title" content="Ashwin Kirbaa — AI & Software Developer"><meta property="og:description" content="Selected projects, experiments and achievements across AI, computer vision and software development.">
+  <title>Ashwin Kirbaa — AI & Software Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
-  <header class="site-header">
-    <a class="brand" href="#top" aria-label="Home"><span>YN</span><span class="brand-word">Your Name</span></a>
-    <nav aria-label="Primary navigation">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a class="nav-cta" href="#contact">Let's talk <span>↗</span></a>
-    </nav>
+  <div class="loader" aria-hidden="true"><div class="loader-name">AKB®</div><div class="loader-count">00</div><div class="loader-line"><i></i></div></div>
+  <div class="cursor" aria-hidden="true"><span>VIEW</span></div><div class="noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="wordmark" href="#top"><b>ASHWIN KIRBAA</b><span>/</span><em>PORTFOLIO ’26</em></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="site-menu"><span></span><span></span><b>MENU</b></button>
+    <div class="availability"><i></i><span>OPEN TO OPPORTUNITIES</span></div><a class="top-cta" href="mailto:ashwinkirbaa17@gmail.com">LET’S TALK <span>↗</span></a>
   </header>
-
+  <nav class="site-menu" id="site-menu" aria-label="Main navigation"><a href="#top"><small>01</small>INDEX</a><a href="#work"><small>02</small>WORK</a><a href="#about"><small>03</small>ABOUT</a><a href="#achievements"><small>04</small>ACHIEVEMENTS</a><a href="#contact"><small>05</small>CONTACT</a></nav>
   <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-kicker reveal"><span class="status-dot"></span> Available for select projects</div>
-      <h1 id="hero-title" class="reveal">I make digital work<br>with <em>character.</em></h1>
-      <div class="hero-bottom reveal">
-        <p>Independent designer & developer crafting expressive brands, useful products, and websites people remember.</p>
-        <a class="circle-link" href="#work" aria-label="Explore selected work"><span>Explore</span><b>↓</b></a>
+    <section class="hero section-red">
+      <div class="hero-meta mono reveal"><span>[ COMPUTER SCIENCE ]</span><span>STUDENT + DEVELOPER</span><span>COIMBATORE, IN</span><a href="#work">SELECTED WORK [05]</a></div>
+      <div class="hero-grid">
+        <div class="hero-name" aria-label="Ashwin Kirbaa"><h1 class="reveal">ASHWIN</h1><h1 class="reveal ghost">KIRBAA</h1></div>
+        <div class="hero-card reveal" data-cursor="DRAG"><div class="screen-card"><div class="screen-top"><span>AKB_SYSTEM</span><span>ONLINE ●</span></div><div class="screen-visual"><div class="core"><i></i><i></i><i></i><strong>AI</strong></div><div class="scan"></div></div><div class="screen-bottom"><b>BUILDING USEFUL<br>INTELLIGENT SYSTEMS</b><span>2025—29<br>CSE</span></div></div><div class="reply mono"><i></i> REPLIES WITHIN TWO DAYS</div></div>
+        <div class="discipline reveal"><p class="mono">FOCUS AREAS</p><a href="#work" data-project-jump="safebox"><span>AI SYSTEMS</span><b>[01]</b></a><a href="#work" data-project-jump="camera"><span>COMPUTER VISION</span><b>[02]</b></a><a href="#work" data-project-jump="twineval"><span>FULL-STACK</span><b>[03]</b></a><a href="#stack"><span>INFRASTRUCTURE</span><b>[04]</b></a></div>
       </div>
-      <div class="hero-stamp" aria-hidden="true">
-        <svg viewBox="0 0 120 120"><defs><path id="circle" d="M60,60 m-43,0 a43,43 0 1,1 86,0 a43,43 0 1,1 -86,0"/></defs><text><textPath href="#circle">DESIGN • DEVELOPMENT • DIRECTION • </textPath></text></svg>
-        <span>✦</span>
-      </div>
+      <div class="hero-foot reveal"><span>Independent project work</span><span>AI, software and automation</span><p>Computer Science student building practical systems that move ideas from prototype to real-world use.</p></div><a class="scroll-cue mono" href="#intro"><span>SCROLL TO EXPLORE</span><b>↓</b></a>
     </section>
-
-    <section class="work" id="work" aria-labelledby="work-title">
-      <div class="section-heading reveal">
-        <p>01 / Selected work</p>
-        <h2 id="work-title">A few things<br>I'm proud of.</h2>
-      </div>
-
-      <article class="project project-feature reveal">
-        <a href="#contact" aria-label="Ask about the Field Notes project">
-          <div class="project-art art-one">
-            <div class="window"><span></span><span></span><span></span><strong>FIELD<br>NOTES</strong><small>Issue No. 04</small></div>
-            <div class="shape shape-one"></div><div class="shape shape-two"></div>
-          </div>
-          <div class="project-meta">
-            <div><h3>Field Notes</h3><p>Editorial platform for curious minds</p></div>
-            <div class="tags"><span>Art direction</span><span>Web design</span><span>Development</span></div>
-            <span class="project-arrow">↗</span>
-          </div>
-        </a>
-      </article>
-
-      <div class="project-grid">
-        <article class="project reveal">
-          <a href="#contact" aria-label="Ask about the Common Ground project">
-            <div class="project-art art-two"><div class="poster"><span>COMMON</span><i>Ground</i><b>Good coffee.<br>Better company.</b></div><div class="cup">CG</div></div>
-            <div class="project-meta"><div><h3>Common Ground</h3><p>Identity for a neighbourhood coffee shop</p></div><span class="project-arrow">↗</span></div>
-          </a>
-        </article>
-        <article class="project reveal delay">
-          <a href="#contact" aria-label="Ask about the Luma project">
-            <div class="project-art art-three"><div class="phone"><div class="sun"></div><span>Good morning.</span><strong>72°</strong><small>Clear skies</small></div><div class="orb"></div></div>
-            <div class="project-meta"><div><h3>Luma</h3><p>A calmer way to check the weather</p></div><span class="project-arrow">↗</span></div>
-          </a>
-        </article>
-      </div>
+    <section class="intro section-light" id="intro"><div class="section-index mono">[ 01 ] APPROACH</div><div class="intro-statement reveal"><p>EVERY USEFUL SYSTEM STARTS WITH A REAL PROBLEM. <em>CODE, CURIOSITY AND ITERATION</em> TURN IT INTO SOMETHING PEOPLE CAN USE.</p></div><div class="intro-notes reveal"><p>I build across artificial intelligence, computer vision, backend systems and infrastructure. The goal is always the same: make an idea concrete, testable and useful.</p><p>A student developer with a direct line from the first experiment to the working prototype.</p><a class="text-link" href="#about">MORE ABOUT ME <span>↗</span></a></div></section>
+    <section class="work section-dark" id="work">
+      <div class="section-index mono">[ 02 ] SELECTED WORK</div><div class="section-title reveal"><h2>PROJECT<br>INDEX</h2><span>© 2026</span><a class="text-link invert" href="https://github.com/AshwinKirbaa" target="_blank" rel="noreferrer">ALL REPOSITORIES ↗</a></div>
+      <div class="project-stage"><div class="project-list" role="list">
+        <a class="project-row active" role="listitem" href="https://github.com/AshwinKirbaa/SafeBox_AI" target="_blank" rel="noreferrer" data-project="safebox" data-cursor="OPEN"><span class="number">01</span><div><h3>SAFEBOX AI</h3><p>AI SECURITY PLATFORM</p></div><span class="year">2026</span><b>↗</b></a>
+        <a class="project-row" role="listitem" href="https://twineval-ai.vercel.app/" target="_blank" rel="noreferrer" data-project="twineval" data-cursor="LIVE"><span class="number">02</span><div><h3>TWINEVAL AI</h3><p>SEMANTIC EVALUATION</p></div><span class="year">2026</span><b>↗</b></a>
+        <a class="project-row" role="listitem" href="https://github.com/AshwinKirbaa/ai_security_camera" target="_blank" rel="noreferrer" data-project="camera" data-cursor="OPEN"><span class="number">03</span><div><h3>AI SECURITY CAMERA</h3><p>COMPUTER VISION</p></div><span class="year">2026</span><b>↗</b></a>
+        <a class="project-row" role="listitem" href="https://github.com/AshwinKirbaa/ai_gesture_control" target="_blank" rel="noreferrer" data-project="gesture" data-cursor="OPEN"><span class="number">04</span><div><h3>GESTURE CONTROL</h3><p>HUMAN–COMPUTER INTERACTION</p></div><span class="year">2026</span><b>↗</b></a>
+        <a class="project-row" role="listitem" href="https://github.com/AshwinKirbaa/Dexget" target="_blank" rel="noreferrer" data-project="dexget" data-cursor="OPEN"><span class="number">05</span><div><h3>DEXGET</h3><p>SOFTWARE PROJECT</p></div><span class="year">2026</span><b>↗</b></a>
+      </div><div class="preview-wrap" aria-live="polite">
+        <div class="project-preview active" data-preview="safebox"><div class="preview-head"><span>SAFEBOX // SECURITY LAB</span><i>RUNNING</i></div><div class="security-grid"><div class="shield">S</div><div class="threats"><span>PROMPT INJECTION <b>BLOCKED</b></span><span>POLICY ADHERENCE <b>PASS</b></span><span>SANDBOX ISOLATION <b>VERIFIED</b></span></div></div><div class="preview-caption"><strong>Evidence-driven AI security testing</strong><span>Python / Docker / AI security</span></div></div>
+        <div class="project-preview" data-preview="twineval"><div class="preview-head"><span>TWINEVAL // EVALUATOR</span><i>LIVE</i></div><div class="eval-ui"><div class="paper"><span>ANSWER_01</span><i></i><i></i><i></i><i></i></div><div class="score"><small>SEMANTIC MATCH</small><strong>91.4%</strong><div><i></i></div></div></div><div class="preview-caption"><strong>AI-assisted examination evaluation</strong><span>Sentence Transformers / Cosine similarity</span></div></div>
+        <div class="project-preview" data-preview="camera"><div class="preview-head"><span>VISION // CAM_01</span><i>REC</i></div><div class="camera-ui"><div class="face-box"><span>IDENTITY MATCH</span><b>98.7%</b></div><div class="reticle"></div><small>INSIGHTFACE // TRACKING ACTIVE</small></div><div class="preview-caption"><strong>Face recognition and visitor identification</strong><span>Python / OpenCV / InsightFace</span></div></div>
+        <div class="project-preview" data-preview="gesture"><div class="preview-head"><span>GESTURE // INPUT MAP</span><i>ACTIVE</i></div><div class="gesture-ui"><div class="hand"><i></i><i></i><i></i><i></i><i></i><b></b></div><div class="gesture-data"><span>GESTURE</span><strong>OPEN PALM</strong><span>ACTION</span><strong>MEDIA CONTROL</strong></div></div><div class="preview-caption"><strong>Touchless computer interaction</strong><span>Python / OpenCV / MediaPipe</span></div></div>
+        <div class="project-preview" data-preview="dexget"><div class="preview-head"><span>DEXGET // BUILD</span><i>PROJECT</i></div><div class="code-ui"><span>01</span><code>const idea = await build();</code><span>02</span><code>idea.test();</code><span>03</span><code>idea.ship();</code><b>_</b></div><div class="preview-caption"><strong>Independent software development project</strong><span>Explore the source on GitHub</span></div></div>
+      </div></div>
     </section>
-
-    <section class="marquee" aria-label="Services">
-      <div><span>Creative direction</span><i>✦</i><span>Brand identity</span><i>✦</i><span>Web design</span><i>✦</i><span>Front-end development</span><i>✦</i><span>Creative direction</span><i>✦</i><span>Brand identity</span><i>✦</i></div>
-    </section>
-
-    <section class="about" id="about" aria-labelledby="about-title">
-      <div class="section-label reveal">02 / About</div>
-      <div class="about-copy reveal">
-        <h2 id="about-title">I care about the small<br>things that make a <em>big</em><br>difference.</h2>
-        <div class="about-details">
-          <p>I work at the intersection of design and technology, turning early ideas into clear, characterful digital experiences. My approach is collaborative, practical, and grounded in the details.</p>
-          <p>From first sketch to final build, I bring strategy, visual thinking, and front-end craft into one thoughtful process.</p>
-          <a href="#contact">More about my approach <span>↗</span></a>
-        </div>
-      </div>
-      <div class="principles reveal">
-        <div><span>01</span><h3>Clear over clever</h3><p>Good design makes the right thing feel obvious.</p></div>
-        <div><span>02</span><h3>Built with care</h3><p>Details add up. I sweat the ones that matter.</p></div>
-        <div><span>03</span><h3>Made together</h3><p>The strongest work comes from honest collaboration.</p></div>
-      </div>
-    </section>
-
-    <section class="contact" id="contact" aria-labelledby="contact-title">
-      <p class="reveal">03 / Start a conversation</p>
-      <h2 id="contact-title" class="reveal">Have a good idea?<br><em>Let's make it real.</em></h2>
-      <a class="email-link reveal" href="mailto:hello@yourname.com"><span>hello@yourname.com</span><b>↗</b></a>
-    </section>
-  </main>
-
-  <footer>
-    <a href="#top" class="footer-mark">YN</a>
-    <p>Independent designer & developer<br><span id="location-time">Based in India · <span id="clock">00:00</span></span></p>
-    <div class="socials"><a href="#">LinkedIn ↗</a><a href="#">Instagram ↗</a><a href="#">GitHub ↗</a></div>
-    <p class="copyright">© <span id="year"></span> Your Name</p>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <section class="capabilities section-red" id="stack"><div class="section-index mono">[ 03 ] WHAT I BUILD WITH</div><div class="cap-head reveal"><h2>CONNECTED<br>DISCIPLINES</h2><p>Four areas that come together in each project—from a model or API to the interface and the system running underneath.</p></div><div class="cap-layout"><div class="cap-list"><button class="cap-item active" data-cap="ai"><span>[01]</span><b>AI + MACHINE LEARNING</b><em>06</em></button><button class="cap-item" data-cap="web"><span>[02]</span><b>WEB + BACKEND</b><em>07</em></button><button class="cap-item" data-cap="vision"><span>[03]</span><b>COMPUTER VISION</b><em>04</em></button><button class="cap-item" data-cap="infra"><span>[04]</span><b>INFRASTRUCTURE</b><em>05</em></button></div><div class="cap-detail" aria-live="polite"><div class="cap-visual"><div class="orbit"><i></i><i></i><i></i><strong>ML</strong></div></div><div class="cap-copy"><small>[ TOOLKIT ]</small><p id="cap-description">Intelligent applications shaped by semantic understanding, classification, and practical automation.</p><div id="cap-tags"><span>SCIKIT-LEARN</span><span>SENTENCE TRANSFORMERS</span><span>NLP</span><span>FASTAPI</span></div></div></div></div></section>
+    <section class="achievements section-light" id="achievements"><div class="section-index mono">[ 04 ] SELECTED ACHIEVEMENTS</div><div class="achieve-head reveal"><h2>MILESTONES</h2><p>Weighted by selectivity and technical significance.</p></div><div class="achievement-grid"><article class="achievement primary reveal"><span class="rank">TOP<br>500</span><div><small>HACK IN HILLS ’26</small><h3>BUILDER PASS + ROUND 2</h3><p>SafeBox AI advanced from more than 10,000 teams to the Top 500.</p></div><b>01</b></article><article class="achievement primary reveal"><span class="rank">#1,134</span><div><small>HACKERRANK ORCHESTRATE</small><h3>35,000+ REGISTRATIONS</h3><p>Agentic AI challenge focused on learning, building, and problem-solving.</p></div><b>02</b></article><article class="achievement reveal"><span class="rank">IBM</span><div><small>BOB 2.0 HACKATHON</small><h3>AGENTIC AI BUILD</h3><p>Completed and submitted a working solution during the September 2026 hackathon.</p></div><b>03</b></article><article class="achievement reveal"><span class="rank">08H</span><div><small>HACKDAY 1.0</small><h3>RAPID PROTOTYPING</h3><p>Collaborated under an eight-hour deadline to turn a problem into a functional prototype.</p></div><b>04</b></article></div></section>
+    <section class="about section-dark" id="about"><div class="section-index mono">[ 05 ] ABOUT</div><div class="about-grid"><h2 class="reveal">CURIOUS<br>BY DEFAULT.<br><em>USEFUL</em><br>BY DESIGN.</h2><div class="about-copy reveal"><p>I’m Ashwin Kirbaa B., a Computer Science Engineering student at Sri Shakthi Institute of Engineering and Technology.</p><p>I enjoy building practical AI-powered applications, exploring computer vision, shaping backend systems, and running infrastructure on Linux. I learn best by making things work.</p><p>Currently pursuing a B.E. in Computer Science and Engineering, batch of 2025–2029.</p><a class="text-link invert" href="mailto:ashwinkirbaa17@gmail.com">START A CONVERSATION ↗</a></div></div><div class="skill-marquee" aria-label="Technical skills"><div><span>JAVA</span><i>✳</i><span>PYTHON</span><i>✳</i><span>JAVASCRIPT</span><i>✳</i><span>REACT</span><i>✳</i><span>FASTAPI</span><i>✳</i><span>DOCKER</span><i>✳</i><span>POSTGRESQL</span><i>✳</i><span>OPENCV</span><i>✳</i><span>JAVA</span><i>✳</i><span>PYTHON</span><i>✳</i><span>JAVASCRIPT</span><i>✳</i><span>REACT</span></div></div><div class="stack-grid reveal"><div><small>LANGUAGES</small><p>Java<br>Python<br>JavaScript</p></div><div><small>WEB + BACKEND</small><p>React / Vite<br>Node / Express<br>FastAPI</p></div><div><small>DATA + AI</small><p>PostgreSQL / MySQL<br>Scikit-learn<br>OpenCV / MediaPipe</p></div><div><small>INFRASTRUCTURE</small><p>Docker / Compose<br>Ubuntu Server<br>Portainer / Tailscale</p></div></div></section>
+    <section class="contact section-red" id="contact"><div class="section-index mono">[ CONTACT ]</div><div class="contact-main reveal"><p>Have a project, internship, or idea worth exploring?</p><a href="mailto:ashwinkirbaa17@gmail.com">LET’S BUILD<br>SOMETHING <em>USEFUL.</em><span>↗</span></a></div><div class="contact-grid"><div><small>EMAIL</small><a href="mailto:ashwinkirbaa17@gmail.com">ashwinkirbaa17@gmail.com</a></div><div><small>ELSEWHERE</small><a href="https://github.com/AshwinKirbaa" target="_blank" rel="noreferrer">GITHUB ↗</a><a href="https://www.linkedin.com/in/ashwin-kirbaa17" target="_blank" rel="noreferrer">LINKEDIN ↗</a><a href="https://x.com/AshwinKirbaa" target="_blank" rel="noreferrer">X ↗</a><a href="https://www.instagram.com/unfav.ashwin_x" target="_blank" rel="noreferrer">INSTAGRAM ↗</a></div><div><small>LOCATION</small><p>Coimbatore<br>Tamil Nadu, India<br><span id="local-time">--:-- IST</span></p></div><div><small>STATUS</small><p>Open to internships,<br>collaborations and<br>ambitious builds.</p></div></div><div class="footer-name" aria-hidden="true">ASHWIN KIRBAA</div><footer class="mono"><span>© <b id="year">2026</b> ASHWIN KIRBAA B.</span><span>DESIGNED + BUILT WITH INTENT</span><a href="#top">BACK TO TOP ↑</a></footer></section>
+  </main><script src="script.js"></script>
+</body></html>
