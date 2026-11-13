@@ -24,20 +24,24 @@
       item.classList.toggle('is-active', i === activeIndex);
     });
 
-    // Update posters transform, opacity and scale
+    // Update posters active class
     posters.forEach((poster, i) => {
       poster.classList.toggle('is-active', i === activeIndex);
     });
 
-    // Center the active poster vertically in the center stage
+    // Center the active poster vertically in stage
     if (stage && posters[activeIndex]) {
-      const stageHeight = stage.offsetHeight;
-      const activePoster = posters[activeIndex];
-      const posterHeight = activePoster.offsetHeight;
-      const posterTop = activePoster.offsetTop;
+      const stageRect = stage.getBoundingClientRect();
+      const posterRect = posters[activeIndex].getBoundingClientRect();
+      const trackRect = track.getBoundingClientRect();
 
-      const targetTranslateY = (stageHeight / 2) - posterTop - (posterHeight / 2);
-      track.style.transform = `translateY(${targetTranslateY}px)`;
+      // current offset of active poster relative to track
+      const posterOffsetInTrack = posters[activeIndex].offsetTop;
+      const posterH = posters[activeIndex].offsetHeight;
+      const stageH = stage.offsetHeight || stageRect.height;
+
+      const targetTranslateY = (stageH / 2) - posterOffsetInTrack - (posterH / 2);
+      track.style.transform = `translateY(${Math.round(targetTranslateY)}px)`;
     }
   }
 
@@ -46,7 +50,7 @@
     if (activeIndex < total - 1) {
       updateActiveCard(activeIndex + 1);
     } else {
-      updateActiveCard(0); // loop
+      updateActiveCard(0); // loop back
     }
   }
 
@@ -54,7 +58,7 @@
     if (activeIndex > 0) {
       updateActiveCard(activeIndex - 1);
     } else {
-      updateActiveCard(total - 1); // loop
+      updateActiveCard(total - 1); // loop back
     }
   }
 
@@ -69,11 +73,9 @@
   // Clicking an inactive poster centers it; clicking the active poster enters its specific target
   posters.forEach((poster, i) => {
     poster.addEventListener('click', (e) => {
-      // If clicking directly on an anchor or button inside, allow its native action
       if (e.target.closest('a') || e.target.closest('button')) return;
 
       if (i === activeIndex) {
-        // Trigger the primary action of the active card
         const link = poster.querySelector('.wga-vposter-cta');
         if (link) {
           if (link.tagName === 'A' && link.href) {
@@ -97,28 +99,24 @@
 
   // Mouse wheel up & down vertical scroll
   let wheelTimeout = null;
-  stage.addEventListener('wheel', (e) => {
-    e.preventDefault();
+  function handleWheel(e) {
     if (wheelTimeout) return;
     if (e.deltaY > 15) {
       nextCard();
-      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 220);
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 200);
     } else if (e.deltaY < -15) {
       prevCard();
-      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 220);
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 200);
     }
+  }
+
+  stage.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    handleWheel(e);
   }, { passive: false });
 
-  // Wheel hovering over theater
   theater.addEventListener('wheel', (e) => {
-    if (wheelTimeout) return;
-    if (e.deltaY > 20) {
-      nextCard();
-      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 220);
-    } else if (e.deltaY < -20) {
-      prevCard();
-      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 220);
-    }
+    handleWheel(e);
   }, { passive: true });
 
   // Touch Swipe up & down
@@ -173,10 +171,11 @@
     });
   });
 
-  // Initial center position after layout settles
+  // Calculate and align initial active card
+  window.addEventListener('load', () => updateActiveCard(0));
+  window.addEventListener('resize', () => updateActiveCard(activeIndex));
   requestAnimationFrame(() => {
-    setTimeout(() => {
-      updateActiveCard(0);
-    }, 60);
+    updateActiveCard(0);
+    setTimeout(() => updateActiveCard(0), 100);
   });
 })();
