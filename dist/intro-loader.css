@@ -199,56 +199,86 @@
   pointer-events: auto;
 }
 
-/* Inner poster image: clean full bleed image */
-.wga-vposter img.wga-poster-img {
-  width: 100%;
-  height: 480px;
-  border-radius: 26px;
-  object-fit: cover;
-  display: block;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95);
-}
-
-/* Direct poster interactive layer (Transparent clickable overlay) */
-.wga-vposter-content {
+/* --- PROFILE CARD CHANNEL THEMES & VISUAL CONTENT --- */
+.deck-channel-visual {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
-  background: transparent;
-  pointer-events: none;
-}
-
-.wga-vposter-content > * {
-  pointer-events: auto;
-}
-
-.wga-vposter-cta {
-  align-self: center;
-  display: inline-flex;
+  justify-content: center;
   align-items: center;
-  gap: 8px;
-  padding: 10px 24px;
-  border-radius: 9999px;
-  background: #ed3b24;
-  color: #171514;
+  text-align: center;
+  padding: 24px;
+  gap: 12px;
+  z-index: 1;
+}
+
+.deck-channel-icon {
+  margin-bottom: 4px;
+}
+
+.deck-channel-visual h4 {
+  font-family: var(--sans);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.deck-channel-visual p {
   font-family: var(--mono);
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 6px 20px rgba(237, 59, 36, 0.55);
-  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  max-width: 260px;
+  margin: 0;
 }
 
-.wga-vposter-cta:hover {
-  background: #ff5538;
-  transform: scale(1.06);
-  box-shadow: 0 8px 25px rgba(237, 59, 36, 0.7);
+.deck-channel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.deck-channel-tags span {
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e4e4e7;
+}
+
+/* GitHub Theme */
+.github-channel {
+  background: radial-gradient(circle at 50% 35%, #24292e 0%, #0d1117 85%);
+}
+
+/* LinkedIn Theme */
+.linkedin-channel {
+  background: radial-gradient(circle at 50% 35%, #0077b533 0%, #081928 85%);
+}
+
+/* Google Skills Theme */
+.google-channel {
+  background: radial-gradient(circle at 50% 35%, #4285f422 0%, #0a0f18 85%);
+}
+
+/* TwinEval Live Theme */
+.twineval-channel {
+  background: radial-gradient(circle at 50% 35%, #ed3b242a 0%, #150f0e 85%);
+}
+
+/* Styling profile card contact button inside track */
+.wga-vposter .profile-card__contact {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* RIGHT COLUMN: Interactive Vertical Card Titles List */
