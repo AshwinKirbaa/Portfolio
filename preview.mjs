@@ -5,6 +5,11 @@ import { extname, join } from 'node:path';
 const root = join(process.cwd(), 'dist');
 const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript' };
 http.createServer(async (request, response) => {
+  if (request.url === '/favicon.ico') {
+    response.writeHead(204);
+    response.end();
+    return;
+  }
   const path = request.url === '/' ? '/index.html' : request.url;
   try {
     const data = await readFile(join(root, path));
