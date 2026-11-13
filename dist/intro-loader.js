@@ -13,90 +13,66 @@
 
   const total = posters.length;
 
-  // Physics-based continuous virtual scroll state
+  // Pre-calculate positions once to eliminate expensive offsetTop DOM layout thrashing
+  let posterData = [];
+  function measure() {
+    const stageH = stage.offsetHeight || window.innerHeight;
+    posterData = posters.map((p) => {
+      const top = p.offsetTop;
+      const h = p.offsetHeight;
+      const target = (stageH / 2) - top - (h / 2);
+      return { top, h, target, center: top + (h / 2) };
+    });
+  }
+
   let currentY = 0;
   let targetY = 0;
   let isAnimating = false;
   let activeIndex = 0;
 
-  // Calculate target offset for a given card index
   function getTargetForIndex(index) {
-    if (!stage || !posters[index]) return 0;
-    const stageH = stage.offsetHeight || window.innerHeight;
-    const posterTop = posters[index].offsetTop;
-    const posterH = posters[index].offsetHeight;
-    return (stageH / 2) - posterTop - (posterH / 2);
+    if (!posterData[index]) return 0;
+    return posterData[index].target;
   }
 
-  // Get index of the card closest to center given a translateY
-  function getClosestIndex(translateY) {
-    if (!stage) return 0;
+  function getClosestIndex(y) {
     const stageH = stage.offsetHeight || window.innerHeight;
-    const stageCenter = (stageH / 2) - translateY;
-
+    const stageCenter = (stageH / 2) - y;
     let closest = 0;
     let minDist = Infinity;
-    posters.forEach((p, i) => {
-      const pCenter = p.offsetTop + (p.offsetHeight / 2);
-      const dist = Math.abs(pCenter - stageCenter);
+    for (let i = 0; i < posterData.length; i++) {
+      const dist = Math.abs(posterData[i].center - stageCenter);
       if (dist < minDist) {
         minDist = dist;
         closest = i;
       }
-    });
+    }
     return closest;
   }
 
-  // Smooth render loop (Lerp with friction like Lenis/Locomotive)
+  // 60-120fps hardware-accelerated render loop
   function render() {
-    // Smooth lerp: moves 9% towards target each frame for fluid momentum
-    currentY += (targetY - currentY) * 0.095;
+    // 0.12 lerp factor gives snappy, silky-smooth responsiveness without floaty lag
+    currentY += (targetY - currentY) * 0.12;
 
-    // Apply smooth transform to the vertical track
-    track.style.transform = `translate3d(0, ${currentY.toFixed(2)}px, 0)`;
+    // Direct GPU composition using translate3d
+    track.style.transform = `translate3d(0, ${currentY.toFixed(1)}px, 0)`;
 
-    // Calculate proximity for each card to smoothly scale and fade
-    const stageH = stage.offsetHeight || window.innerHeight;
-    const stageCenter = (stageH / 2) - currentY;
-
-    let closestIndex = 0;
-    let minDist = Infinity;
-
-    posters.forEach((p, i) => {
-      const pCenter = p.offsetTop + (p.offsetHeight / 2);
-      const dist = Math.abs(pCenter - stageCenter);
-      const maxDist = p.offsetHeight * 1.35;
-      const factor = Math.max(0, 1 - Math.min(1, dist / maxDist)); // 1 when centered, 0 when far
-
-      // Continuous smooth scale between 0.82 and 1.0
-      const scale = 0.82 + (factor * 0.18);
-      // Continuous smooth opacity between 0.3 and 1.0
-      const opacity = 0.3 + (factor * 0.7);
-
-      p.style.transform = `scale(${scale.toFixed(3)})`;
-      p.style.opacity = opacity.toFixed(3);
-
-      if (dist < minDist) {
-        minDist = dist;
-        closestIndex = i;
-      }
-    });
-
+    // Check closest card
+    const closestIndex = getClosestIndex(currentY);
     if (closestIndex !== activeIndex) {
       activeIndex = closestIndex;
-      titleItems.forEach((item, i) => {
-        item.classList.toggle('is-active', i === activeIndex);
-      });
-      posters.forEach((p, i) => {
-        p.classList.toggle('is-active', i === activeIndex);
-      });
+      for (let i = 0; i < total; i++) {
+        titleItems[i].classList.toggle('is-active', i === activeIndex);
+        posters[i].classList.toggle('is-active', i === activeIndex);
+      }
     }
 
-    if (Math.abs(targetY - currentY) > 0.1 || isDragging) {
+    if (Math.abs(targetY - currentY) > 0.3 || isDragging) {
       requestAnimationFrame(render);
     } else {
       currentY = targetY;
-      track.style.transform = `translate3d(0, ${currentY.toFixed(2)}px, 0)`;
+      track.style.transform = `translate3d(0, ${Math.round(currentY)}px, 0)`;
       isAnimating = false;
     }
   }
@@ -108,7 +84,6 @@
     }
   }
 
-  // Jump to specific card smoothly
   function scrollToIndex(index) {
     if (index < 0) index = 0;
     if (index >= total) index = total - 1;
@@ -116,7 +91,6 @@
     startAnimation();
   }
 
-  // Next / Previous helpers
   function nextCard() {
     scrollToIndex(activeIndex + 1);
   }
@@ -125,7 +99,6 @@
     scrollToIndex(activeIndex - 1);
   }
 
-  // Right column titles click to smoothly scroll to card
   titleItems.forEach((item, i) => {
     item.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -133,7 +106,6 @@
     });
   });
 
-  // Clicking an inactive poster smoothly centers it; active poster triggers destination
   posters.forEach((poster, i) => {
     poster.addEventListener('click', (e) => {
       if (e.target.closest('a') || e.target.closest('button')) return;
@@ -160,27 +132,24 @@
     });
   });
 
-  // Natural Wheel Scrolling: smoothly glides up & down
+  // Natural inertia wheel handler with rubber-band boundaries
   let snapTimeout = null;
   function handleWheel(e) {
     e.preventDefault();
-    // Continuous scroll delta
-    const delta = e.deltaY * 0.9;
-    targetY -= delta;
+    const delta = e.deltaY;
+    targetY -= delta * 0.85;
 
-    // Boundaries with gentle rubber-band elasticity
-    const minY = getTargetForIndex(total - 1) - 60;
-    const maxY = getTargetForIndex(0) + 60;
+    const minY = getTargetForIndex(total - 1) - 40;
+    const maxY = getTargetForIndex(0) + 40;
     targetY = Math.max(minY, Math.min(maxY, targetY));
 
     startAnimation();
 
-    // When scrolling stops, gently snap to closest card
     clearTimeout(snapTimeout);
     snapTimeout = setTimeout(() => {
       const closest = getClosestIndex(targetY);
       scrollToIndex(closest);
-    }, 180);
+    }, 120);
   }
 
   stage.addEventListener('wheel', handleWheel, { passive: false });
@@ -230,7 +199,7 @@
     scrollToIndex(closest);
   }, { passive: true });
 
-  // Keyboard navigation up & down
+  // Keyboard navigation
   window.addEventListener('keydown', (e) => {
     if (theater.classList.contains('dismissed')) return;
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
@@ -268,17 +237,23 @@
     });
   });
 
-  // Initial alignment
-  function initPosition() {
+  function init() {
+    measure();
     currentY = getTargetForIndex(0);
     targetY = currentY;
-    render();
+    track.style.transform = `translate3d(0, ${Math.round(currentY)}px, 0)`;
+    posters.forEach((p, i) => p.classList.toggle('is-active', i === 0));
+    titleItems.forEach((t, i) => t.classList.toggle('is-active', i === 0));
   }
 
-  window.addEventListener('load', initPosition);
-  window.addEventListener('resize', () => scrollToIndex(activeIndex));
+  window.addEventListener('load', init);
+  window.addEventListener('resize', () => {
+    measure();
+    scrollToIndex(activeIndex);
+  });
+
   requestAnimationFrame(() => {
-    initPosition();
-    setTimeout(initPosition, 80);
+    init();
+    setTimeout(init, 50);
   });
 })();
