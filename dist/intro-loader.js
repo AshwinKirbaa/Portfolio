@@ -50,20 +50,10 @@
       const translateY = diff * stepY;
 
       const p = posters[i];
-      p.style.marginTop = (-p.offsetHeight / 2) + 'px';
-      p.style.marginLeft = (-p.offsetWidth / 2) + 'px';
-      if (absDiff > 0.05) {
-        p.style.display = 'none';
-        p.style.opacity = '0';
-        p.style.visibility = 'hidden';
-      } else {
-        p.style.display = 'block';
-        p.style.visibility = 'visible';
-        p.style.transform = 'translate3d(0, ' + translateY.toFixed(1) + 'px, 0) scale(' + scale.toFixed(4) + ')';
-        p.style.opacity = opacity.toFixed(4);
-        p.style.zIndex = Math.round(30 - Math.min(25, absDiff * 8));
-        p.style.pointerEvents = 'auto';
-      }
+      p.style.transform = 'translate3d(0, ' + translateY.toFixed(1) + 'px, 0) scale(' + scale.toFixed(4) + ')';
+      p.style.opacity = opacity.toFixed(4);
+      p.style.zIndex = Math.round(30 - Math.min(25, absDiff * 8));
+      p.style.pointerEvents = 'auto';
     }
 
     const closest = Math.round(currentProgress);
