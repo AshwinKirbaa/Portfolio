@@ -86,6 +86,54 @@ section[id]{scroll-margin-top:78px}
 .cap-item{transition:padding .25s var(--ease),background .25s,color .25s}
 @keyframes heroTitleIn{from{opacity:0;transform:translateY(28px);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
 
+/* Kinetic interaction layer */
+.scroll-progress{position:fixed;top:0;left:0;width:100%;height:3px;z-index:180;pointer-events:none;transform:scaleX(0);transform-origin:left;background:var(--paper);mix-blend-mode:difference;will-change:transform}
+.ambient-orb{position:absolute;left:0;top:0;width:18px;height:18px;border-radius:50%;background:#18c3c8;z-index:5;pointer-events:none;transform:translate3d(-100px,-100px,0);box-shadow:0 0 0 1px rgba(23,21,20,.25),0 0 32px rgba(24,195,200,.42);transition:width .35s var(--ease),height .35s var(--ease),background .35s;will-change:transform}
+.hero:hover .ambient-orb{width:20px;height:20px}
+.cursor-trail{position:fixed;left:0;top:0;width:5px;height:5px;border-radius:50%;background:var(--paper);mix-blend-mode:difference;z-index:149;pointer-events:none;opacity:.72;will-change:transform}
+.hero-name h1{will-change:translate}
+.hero-card{will-change:transform,translate;transition:box-shadow .45s var(--ease)}
+.hero-card:hover .screen-card{box-shadow:18px 21px 0 rgba(23,21,20,.42)}
+.discipline a{position:relative;overflow:hidden}
+.discipline a:before{content:"";position:absolute;inset:0;background:var(--red);transform:translateX(-102%);transition:transform .35s var(--ease);z-index:-1}
+.discipline a:hover:before{transform:none}
+.discipline a:hover{color:var(--ink)}
+.project-preview{clip-path:inset(4% 4% 4% 4%);filter:saturate(.65)}
+.project-preview.active{clip-path:inset(0);filter:saturate(1)}
+.project-row h3,.achievement h3,.cap-item b{transition:letter-spacing .35s var(--ease),transform .35s var(--ease)}
+.project-row:hover h3,.project-row.active h3,.achievement:hover h3,.cap-item:hover b{letter-spacing:-.02em;transform:translateX(7px)}
+.achievement{transition:transform .45s var(--ease),background .35s,color .35s;transform-origin:center}
+.achievement:hover{transform:translateY(-8px);z-index:2}
+.cap-detail{transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.cap-detail:hover{transform:rotate(.5deg) scale(1.012);box-shadow:18px 18px 0 rgba(237,59,36,.75)}
+.magnetic{will-change:translate;transition:translate .28s var(--ease)}
+.topbar{transition:height .4s var(--ease),top .4s var(--ease),background .4s}
+body.is-scrolled .topbar{top:9px;height:42px;background:rgba(23,21,20,.97)}
+.section-index{transition:letter-spacing .45s var(--ease)}
+section:hover>.section-index{letter-spacing:.16em}
+
+@media(max-width:720px){.ambient-orb,.cursor-trail,.scroll-progress{display:none}.project-preview{clip-path:none;filter:none}.achievement:hover,.cap-detail:hover{transform:none;box-shadow:none}}
+@media(prefers-reduced-motion:reduce){.ambient-orb,.cursor-trail,.scroll-progress{display:none!important}.project-preview{clip-path:none;filter:none}.achievement:hover,.cap-detail:hover{transform:none;box-shadow:none}}
+
+/* Reference-matched red scanline theme */
+:root{--red:#f13b2b}
+.section-red,.hero,.contact,.achievement.primary{
+  background-color:#f13b2b;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(24,18,17,.105) 0,rgba(24,18,17,.105) 1px,rgba(255,255,255,.025) 1px,rgba(255,255,255,.025) 3px),
+    linear-gradient(90deg,rgba(23,21,20,.12) 1px,transparent 1px),
+    linear-gradient(0deg,rgba(23,21,20,.08) 1px,transparent 1px);
+  background-size:100% 3px,25% 100%,100% 145px;
+  background-position:0 0,0 0,0 0;
+}
+.hero:after,.section-red:after,.contact:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,.018),rgba(0,0,0,.025));mix-blend-mode:overlay;z-index:0}
+.section-red,.contact{position:relative;isolation:isolate}
+.section-red>*:not(.ambient-orb),.contact>*{position:relative;z-index:1}
+.hero{isolation:isolate}
+.hero-meta,.hero-grid,.hero-foot,.scroll-cue{z-index:2}
+.section-dark{background-color:#171514;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0,rgba(255,255,255,.035) 1px,transparent 1px,transparent 4px),linear-gradient(90deg,rgba(255,255,255,.065) 1px,transparent 1px);background-size:100% 4px,25% 100%}
+.screen-card,.discipline,.topbar,.site-menu,.preview-wrap,.cap-detail{background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.026) 0,rgba(255,255,255,.026) 1px,transparent 1px,transparent 4px)}
+
 @media(max-width:1000px){
   .topbar{grid-template-columns:auto auto 1fr auto}
   .hero-grid{min-height:70vh}
@@ -101,7 +149,7 @@ section[id]{scroll-margin-top:78px}
   .topbar{grid-template-columns:1fr auto}
   .wordmark{border-right:0}
   .menu-toggle{border-left:1px solid rgba(255,255,255,.16)}
-  .hero{background-size:50% 100%,100% 140px}
+  .hero{background-size:100% 3px,50% 100%,100% 140px}
   .hero-grid{display:block;min-height:0;padding-top:42px}
   .hero-name{position:relative;inset:auto}
   .hero-name h1{position:static;font-size:22vw;line-height:.82}
@@ -110,5 +158,36 @@ section[id]{scroll-margin-top:78px}
   .screen-visual{height:260px}
   .discipline{position:relative;right:auto;top:auto;width:auto}
   .hero-foot{margin-top:28px}
-  .section-red,.section-dark,.section-light{background-size:50% 100%}
+  .section-red,.contact,.achievement.primary{background-size:100% 3px,50% 100%,100% 140px}
+  .section-dark{background-size:100% 4px,50% 100%}
+}
+
+/* Achievement alignment correction */
+.achievement{
+  grid-template-columns:minmax(260px,36%) minmax(0,1fr);
+  column-gap:34px;
+  align-items:end;
+}
+.achievement .rank{
+  align-self:end;
+  min-width:0;
+  white-space:nowrap;
+  font-size:clamp(66px,6.1vw,112px);
+  line-height:.78;
+}
+.achievement>div{min-width:0;padding:0 28px 3px 0}
+.achievement h3{font-size:clamp(18px,1.45vw,27px);line-height:1.06;overflow-wrap:anywhere}
+.achievement p{max-width:590px}
+
+@media(max-width:1200px){
+  .achievement{grid-template-columns:minmax(190px,34%) minmax(0,1fr);column-gap:24px}
+  .achievement .rank{font-size:clamp(58px,7vw,88px)}
+  .achievement>div{padding-right:18px}
+}
+
+@media(max-width:720px){
+  .achievement{grid-template-columns:1fr;gap:24px;align-items:start;min-height:330px}
+  .achievement .rank{font-size:21vw;white-space:normal;align-self:start}
+  .achievement>div{padding:0 20px 0 0;align-self:end}
+  .achievement h3{font-size:22px}
 }
