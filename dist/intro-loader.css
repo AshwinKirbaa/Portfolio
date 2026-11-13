@@ -115,6 +115,7 @@
 .wga-name-brand {
   margin-top: auto;
   margin-bottom: auto;
+  overflow: hidden;
 }
 
 .wga-name-brand h2 {
@@ -125,6 +126,7 @@
   margin: 0;
   color: #ffffff;
   text-transform: uppercase;
+  will-change: transform;
 }
 
 .wga-name-brand h2 span {
@@ -139,6 +141,7 @@
   margin: 0;
   margin-bottom: 38px;
   font-weight: 500;
+  will-change: opacity, transform;
 }
 
 /* CENTER COLUMN: Vertical Scrolling Posters Stage */
@@ -166,6 +169,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  will-change: transform;
 }
 
 /* Individual Vertical Card Poster (Traversed/active card is big, inactive cards are small) */
@@ -414,6 +418,35 @@
   .wga-vposter {
     width: 300px;
   }
+}
+
+/* --- INTRO INITIAL ENTRANCE ANIMATION STATE (we-go-again.com replica) --- */
+.portfolio-intro-theater.is-intro-loading .wga-vertical-track {
+  transform: translateY(100vh);
+}
+
+.portfolio-intro-theater.is-intro-loading .wga-vposter {
+  transform: translate3d(0, 0, 0) scale(0.2);
+  opacity: 0;
+}
+
+.portfolio-intro-theater.is-intro-loading .wga-name-brand h2 {
+  transform: translateY(120%);
+}
+
+.portfolio-intro-theater.is-intro-loading .wga-left-bio {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.portfolio-intro-theater.is-intro-loading .wga-title-item {
+  opacity: 0;
+  transform: translateY(25px);
+}
+
+.portfolio-intro-theater.is-intro-loading .wga-bottom-bar {
+  opacity: 0;
+  transform: translateY(15px);
 }
 
 /* --- FLUID FLIP TRANSITION FROM CENTER TO LOWER LEFT HERO --- */

@@ -109,7 +109,7 @@
 
   // Wheel interaction
   function handleWheel(e) {
-    if (isTransitioning) return;
+    if (isTransitioning || isIntroPlaying) return;
     e.preventDefault();
     const delta = e.deltaY;
     targetProgress += (delta / 450);
@@ -129,14 +129,14 @@
 
   // Touch & Drag Support
   stage.addEventListener('mousedown', (e) => {
-    if (isTransitioning) return;
+    if (isTransitioning || isIntroPlaying) return;
     startY = e.clientY;
     dragStartProgress = currentProgress;
     isDragging = true;
   });
 
   window.addEventListener('mousemove', (e) => {
-    if (!isDragging || isTransitioning) return;
+    if (!isDragging || isTransitioning || isIntroPlaying) return;
     const diffY = e.clientY - startY;
     const stageH = stage.offsetHeight || window.innerHeight;
     targetProgress = dragStartProgress - (diffY / (stageH * 0.45));
@@ -152,14 +152,14 @@
   });
 
   stage.addEventListener('touchstart', (e) => {
-    if (isTransitioning) return;
+    if (isTransitioning || isIntroPlaying) return;
     startY = e.touches[0].clientY;
     dragStartProgress = currentProgress;
     isDragging = true;
   }, { passive: true });
 
   stage.addEventListener('touchmove', (e) => {
-    if (!isDragging || isTransitioning) return;
+    if (!isDragging || isTransitioning || isIntroPlaying) return;
     const diffY = e.touches[0].clientY - startY;
     const stageH = stage.offsetHeight || window.innerHeight;
     targetProgress = dragStartProgress - (diffY / (stageH * 0.45));
@@ -168,7 +168,7 @@
   }, { passive: true });
 
   stage.addEventListener('touchend', () => {
-    if (isTransitioning) return;
+    if (isTransitioning || isIntroPlaying) return;
     isDragging = false;
     const closest = Math.round(targetProgress);
     scrollToIndex(closest);
@@ -405,24 +405,143 @@
     });
   });
 
+  let isIntroPlaying = true;
+
+  function playIntroAnimation() {
+    isIntroPlaying = true;
+    measure();
+    currentProgress = 0;
+    targetProgress = 0;
+    activeIndex = 0;
+
+    const brandWordmark = theater.querySelector('.wga-name-brand h2');
+    const leftBio = theater.querySelector('.wga-left-bio');
+    const bottomBar = theater.querySelector('.wga-bottom-bar');
+    const stageH = stage.offsetHeight || window.innerHeight;
+
+    // Set initial intro loading state
+    if (window.gsap) {
+      // Immediate set starting transforms
+      gsap.set(track, { y: stageH });
+      gsap.set(posters, { scale: 0.2, opacity: 0 });
+      if (brandWordmark) gsap.set(brandWordmark, { yPercent: 120 });
+      if (leftBio) gsap.set(leftBio, { y: 25, opacity: 0 });
+      if (titleItems.length) gsap.set(titleItems, { y: 30, opacity: 0 });
+      if (bottomBar) gsap.set(bottomBar, { y: 20, opacity: 0 });
+
+      // Create master intro timeline matching we-go-again.com
+      const tl = gsap.timeline({
+        onComplete: () => {
+          isIntroPlaying = false;
+          // Clean up inline styles from intro animation so layout updater takes over cleanly
+          gsap.set(track, { clearProps: 'transform,y' });
+          updateLayout();
+        }
+      });
+
+      // 1. Center track vertical sweep up (duration 1.35s with ultra-smooth cubic-bezier)
+      tl.to(track, {
+        y: 0,
+        duration: 1.35,
+        ease: 'power4.out'
+      }, 0.05);
+
+      // 2. Individual card expansion & opacity ramp
+      // Calculate target resting positions for active card (0) and adjacent card (1)
+      const baseH = posters[0] ? posters[0].offsetHeight : 568;
+      const stepY = (stageH / 2) - 105 + (baseH * 0.55 / 2);
+
+      posters.forEach((p, i) => {
+        const diff = i; // at progress = 0
+        const absDiff = Math.abs(diff);
+        const factor = Math.max(0, 1 - absDiff);
+        const easedFactor = Math.pow(factor, 1.6);
+        const targetScale = 0.55 + 0.45 * easedFactor;
+        const targetOpacity = 0.45 + 0.55 * factor;
+        const targetTranslateY = diff * stepY;
+
+        tl.fromTo(p, {
+          y: targetTranslateY,
+          scale: 0.2,
+          opacity: 0
+        }, {
+          y: targetTranslateY,
+          scale: targetScale,
+          opacity: targetOpacity,
+          duration: 1.35,
+          ease: 'power4.out'
+        }, 0.05);
+      });
+
+      // 3. Left Brand Wordmark reveal from overflow mask
+      if (brandWordmark) {
+        tl.to(brandWordmark, {
+          yPercent: 0,
+          duration: 1.15,
+          ease: 'power3.out'
+        }, 0.2);
+      }
+
+      // 4. Left bio tagline fade up
+      if (leftBio) {
+        tl.to(leftBio, {
+          y: 0,
+          opacity: 0.7,
+          duration: 0.9,
+          ease: 'power3.out'
+        }, 0.5);
+      }
+
+      // 5. Right titles list staggered reveal
+      if (titleItems.length) {
+        titleItems.forEach((item, i) => {
+          item.classList.toggle('is-active', i === 0);
+        });
+
+        tl.to(titleItems, {
+          y: 0,
+          opacity: (i) => i === 0 ? 1 : 0.35,
+          duration: 0.85,
+          stagger: 0.06,
+          ease: 'power3.out'
+        }, 0.4);
+      }
+
+      // 6. Bottom scroll hint fade up
+      if (bottomBar) {
+        tl.to(bottomBar, {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out'
+        }, 0.7);
+      }
+
+    } else {
+      // Fallback if GSAP is somehow not loaded
+      measure();
+      updateLayout();
+      isIntroPlaying = false;
+    }
+  }
+
   function init() {
     measure();
     currentProgress = 0;
     targetProgress = 0;
     activeIndex = 0;
-    updateLayout();
-    posters.forEach((p, i) => p.classList.toggle('is-active', i === 0));
-    titleItems.forEach((t, i) => t.classList.toggle('is-active', i === 0));
+    playIntroAnimation();
   }
 
   window.addEventListener('load', init);
   window.addEventListener('resize', () => {
     measure();
-    updateLayout();
+    if (!isIntroPlaying) {
+      updateLayout();
+    }
   });
 
   requestAnimationFrame(() => {
     init();
-    setTimeout(init, 60);
   });
 })();
