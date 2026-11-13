@@ -1,4 +1,13 @@
+.hero-name {
+  pointer-events: auto !important;
+}
+
+.hero-name h1 {
+  pointer-events: auto !important;
+}
+
 .fold-text {
+  pointer-events: auto !important;
   display: inline-block;
   color: var(--fold-text-color, currentColor);
   font-size: var(--fold-text-font-size, inherit);
@@ -115,3 +124,4 @@
     opacity: 0 !important;
   }
 }
+
