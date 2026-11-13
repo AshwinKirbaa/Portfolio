@@ -25,10 +25,7 @@
   let snapTimeout = null;
 
   function measure() {
-    posters.forEach((p) => {
-      p.style.marginTop = (-p.offsetHeight / 2) + 'px';
-      p.style.marginLeft = (-p.offsetWidth / 2) + 'px';
-    });
+    // Pure CSS transforms handle centering without DOM reflow layout thrashing
   }
 
   function updateLayout() {
@@ -50,7 +47,7 @@
       const translateY = diff * stepY;
 
       const p = posters[i];
-      p.style.transform = 'translate3d(0, ' + translateY.toFixed(1) + 'px, 0) scale(' + scale.toFixed(4) + ')';
+      p.style.transform = 'translate3d(-50%, calc(-50% + ' + translateY.toFixed(1) + 'px), 0) scale(' + scale.toFixed(4) + ')';
       p.style.opacity = opacity.toFixed(4);
       p.style.zIndex = Math.round(30 - Math.min(25, absDiff * 8));
       p.style.pointerEvents = 'auto';
@@ -461,10 +458,14 @@
         const targetTranslateY = diff * stepY;
 
         tl.fromTo(p, {
+          xPercent: -50,
+          yPercent: -50,
           y: targetTranslateY,
           scale: 0.2,
           opacity: 0
         }, {
+          xPercent: -50,
+          yPercent: -50,
           y: targetTranslateY,
           scale: targetScale,
           opacity: targetOpacity,
