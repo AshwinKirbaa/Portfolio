@@ -67,12 +67,14 @@
   display: inline-flex !important;
   align-items: center !important;
   gap: 10px !important;
-  padding: 8px 18px !important;
-  border-radius: 9999px !important;
-  background: rgba(18, 18, 18, 0.9) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  padding: 0 18px !important;
+  height: 48px !important;
+  border-radius: 0 5px 5px 0 !important;
+  background: rgba(23, 21, 20, 0.94) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.16) !important;
   color: #fff !important;
   font-family: var(--sans) !important;
   font-size: 13px !important;
@@ -283,20 +285,22 @@ body .site-menu a.menu-book-btn:hover {
 
 /* Topbar CTA Pill */
 .top-cta.roll-btn {
-  background: #000;
-  color: #fff;
-  padding: 9px 20px;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 700;
+  background: var(--red);
+  color: var(--ink);
+  padding: 0 16px;
+  height: 48px;
+  border-radius: 0 5px 5px 0;
+  border: 1px solid var(--ink);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
   letter-spacing: 0.05em;
   transition: background 0.3s var(--nika-ease), transform 0.3s var(--nika-ease), box-shadow 0.3s var(--nika-ease);
 }
 
 .top-cta.roll-btn:hover {
-  background: #1a1a1a;
+  background: #ff4730;
+  color: var(--ink);
   transform: translateY(-1px);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
 }
