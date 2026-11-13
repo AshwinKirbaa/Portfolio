@@ -125,20 +125,22 @@
   user-select: none;
   -webkit-user-select: none;
   transform: translate3d(0, 0, 0);
-  transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.3, 1),
-              box-shadow 0.1s cubic-bezier(0.2, 0.8, 0.3, 1),
-              filter 0.15s ease;
+  transition: transform 0.12s cubic-bezier(0.2, 0.9, 0.3, 1),
+              box-shadow 0.12s cubic-bezier(0.2, 0.9, 0.3, 1),
+              filter 0.12s ease;
   outline: none;
 }
 
+/* Mechanical press-inward on HOVER and on CLICK/PRESS */
 .console-key:hover {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
+  transform: translateY(5px);
+  filter: brightness(0.97);
 }
 
 .console-key.pressed,
 .console-key:active {
-  transform: translateY(4px) !important;
+  transform: translateY(6px) !important;
+  filter: brightness(0.92);
 }
 
 /* Default Dark Key (HOME, HIRE ME, X, LET'S TALK) */
@@ -157,13 +159,17 @@
     inset 0 -2px 4px rgba(0, 0, 0, 0.5);
 }
 
+.console-key.key-home:hover,
 .console-key.key-home.pressed, .console-key.key-home:active,
+.console-key.key-hire:hover,
 .console-key.key-hire.pressed, .console-key.key-hire:active,
+.console-key.key-x:hover,
 .console-key.key-x.pressed, .console-key.key-x:active,
+.console-key.key-call:hover,
 .console-key.key-call.pressed, .console-key.key-call:active {
   box-shadow: 
-    0 2px 0 #08080a,
-    0 4px 6px rgba(0, 0, 0, 0.6),
+    0 1px 0 #08080a,
+    0 3px 6px rgba(0, 0, 0, 0.6),
     inset 0 2px 4px rgba(0, 0, 0, 0.7);
 }
 
@@ -181,10 +187,11 @@
   font-size: 20px;
 }
 
+.console-key.key-email:hover,
 .console-key.key-email.pressed, .console-key.key-email:active {
   box-shadow: 
-    0 2px 0 #735d46,
-    0 4px 6px rgba(0, 0, 0, 0.5),
+    0 1px 0 #735d46,
+    0 3px 6px rgba(0, 0, 0, 0.5),
     inset 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -201,10 +208,11 @@
     inset 0 -2px 4px rgba(0, 0, 0, 0.25);
 }
 
+.console-key.key-github:hover,
 .console-key.key-github.pressed, .console-key.key-github:active {
   box-shadow: 
-    0 2px 0 #335973,
-    0 4px 6px rgba(0, 0, 0, 0.5),
+    0 1px 0 #335973,
+    0 3px 6px rgba(0, 0, 0, 0.5),
     inset 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -221,10 +229,11 @@
     inset 0 -2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.console-key.key-instagram:hover,
 .console-key.key-instagram.pressed, .console-key.key-instagram:active {
   box-shadow: 
-    0 2px 0 #71175e,
-    0 4px 6px rgba(0, 0, 0, 0.5),
+    0 1px 0 #71175e,
+    0 3px 6px rgba(0, 0, 0, 0.5),
     inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -241,10 +250,11 @@
     inset 0 -2px 4px rgba(0, 0, 0, 0.25);
 }
 
+.console-key.key-linkedin:hover,
 .console-key.key-linkedin.pressed, .console-key.key-linkedin:active {
   box-shadow: 
-    0 2px 0 #5f3373,
-    0 4px 6px rgba(0, 0, 0, 0.5),
+    0 1px 0 #5f3373,
+    0 3px 6px rgba(0, 0, 0, 0.5),
     inset 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -261,10 +271,11 @@
     inset 0 -2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.console-key.key-projects:hover,
 .console-key.key-projects.pressed, .console-key.key-projects:active {
   box-shadow: 
-    0 2px 0 #153896,
-    0 4px 6px rgba(0, 0, 0, 0.5),
+    0 1px 0 #153896,
+    0 3px 6px rgba(0, 0, 0, 0.5),
     inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -444,3 +455,4 @@
     max-width: 380px;
   }
 }
+
