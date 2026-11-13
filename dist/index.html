@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="fold-text.css">
   <link rel="stylesheet" href="intro-loader.css">
   <link rel="stylesheet" href="console.css">
+  <link rel="stylesheet" href="nika-animations.css">
 </head>
 <body>
   <!-- We Go Again Exact 3-Column Vertical Scroll & Title Highlight Stage -->
@@ -307,10 +308,40 @@
   <div class="noise" aria-hidden="true"></div>
   <header class="topbar">
     <a class="wordmark" href="#top"><b>ASHWIN KIRBAA</b><span>/</span><em>PORTFOLIO ’26</em></a>
-    <button class="menu-toggle" aria-expanded="false" aria-controls="site-menu"><span></span><span></span><b>MENU</b></button>
-    <div class="availability"><i></i><span>OPEN TO OPPORTUNITIES</span></div><a class="top-cta" href="mailto:ashwinkirbaa17@gmail.com">LET’S TALK <span>↗</span></a>
+    <button class="menu-toggle roll-btn" aria-expanded="false" aria-controls="site-menu"><span class="menu-icon-bars"><span></span><span></span></span><span class="roll-wrap"><span class="roll-label">MENU</span><span class="roll-hover">MENU</span></span></button>
+    <div class="availability"><i></i><span>OPEN TO OPPORTUNITIES</span></div><a class="top-cta roll-btn" href="mailto:ashwinkirbaa17@gmail.com"><span class="roll-wrap"><span class="roll-label">LET’S TALK ↗</span><span class="roll-hover">LET’S TALK ↗</span></span></a>
   </header>
-  <nav class="site-menu" id="site-menu" aria-label="Main navigation"><a href="#top"><small>01</small>INDEX</a><a href="#work"><small>02</small>WORK</a><a href="#about"><small>03</small>ABOUT</a><a href="#achievements"><small>04</small>ACHIEVEMENTS</a><a href="#contact"><small>05</small>CONTACT</a></nav>
+  <nav class="site-menu" id="site-menu" aria-label="Main navigation">
+    <div class="menu-nav-links">
+      <a href="#top" class="menu-roll-item"><span class="menu-item-left"><span class="menu-dot">●</span> INDEX</span><small>[01]</small></a>
+      <a href="#work" class="menu-roll-item"><span class="menu-item-left"><span class="menu-dot">●</span> WORK</span><small>[02]</small></a>
+      <a href="#about" class="menu-roll-item"><span class="menu-item-left"><span class="menu-dot">●</span> ABOUT</span><small>[03]</small></a>
+      <a href="#achievements" class="menu-roll-item"><span class="menu-item-left"><span class="menu-dot">●</span> ACHIEVEMENTS</span><small>[04]</small></a>
+      <a href="#contact" class="menu-roll-item"><span class="menu-item-left"><span class="menu-dot">●</span> CONTACT</span><small>[05]</small></a>
+    </div>
+    
+    <div class="menu-latest-case">
+      <img src="assets/portrait.png" alt="Ashwin Kirbaa" class="menu-case-thumb">
+      <div class="menu-case-info">
+        <small class="mono">LATEST PROJECT</small>
+        <strong>SafeBox AI</strong>
+      </div>
+      <span class="menu-case-year mono">2026</span>
+    </div>
+
+    <div class="menu-footer-meta">
+      <span class="mono">ASHWINKIRBAA17@GMAIL.COM</span>
+      <span class="mono">COIMBATORE, IN</span>
+    </div>
+
+    <a href="mailto:ashwinkirbaa17@gmail.com" class="menu-book-btn roll-btn">
+      <span class="menu-dot red">●</span>
+      <span class="roll-wrap">
+        <span class="roll-label">START A CONVERSATION</span>
+        <span class="roll-hover">LET'S TALK ↗</span>
+      </span>
+    </a>
+  </nav>
   <main id="top">
     <section class="hero section-red">
       <div class="hero-meta mono reveal"><span>[ COMPUTER SCIENCE ]</span><span>STUDENT + DEVELOPER</span><span>COIMBATORE, IN</span><a href="#work">SELECTED WORK [05]</a></div>
@@ -361,11 +392,11 @@
         </div>
         <div class="discipline reveal"><p class="mono">FOCUS AREAS</p><a href="#work" data-project-jump="safebox"><span>AI SYSTEMS</span><b>[01]</b></a><a href="#work" data-project-jump="camera"><span>COMPUTER VISION</span><b>[02]</b></a><a href="#work" data-project-jump="twineval"><span>FULL-STACK</span><b>[03]</b></a><a href="#stack"><span>INFRASTRUCTURE</span><b>[04]</b></a></div>
       </div>
-      <div class="hero-foot reveal"><span>Independent project work</span><span>AI, software and automation</span><p>Computer Science student building practical systems that move ideas from prototype to real-world use.</p></div><a class="scroll-cue mono" href="#intro"><span>SCROLL TO EXPLORE</span><b>↓</b></a>
+      <div class="hero-foot reveal"><span>Independent project work</span><span>AI, software and automation</span><p>Computer Science student building practical systems that move ideas from prototype to real-world use.</p></div><a class="scroll-cue mono roll-btn" href="#intro"><span class="roll-wrap"><span class="roll-label">SCROLL TO EXPLORE ↓</span><span class="roll-hover">SCROLL TO EXPLORE ↓</span></span></a>
     </section>
-    <section class="intro section-light" id="intro"><div class="section-index mono">[ 01 ] APPROACH</div><div class="intro-statement reveal"><p>EVERY USEFUL SYSTEM STARTS WITH A REAL PROBLEM. <em>CODE, CURIOSITY AND ITERATION</em> TURN IT INTO SOMETHING PEOPLE CAN USE.</p></div><div class="intro-notes reveal"><p>I build across artificial intelligence, computer vision, backend systems and infrastructure. The goal is always the same: make an idea concrete, testable and useful.</p><p>A student developer with a direct line from the first experiment to the working prototype.</p><a class="text-link" href="#about">MORE ABOUT ME <span>↗</span></a></div></section>
+    <section class="intro section-light" id="intro"><div class="section-index mono">[ 01 ] APPROACH</div><div class="intro-statement reveal"><p>EVERY USEFUL SYSTEM STARTS WITH A REAL PROBLEM. <em>CODE, CURIOSITY AND ITERATION</em> TURN IT INTO SOMETHING PEOPLE CAN USE.</p></div><div class="intro-notes reveal"><p>I build across artificial intelligence, computer vision, backend systems and infrastructure. The goal is always the same: make an idea concrete, testable and useful.</p><p>A student developer with a direct line from the first experiment to the working prototype.</p><a class="text-link roll-btn" href="#about"><span class="roll-wrap"><span class="roll-label">MORE ABOUT ME ↗</span><span class="roll-hover">MORE ABOUT ME ↗</span></span></a></div></section>
     <section class="work section-dark" id="work">
-      <div class="section-index mono">[ 02 ] SELECTED WORK</div><div class="section-title reveal"><h2>PROJECT<br>INDEX</h2><span>© 2026</span><a class="text-link invert" href="https://github.com/AshwinKirbaa" target="_blank" rel="noreferrer">ALL REPOSITORIES ↗</a></div>
+      <div class="section-index mono">[ 02 ] SELECTED WORK</div><div class="section-title reveal"><h2>PROJECT<br>INDEX</h2><span>© 2026</span><a class="text-link invert roll-btn" href="https://github.com/AshwinKirbaa" target="_blank" rel="noreferrer"><span class="roll-wrap"><span class="roll-label">ALL REPOSITORIES ↗</span><span class="roll-hover">ALL REPOSITORIES ↗</span></span></a></div>
       <div class="project-stage"><div class="project-list" role="list">
         <a class="project-row active" role="listitem" href="https://github.com/AshwinKirbaa/SafeBox_AI" target="_blank" rel="noreferrer" data-project="safebox"><span class="number">01</span><div><h3>SAFEBOX AI</h3><p>AI SECURITY PLATFORM</p></div><span class="year">2026</span><b>↗</b></a>
         <a class="project-row" role="listitem" href="https://twineval-ai.vercel.app/" target="_blank" rel="noreferrer" data-project="twineval"><span class="number">02</span><div><h3>TWINEVAL AI</h3><p>SEMANTIC EVALUATION</p></div><span class="year">2026</span><b>↗</b></a>
@@ -481,4 +512,5 @@
     <section class="about section-dark" id="about"><div class="section-index mono">[ 05 ] ABOUT</div><div class="about-grid"><h2 class="reveal">CURIOUS<br>BY DEFAULT.<br><em>USEFUL</em><br>BY DESIGN.</h2><div class="about-copy reveal"><p>I’m Ashwin Kirbaa B., a Computer Science Engineering student at Sri Shakthi Institute of Engineering and Technology.</p><p>I enjoy building practical AI-powered applications, exploring computer vision, shaping backend systems, and running infrastructure on Linux. I learn best by making things work.</p><p>Currently pursuing a B.E. in Computer Science and Engineering, batch of 2025–2029.</p><a class="text-link invert" href="mailto:ashwinkirbaa17@gmail.com">START A CONVERSATION ↗</a></div></div><div class="skill-marquee" aria-label="Technical skills"><div><span>JAVA</span><i>✳</i><span>PYTHON</span><i>✳</i><span>JAVASCRIPT</span><i>✳</i><span>REACT</span><i>✳</i><span>FASTAPI</span><i>✳</i><span>DOCKER</span><i>✳</i><span>POSTGRESQL</span><i>✳</i><span>OPENCV</span><i>✳</i><span>JAVA</span><i>✳</i><span>PYTHON</span><i>✳</i><span>JAVASCRIPT</span><i>✳</i><span>REACT</span></div></div><div class="stack-grid reveal"><div><small>LANGUAGES</small><p>Java<br>Python<br>JavaScript</p></div><div><small>WEB + BACKEND</small><p>React / Vite<br>Node / Express<br>FastAPI</p></div><div><small>DATA + AI</small><p>PostgreSQL / MySQL<br>Scikit-learn<br>OpenCV / MediaPipe</p></div><div><small>INFRASTRUCTURE</small><p>Docker / Compose<br>Ubuntu Server<br>Portainer / Tailscale</p></div></div></section>
     <section class="contact section-red" id="contact"><div class="section-index mono">[ CONTACT ]</div><div class="contact-main reveal"><p>Have a project, internship, or idea worth exploring?</p><a href="mailto:ashwinkirbaa17@gmail.com">LET’S BUILD<br>SOMETHING <em>USEFUL.</em><span>↗</span></a></div><div class="contact-grid"><div><small>EMAIL</small><a href="mailto:ashwinkirbaa17@gmail.com">ashwinkirbaa17@gmail.com</a></div><div><small>ELSEWHERE</small><a href="https://github.com/AshwinKirbaa" target="_blank" rel="noreferrer">GITHUB ↗</a><a href="https://www.linkedin.com/in/ashwin-kirbaa17" target="_blank" rel="noreferrer">LINKEDIN ↗</a><a href="https://x.com/AshwinKirbaa" target="_blank" rel="noreferrer">X ↗</a><a href="https://www.instagram.com/unfav.ashwin_x" target="_blank" rel="noreferrer">INSTAGRAM ↗</a></div><div><small>LOCATION</small><p>Coimbatore<br>Tamil Nadu, India<br><span id="local-time">--:-- IST</span></p></div><div><small>STATUS</small><p>Open to internships,<br>collaborations and<br>ambitious builds.</p></div></div><div class="console-3d-wrapper reveal"><div class="control-console" aria-label="Portfolio control console"><div class="console-base-lip"></div><div class="console-left"><div class="console-status mono"><span id="console-message">AVAILABLE FOR OPPORTUNITIES</span><i></i></div><div class="console-keys"><a class="console-key key-home" href="#top" data-console-label="HOME">HOME</a><a class="console-key key-github" href="https://github.com/AshwinKirbaa" target="_blank" rel="noreferrer" data-console-label="GITHUB">GH</a><a class="console-key key-instagram" href="https://www.instagram.com/unfav.ashwin_x" target="_blank" rel="noreferrer" data-console-label="INSTAGRAM">IG</a><a class="console-key key-email" href="mailto:ashwinkirbaa17@gmail.com" data-console-label="EMAIL">@</a><a class="console-key key-hire" href="mailto:ashwinkirbaa17@gmail.com?subject=Opportunity%20for%20Ashwin" data-console-label="HIRE ME">HIRE ME</a><a class="console-key key-x" href="https://x.com/AshwinKirbaa" target="_blank" rel="noreferrer" data-console-label="X">X</a><a class="console-key key-call" href="mailto:ashwinkirbaa17@gmail.com?subject=Let's%20talk" data-console-label="LET'S TALK">LET'S TALK</a><a class="console-key key-linkedin" href="https://www.linkedin.com/in/ashwin-kirbaa17" target="_blank" rel="noreferrer" data-console-label="LINKEDIN">LI</a><a class="console-key key-projects" href="#work" data-console-label="PROJECTS">PR</a></div></div><div class="console-speaker" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="console-screen" aria-hidden="true"><span class="screen-screw s1"></span><span class="screen-screw s2"></span><span class="screen-screw s3"></span><span class="screen-screw s4"></span><div class="crt"><div class="crt-grid"></div><svg viewBox="0 0 240 180" role="img"><path class="crt-sweep" d="M34 78 L104 67 L112 126 L168 126 L168 42 L151 42 M112 78 L112 52 M112 52 L146 52"/><path class="crt-pulse" d="M26 122 C65 88 86 143 118 104 S174 72 214 104"/></svg><b>AK</b></div></div></div></div><div class="footer-name" aria-hidden="true">ASHWIN KIRBAA</div><footer class="mono"><span>© <b id="year">2026</b> ASHWIN KIRBAA B.</span><span>DESIGNED + BUILT WITH INTENT</span><a href="#top">BACK TO TOP ↑</a></footer></section>
   </main><div class="scroll-progress" aria-hidden="true"><i></i></div><script src="gsap.min.js"></script><script src="intro-loader.js"></script><script src="script.js"></script><script src="kinetic.js"></script><script src="scroll-scenes.js"></script><script src="profile-card.js"></script><script src="fold-text.js"></script><script src="console.js"></script>
+  <script src="nika-animations.js"></script>
 </body></html>
