@@ -60,17 +60,35 @@
 
   // Right column titles click to jump to corresponding poster
   titleItems.forEach((item, i) => {
-    item.addEventListener('click', () => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
       updateActiveCard(i);
     });
   });
 
-  // Clicking an inactive poster centers it; clicking the active poster enters portfolio
+  // Clicking an inactive poster centers it; clicking the active poster enters its specific target
   posters.forEach((poster, i) => {
     poster.addEventListener('click', (e) => {
-      if (e.target.closest('a') || e.target.closest('.wga-vposter-btn')) return;
+      // If clicking directly on an anchor or button inside, allow its native action
+      if (e.target.closest('a') || e.target.closest('button')) return;
+
       if (i === activeIndex) {
-        dismissIntro();
+        // Trigger the primary action of the active card
+        const link = poster.querySelector('.wga-vposter-cta');
+        if (link) {
+          if (link.tagName === 'A' && link.href) {
+            if (link.target === '_blank') {
+              window.open(link.href, '_blank', 'noopener,noreferrer');
+            } else {
+              dismissIntro();
+              window.location.hash = link.getAttribute('href');
+            }
+          } else {
+            dismissIntro();
+          }
+        } else {
+          dismissIntro();
+        }
       } else {
         updateActiveCard(i);
       }
@@ -84,22 +102,22 @@
     if (wheelTimeout) return;
     if (e.deltaY > 15) {
       nextCard();
-      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 240);
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 220);
     } else if (e.deltaY < -15) {
       prevCard();
-      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 240);
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 220);
     }
   }, { passive: false });
 
-  // Also support wheel when hovering anywhere in the intro theater
+  // Wheel hovering over theater
   theater.addEventListener('wheel', (e) => {
     if (wheelTimeout) return;
     if (e.deltaY > 20) {
       nextCard();
-      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 240);
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 220);
     } else if (e.deltaY < -20) {
       prevCard();
-      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 240);
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 220);
     }
   }, { passive: true });
 
@@ -125,7 +143,18 @@
     } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
       prevCard();
     } else if (e.key === 'Enter') {
-      dismissIntro();
+      const activePoster = posters[activeIndex];
+      const link = activePoster.querySelector('.wga-vposter-cta');
+      if (link && link.tagName === 'A' && link.href) {
+        if (link.target === '_blank') {
+          window.open(link.href, '_blank', 'noopener,noreferrer');
+        } else {
+          dismissIntro();
+          window.location.hash = link.getAttribute('href');
+        }
+      } else {
+        dismissIntro();
+      }
     } else if (e.key === 'Escape') {
       dismissIntro();
     }
@@ -148,6 +177,6 @@
   requestAnimationFrame(() => {
     setTimeout(() => {
       updateActiveCard(0);
-    }, 80);
+    }, 60);
   });
 })();
