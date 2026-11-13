@@ -35,7 +35,7 @@
     if (isTransitioning) return;
     const stageH = stage.offsetHeight || window.innerHeight;
     const baseH = posters[0] ? posters[0].offsetHeight : 568;
-    const stepY = (stageH / 2) - 75 + (baseH * 0.55 / 2);
+    const stepY = (stageH / 2) - 105 + (baseH * 0.55 / 2);
 
     for (let i = 0; i < total; i++) {
       const diff = i - currentProgress;
@@ -45,7 +45,7 @@
       const easedFactor = Math.pow(factor, 1.6);
 
       const scale = 0.55 + 0.45 * easedFactor;
-      const opacity = Math.pow(factor, 2.5);
+      const opacity = 0.45 + 0.55 * factor;
 
       const translateY = diff * stepY;
 
