@@ -28,11 +28,36 @@
     // Pure CSS transforms handle centering without DOM reflow layout thrashing
   }
 
-  function updateLayout() {
-    if (isTransitioning) return;
+  function getLayoutMetrics() {
     const stageH = stage.offsetHeight || window.innerHeight;
     const baseH = posters[0] ? posters[0].offsetHeight : 568;
-    const stepY = (stageH / 2) - 105 + (baseH * 0.55 / 2);
+    const baseW = posters[0] ? posters[0].offsetWidth : 410;
+    const compact = window.innerWidth <= 1100;
+
+    if (!compact) {
+      return {
+        activeScale: 1,
+        inactiveScale: 0.55,
+        stepY: (stageH / 2) - 105 + (baseH * 0.55 / 2)
+      };
+    }
+
+    // Keep the card's native proportions and scale the complete object. This
+    // prevents its artwork, tags and footer from reflowing into one another.
+    const horizontalRoom = Math.max(180, window.innerWidth - 32);
+    const verticalRoom = Math.max(180, stageH - 84);
+    const activeScale = Math.min(1, horizontalRoom / baseW, verticalRoom / baseH);
+
+    return {
+      activeScale,
+      inactiveScale: activeScale * 0.55,
+      stepY: Math.max(baseH * activeScale * 0.84 + 34, stageH * 0.72)
+    };
+  }
+
+  function updateLayout() {
+    if (isTransitioning) return;
+    const { activeScale, inactiveScale, stepY } = getLayoutMetrics();
 
     for (let i = 0; i < total; i++) {
       const diff = i - currentProgress;
@@ -41,7 +66,7 @@
       const factor = Math.max(0, 1 - absDiff);
       const easedFactor = Math.pow(factor, 1.6);
 
-      const scale = 0.55 + 0.45 * easedFactor;
+      const scale = inactiveScale + (activeScale - inactiveScale) * easedFactor;
       const opacity = 0.45 + 0.55 * factor;
 
       const translateY = diff * stepY;
@@ -446,15 +471,14 @@
 
       // 2. Individual card expansion & opacity ramp
       // Calculate target resting positions for active card (0) and adjacent card (1)
-      const baseH = posters[0] ? posters[0].offsetHeight : 568;
-      const stepY = (stageH / 2) - 105 + (baseH * 0.55 / 2);
+      const { activeScale, inactiveScale, stepY } = getLayoutMetrics();
 
       posters.forEach((p, i) => {
         const diff = i; // at progress = 0
         const absDiff = Math.abs(diff);
         const factor = Math.max(0, 1 - absDiff);
         const easedFactor = Math.pow(factor, 1.6);
-        const targetScale = 0.55 + 0.45 * easedFactor;
+        const targetScale = inactiveScale + (activeScale - inactiveScale) * easedFactor;
         const targetOpacity = 0.45 + 0.55 * factor;
         const targetTranslateY = diff * stepY;
 
@@ -538,9 +562,9 @@
   window.addEventListener('load', init);
   window.addEventListener('resize', () => {
     measure();
-    if (!isIntroPlaying) {
-      updateLayout();
-    }
+    // Resizing can happen during the entrance animation. Recalculate on the
+    // next paint so the resting layout always matches the current viewport.
+    requestAnimationFrame(updateLayout);
   });
 
   if (document.readyState === 'complete') requestAnimationFrame(init);

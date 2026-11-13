@@ -30,6 +30,86 @@
   .console-key { transition: none !important; }
 }
 
+/* Intro theater: switch from the three-column desktop composition to a
+   single, centered stage before the columns can overlap. The poster keeps its
+   native width; intro-loader.js scales the complete card to fit each screen. */
+@media (max-width: 1100px) {
+  .portfolio-intro-theater .wga-top-nav {
+    flex: 0 0 auto;
+    padding: max(14px, env(safe-area-inset-top)) 18px 10px;
+  }
+
+  .portfolio-intro-theater .wga-main-stage {
+    display: block;
+    min-height: 0;
+    padding: 0 16px 64px;
+    overflow: hidden;
+  }
+
+  .portfolio-intro-theater .wga-left-col,
+  .portfolio-intro-theater .wga-right-col {
+    display: none !important;
+  }
+
+  .portfolio-intro-theater .wga-center-col,
+  .portfolio-intro-theater .wga-vertical-track {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .portfolio-intro-theater .wga-vposter {
+    width: 410px;
+    max-width: none;
+  }
+
+  .portfolio-intro-theater .wga-bottom-bar {
+    min-height: 54px;
+    padding: 10px 16px max(12px, env(safe-area-inset-bottom));
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .92) 42%);
+  }
+}
+
+@media (max-width: 600px) {
+  .portfolio-intro-theater .wga-top-nav {
+    font-size: 11px;
+  }
+
+  .portfolio-intro-theater .wga-nav-links {
+    gap: 12px;
+  }
+
+  .portfolio-intro-theater .wga-filter-badge {
+    display: none;
+  }
+
+  .portfolio-intro-theater .wga-main-stage {
+    padding-inline: 8px;
+  }
+
+  .portfolio-intro-theater .wga-scroll-hint {
+    width: 100%;
+    justify-content: center;
+    font-size: 9px;
+  }
+}
+
+@media (max-height: 560px) and (max-width: 1100px) {
+  .portfolio-intro-theater .wga-top-nav {
+    padding-top: 8px;
+    padding-bottom: 4px;
+  }
+
+  .portfolio-intro-theater .wga-main-stage {
+    padding-bottom: 42px;
+  }
+
+  .portfolio-intro-theater .wga-bottom-bar {
+    min-height: 42px;
+    padding-block: 6px;
+  }
+}
+
 /* Full-stack proof panel: kept in the always-loaded stability sheet. */
 .fullstack-status {
   margin: 0 3vw 42px;
