@@ -109,7 +109,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  padding: 40px 0;
+  padding: 50px 0 36px;
 }
 
 .wga-name-brand {
@@ -133,10 +133,11 @@
 
 .wga-left-bio {
   font-size: 13px;
-  line-height: 1.45;
+  line-height: 1.5;
   color: rgba(255, 255, 255, 0.7);
   max-width: 320px;
   margin: 0;
+  margin-bottom: 38px;
   font-weight: 500;
 }
 
@@ -321,7 +322,7 @@
   right: 0;
   z-index: 50;
   width: 100%;
-  padding: 18px 4vw 24px;
+  padding: 14px 4vw 20px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
