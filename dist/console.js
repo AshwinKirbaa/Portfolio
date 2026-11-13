@@ -82,6 +82,5 @@
 
     const label = key.dataset.consoleLabel || key.textContent.trim();
     key.setAttribute('aria-label', label);
-    key.title = label;
   });
 })();

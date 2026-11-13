@@ -4,10 +4,19 @@
   transform: translate3d(0, 0, 0) !important;
 }
 
-.console-key:hover,
+.console-key:hover {
+  filter: none !important;
+  outline: none !important;
+}
+
+/* The depth plate can composite above the colored key face while hovering in
+   some browsers. Hide it only for hover so each key keeps its original face. */
+.console-key:hover::before {
+  opacity: 0 !important;
+}
+
 .console-key:focus-visible {
-  filter: brightness(1.1) saturate(1.04);
-  outline: 2px solid rgba(255, 255, 255, 0.72);
+  outline: 2px solid rgba(104, 255, 123, .9) !important;
   outline-offset: 3px;
 }
 
