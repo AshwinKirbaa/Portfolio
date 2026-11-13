@@ -90,7 +90,6 @@
 
 /* Responsive recruiter-first improvements. */
 html, body { max-width: 100%; overflow-x: clip; }
-.menu-cv-link { display: block; width: fit-content; margin: 18px 0; padding-bottom: 4px; border-bottom: 1px solid currentColor; }
 
 .fullstack-status { display: block; padding: 0; background: #111; }
 .fullstack-status summary { list-style: none; min-height: 66px; padding: 14px 18px; display: grid; grid-template-columns: 12px 1fr auto; align-items: center; gap: 14px; cursor: pointer; }

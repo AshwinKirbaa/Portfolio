@@ -5,6 +5,16 @@
   if (!consolePanel || !message) return;
 
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // The HIRE ME key opens the CV in the browser. Visitors can review it there
+  // or use the browser's built-in download control.
+  const hireKey = document.querySelector('.key-hire');
+  if (hireKey) {
+    hireKey.href = 'assets/ashwin-kirbaa-cv.pdf';
+    hireKey.target = '_blank';
+    hireKey.rel = 'noreferrer';
+    hireKey.dataset.consoleLabel = 'VIEW OR DOWNLOAD CV';
+  }
   
   // Interactive 3D Perspective Tilt Tracking
   let targetRx = 0;
