@@ -1,142 +1,123 @@
 (() => {
   const theater = document.querySelector('.portfolio-intro-theater');
-  const stage = document.querySelector('.intro-carousel-stage');
-  const track = document.querySelector('.intro-carousel-track');
-  const cards = Array.from(document.querySelectorAll('.intro-carousel-card'));
-  const dots = Array.from(document.querySelectorAll('.carousel-dot'));
-  const prevBtn = document.querySelector('.carousel-nav-btn.prev');
-  const nextBtn = document.querySelector('.carousel-nav-btn.next');
-  const enterTriggers = document.querySelectorAll('.enter-portfolio-trigger');
+  const containerOuter = document.querySelector('.wga-container-outer');
+  const containerInner = document.querySelector('.wga-container-inner');
+  const cards = Array.from(document.querySelectorAll('.wga-poster-wrap'));
+  const activeTitle = document.querySelector('.wga-active-title');
+  const enterBtns = document.querySelectorAll('.enter-portfolio-trigger');
 
-  if (!theater || cards.length === 0) return;
+  if (!theater || !containerInner || cards.length === 0) return;
 
-  // Lock scrolling during intro
+  // Lock body scroll while in intro
   document.body.style.overflow = 'hidden';
 
-  let currentIndex = 0;
-  const totalCards = cards.length;
+  let activeIndex = 0;
+  const titles = [
+    '01 // ASHWIN KIRBAA — PORTFOLIO',
+    '02 // GITHUB REPOSITORIES & BUILDS',
+    '03 // LINKEDIN PROFESSIONAL NETWORK',
+    '04 // GOOGLE CLOUD & AI SKILLS',
+    '05 // TWINEVAL AI — LIVE DEMO'
+  ];
 
-  function updateCarousel() {
-    cards.forEach((card, i) => {
-      // Calculate offset relative to currentIndex (-2, -1, 0, 1, 2)
-      let offset = i - currentIndex;
-
-      const absOffset = Math.abs(offset);
-      const sign = Math.sign(offset);
-
-      let x = offset * 310;
-      let z = -absOffset * 160;
-      let rotY = -sign * Math.min(32, absOffset * 24);
-      let scale = Math.max(0.65, 1 - absOffset * 0.16);
-      let opacity = Math.max(0, 1 - absOffset * 0.35);
-      let filter = absOffset === 0 ? 'blur(0px) brightness(1)' : `blur(${absOffset * 2}px) brightness(${Math.max(0.35, 1 - absOffset * 0.28)})`;
-
-      if (absOffset > 2) {
-        opacity = 0;
-        card.style.pointerEvents = 'none';
-      } else {
-        card.style.pointerEvents = 'auto';
-      }
-
-      card.classList.toggle('is-active', absOffset === 0);
-      card.style.zIndex = 20 - absOffset;
-      card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) scale(${scale})`;
-      card.style.opacity = opacity;
-      card.style.filter = filter;
-    });
-
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentIndex);
-    });
-  }
-
-  function goTo(index) {
+  function setActiveCard(index, smoothScroll = true) {
     if (index < 0) index = 0;
-    if (index >= totalCards) index = totalCards - 1;
-    currentIndex = index;
-    updateCarousel();
-  }
+    if (index >= cards.length) index = cards.length - 1;
+    activeIndex = index;
 
-  function next() {
-    if (currentIndex < totalCards - 1) {
-      goTo(currentIndex + 1);
-    } else {
-      goTo(0);
-    }
-  }
-
-  function prev() {
-    if (currentIndex > 0) {
-      goTo(currentIndex - 1);
-    } else {
-      goTo(totalCards - 1);
-    }
-  }
-
-  if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
-  if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); next(); });
-
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', (e) => {
-      e.stopPropagation();
-      goTo(i);
+    cards.forEach((card, i) => {
+      card.classList.toggle('is-active', i === activeIndex);
     });
+
+    if (activeTitle) {
+      activeTitle.style.transform = 'translateY(-100%)';
+      activeTitle.style.opacity = '0';
+      setTimeout(() => {
+        activeTitle.textContent = titles[activeIndex] || '';
+        activeTitle.style.transform = 'translateY(100%)';
+        requestAnimationFrame(() => {
+          activeTitle.style.transform = 'translateY(0)';
+          activeTitle.style.opacity = '1';
+        });
+      }, 180);
+    }
+
+    // Center the active card in containerOuter
+    if (smoothScroll && containerOuter) {
+      const card = cards[activeIndex];
+      const cardLeft = card.offsetLeft;
+      const cardWidth = card.offsetWidth;
+      const outerWidth = containerOuter.offsetWidth;
+      const targetScroll = cardLeft - (outerWidth / 2) + (cardWidth / 2);
+
+      // Shift containerInner
+      containerInner.style.transform = `translateX(${-targetScroll}px)`;
+    }
+  }
+
+  // Exact We-Go-Again Entrance Sequence:
+  // 1. Initial black state: containerInner is translateX(100vw), cards scale(0.2)
+  // 2. Trigger animate-run: containerInner sweeps in from right to centered first card, cards scale from 0.2 to 1
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      containerInner.classList.add('animate-run');
+      cards.forEach((card, i) => {
+        // slight cascade stagger
+        setTimeout(() => {
+          card.classList.add('animate-run');
+        }, i * 70);
+      });
+
+      // Align and center first card after entry sweep
+      setTimeout(() => {
+        setActiveCard(0, true);
+      }, 1500);
+    }, 100);
   });
 
-  // Clicking an adjacent card shifts the carousel to focus on it
+  // Card click to center / focus
   cards.forEach((card, i) => {
     card.addEventListener('click', (e) => {
       if (e.target.closest('a') || e.target.closest('.enter-portfolio-trigger')) return;
-      if (i !== currentIndex) {
-        goTo(i);
-      }
+      setActiveCard(i, true);
     });
   });
 
-  // Mouse wheel scroll to cycle cards horizontally like we-go-again
+  // Wheel scrolling across cards
   let wheelTimeout = null;
-  stage.addEventListener('wheel', (e) => {
+  containerOuter.addEventListener('wheel', (e) => {
     e.preventDefault();
     if (wheelTimeout) return;
     if (e.deltaY > 15 || e.deltaX > 15) {
-      next();
+      setActiveCard(activeIndex + 1, true);
       wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 260);
     } else if (e.deltaY < -15 || e.deltaX < -15) {
-      prev();
+      setActiveCard(activeIndex - 1, true);
       wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 260);
     }
   }, { passive: false });
 
-  // Touch & Drag Support
+  // Touch Drag
   let startX = 0;
-  let isDragging = false;
-  stage.addEventListener('mousedown', (e) => {
-    startX = e.clientX;
-    isDragging = true;
-  });
-  window.addEventListener('mouseup', (e) => {
-    if (!isDragging) return;
-    isDragging = false;
-    const diff = e.clientX - startX;
-    if (diff > 50) prev();
-    else if (diff < -50) next();
-  });
-  stage.addEventListener('touchstart', (e) => {
+  containerOuter.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
   }, { passive: true });
-  stage.addEventListener('touchend', (e) => {
+  containerOuter.addEventListener('touchend', (e) => {
     const diff = e.changedTouches[0].clientX - startX;
-    if (diff > 40) prev();
-    else if (diff < -40) next();
+    if (diff > 45) {
+      setActiveCard(activeIndex - 1, true);
+    } else if (diff < -45) {
+      setActiveCard(activeIndex + 1, true);
+    }
   }, { passive: true });
 
   // Keyboard navigation
   window.addEventListener('keydown', (e) => {
     if (theater.classList.contains('dismissed')) return;
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      next();
+      setActiveCard(activeIndex + 1, true);
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      prev();
+      setActiveCard(activeIndex - 1, true);
     } else if (e.key === 'Escape') {
       dismissIntro();
     }
@@ -148,13 +129,10 @@
     window.dispatchEvent(new Event('resize'));
   }
 
-  enterTriggers.forEach((btn) => {
+  enterBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       dismissIntro();
     });
   });
-
-  // Initial setup: start at card 0 (Portfolio)
-  updateCarousel();
 })();

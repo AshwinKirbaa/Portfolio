@@ -1,4 +1,14 @@
-/* --- WE-GO-AGAIN CAROUSEL DECK & FULL INTRO EXPERIENCE --- */
+/* ==========================================================================
+   WE-GO-AGAIN EXACT REPLICA: LOADING & HORIZONTAL ENTRANCE ANIMATION
+   Matches we-go-again.com:
+   - Initial total black viewport
+   - Cards scaled down to scale(0.2)
+   - containerInner translation from translateX(containerOuterSize) -> none
+   - duration 1.4s with ease-out-2 (cubic-bezier(0.22, 1, 0.36, 1))
+   - Cards scale from scale(0.2) to scale(1.0)
+   - Left-to-right carousel sliding smoothly and centering active first card
+   - Active titles reveal with mask sliding
+   ========================================================================== */
 
 .portfolio-intro-theater {
   position: fixed;
@@ -14,8 +24,8 @@
   -webkit-user-select: none;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              visibility 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0.75s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .portfolio-intro-theater.dismissed {
@@ -24,439 +34,306 @@
   pointer-events: none !important;
 }
 
-/* Background grid & radial spotlight */
+/* Subtle background vignette */
 .intro-theater-backdrop {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 45%, rgba(237, 59, 36, 0.12) 0%, rgba(5, 5, 5, 0.98) 75%);
+  background: radial-gradient(circle at 50% 50%, rgba(20, 20, 20, 0.8) 0%, rgba(0, 0, 0, 1) 85%);
   pointer-events: none;
 }
 
-.intro-scanlines {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255, 255, 255, 0.02) 4px);
-  pointer-events: none;
-}
-
-/* Header bar inside intro */
-.intro-topbar {
+/* We-Go-Again Minimal Header */
+.wga-header {
   width: 100%;
-  padding: 24px 3vw 0;
+  padding: 24px 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  color: #a1a1aa;
-  z-index: 10;
+  font-family: var(--sans);
+  z-index: 20;
 }
 
-.intro-topbar .brand {
+.wga-logo {
+  font-size: 13px;
   font-weight: 700;
-  color: #fff;
+  letter-spacing: -0.02em;
+  color: #ffffff;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.intro-topbar .brand span {
+.wga-logo span {
   color: #ed3b24;
 }
 
-.intro-topbar .instructions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 10px;
+.wga-nav-hint {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.5);
 }
 
-.intro-topbar .instructions kbd {
-  background: #1c1917;
-  border: 1px solid #44403c;
-  border-radius: 4px;
-  padding: 2px 6px;
-  color: #fff;
-}
-
-/* The Horizontal 3D Carousel Stage */
-.intro-carousel-stage {
+/* The Horizontal Viewport Container (containerOuter) */
+.wga-container-outer {
   position: relative;
   width: 100vw;
-  height: 580px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: 1400px;
-  perspective-origin: 50% 50%;
-  cursor: grab;
-  touch-action: pan-y;
-}
-
-.intro-carousel-stage:active {
-  cursor: grabbing;
-}
-
-/* The Track that slides cards horizontally */
-.intro-carousel-track {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform-style: preserve-3d;
-}
-
-/* Individual Card Wrapper */
-.intro-carousel-card {
-  position: absolute;
-  width: 320px;
-  height: 480px;
-  transform-style: preserve-3d;
-  will-change: transform, opacity, filter;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: pointer;
-}
-
-/* Interactive Card Base */
-.deck-card {
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
-  background: #131110;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  height: 540px;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+}
+
+/* The Animated Sliding Rail (containerInner)
+   Initial state: translateX(100vw). When loaded: transitions to none */
+.wga-container-inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 10vw;
+  will-change: transform;
+  transform: translateX(100vw);
+  transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wga-container-inner.animate-run {
+  transform: translateX(0);
+}
+
+/* Individual Poster / Card Container */
+.wga-poster-wrap {
+  flex: 0 0 auto;
+  width: 300px;
+  height: 440px;
   position: relative;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 16px;
+  background: #090909;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+  cursor: pointer;
+  will-change: transform, opacity;
+  /* We-Go-Again initial scale: scale(0.2) -> scale(1) */
+  transform: scale(0.2);
+  opacity: 0.1;
+  transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 1.5s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
 }
 
-.intro-carousel-card.is-active .deck-card {
-  border-color: rgba(237, 59, 36, 0.6);
-  box-shadow: 0 28px 60px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(237, 59, 36, 0.25);
+.wga-poster-wrap.animate-run {
+  transform: scale(1);
+  opacity: 0.75;
 }
 
-/* Card Header */
-.deck-card-header {
-  padding: 14px 18px;
+.wga-poster-wrap.is-active {
+  opacity: 1 !important;
+  border-color: rgba(237, 59, 36, 0.7);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(237, 59, 36, 0.28);
+}
+
+.wga-poster-wrap:hover {
+  opacity: 1;
+}
+
+/* Inner Card Structure */
+.wga-card-top {
+  padding: 12px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: 0.08em;
-  color: #a8a29e;
+  color: #71717a;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-.deck-card-header .badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #22c55e;
+.wga-card-top .channel-tag {
+  color: #fff;
+  font-weight: 500;
 }
 
-.deck-card-header .badge i {
+.wga-card-top .status-dot {
+  display: inline-block;
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: #22c55e;
-  box-shadow: 0 0 8px #22c55e;
+  box-shadow: 0 0 6px #22c55e;
 }
 
-/* Card Visual Body */
-.deck-card-visual {
-  flex: 1;
-  position: relative;
+.wga-card-media {
+  width: 100%;
+  height: 310px;
   overflow: hidden;
-  background: #0c0a09;
+  position: relative;
+  background: #111;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.deck-card-visual img {
+.wga-card-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* Specialized Card Types */
-.deck-card-github {
-  background: radial-gradient(circle at 50% 35%, #24292e 0%, #0d1117 80%);
+/* Custom Card Layouts */
+.wga-custom-content {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 24px;
   text-align: center;
-  gap: 16px;
-  width: 100%;
-  height: 100%;
+  gap: 14px;
 }
 
-.deck-card-github svg {
-  fill: #f0f6fc;
+.wga-card-media.github-bg {
+  background: radial-gradient(circle at 50% 40%, #1f2428 0%, #0d1117 80%);
 }
 
-.deck-card-github h4 {
-  font-family: var(--sans);
-  font-size: 22px;
-  font-weight: 700;
-  color: #f0f6fc;
-  margin: 0;
+.wga-card-media.linkedin-bg {
+  background: radial-gradient(circle at 50% 40%, #0077b522 0%, #081b29 80%);
 }
 
-.deck-card-github p {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: #8b949e;
-  line-height: 1.5;
-  margin: 0;
+.wga-card-media.skills-bg {
+  background: radial-gradient(circle at 50% 40%, #4285f418 0%, #0b0e14 80%);
 }
 
-.deck-card-github .repo-tags {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px;
-}
-
-.deck-card-github .repo-tags span {
-  font-family: var(--mono);
-  font-size: 9px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 3px 8px;
-  border-radius: 12px;
-  color: #c9d1d9;
-}
-
-/* LinkedIn Card */
-.deck-card-linkedin {
-  background: radial-gradient(circle at 50% 35%, #0077b533 0%, #081b29 80%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
-  text-align: center;
-  gap: 16px;
-  width: 100%;
-  height: 100%;
-}
-
-.deck-card-linkedin svg {
-  fill: #0a66c2;
-}
-
-.deck-card-linkedin h4 {
-  font-family: var(--sans);
-  font-size: 22px;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0;
-}
-
-.deck-card-linkedin p {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: #94a3b8;
-  line-height: 1.5;
-  margin: 0;
-}
-
-/* Google Skills Card */
-.deck-card-skills {
-  background: radial-gradient(circle at 50% 35%, #4285f422 0%, #0a0e17 80%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
-  text-align: center;
-  gap: 16px;
-  width: 100%;
-  height: 100%;
-}
-
-.deck-card-skills .google-logo {
-  display: flex;
-  gap: 6px;
-  font-family: var(--sans);
-  font-weight: 700;
-  font-size: 28px;
-}
-
-.deck-card-skills .google-logo span:nth-child(1) { color: #4285F4; }
-.deck-card-skills .google-logo span:nth-child(2) { color: #EA4335; }
-.deck-card-skills .google-logo span:nth-child(3) { color: #FBBC05; }
-.deck-card-skills .google-logo span:nth-child(4) { color: #4285F4; }
-.deck-card-skills .google-logo span:nth-child(5) { color: #34A853; }
-.deck-card-skills .google-logo span:nth-child(6) { color: #EA4335; }
-
-.deck-card-skills h4 {
+.wga-custom-content h4 {
   font-family: var(--sans);
   font-size: 20px;
   font-weight: 700;
-  color: #ffffff;
+  color: #fff;
   margin: 0;
 }
 
-.deck-card-skills p {
+.wga-custom-content p {
   font-family: var(--mono);
   font-size: 11px;
-  color: #94a3b8;
+  color: #a1a1aa;
   line-height: 1.5;
   margin: 0;
 }
 
-.deck-card-skills .skill-badges {
+.wga-pill-row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 6px;
+  justify-content: center;
 }
 
-.deck-card-skills .skill-badges span {
+.wga-pill-row span {
   font-family: var(--mono);
   font-size: 9px;
-  background: rgba(66, 133, 244, 0.15);
-  border: 1px solid rgba(66, 133, 244, 0.35);
   padding: 3px 8px;
   border-radius: 12px;
-  color: #93c5fd;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e4e4e7;
 }
 
-/* Card Footer / Action Button */
-.deck-card-footer {
-  padding: 14px 18px;
+/* Card Bottom Info */
+.wga-card-bottom {
+  padding: 14px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.4);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.5);
 }
 
-.deck-card-footer .card-title-group h5 {
+.wga-card-bottom .card-info h5 {
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #ffffff;
   margin: 0;
 }
 
-.deck-card-footer .card-title-group span {
+.wga-card-bottom .card-info span {
   font-family: var(--mono);
-  font-size: 10px;
-  color: #78716c;
+  font-size: 9px;
+  color: #71717a;
 }
 
-.deck-card-action-btn {
+.wga-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
+  gap: 4px;
+  padding: 6px 12px;
   border-radius: 9999px;
   background: #ed3b24;
   color: #171514;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-decoration: none;
+  cursor: pointer;
+  border: none;
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.deck-card-action-btn:hover {
-  background: #ff5733;
+.wga-btn:hover {
+  background: #ff5538;
   transform: scale(1.05);
 }
 
-/* Carousel Control Dock at Bottom */
-.intro-carousel-dock {
+/* We-Go-Again Bottom Dock with Active Title & Enter Button */
+.wga-bottom-dock {
   width: 100%;
-  padding: 0 3vw 36px;
+  padding: 0 32px 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  z-index: 10;
+  z-index: 20;
 }
 
-/* Dots and Nav */
-.carousel-nav-row {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.carousel-nav-btn {
-  width: 38px;
+.wga-active-title-mask {
   height: 38px;
-  border-radius: 50%;
-  background: #1c1917;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #eee9df;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.carousel-nav-btn:hover {
-  background: #ed3b24;
-  border-color: #ed3b24;
-  color: #171514;
-  transform: scale(1.08);
-}
-
-.carousel-dots {
+  overflow: hidden;
+  position: relative;
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
-.carousel-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-  transition: all 0.25s ease;
+.wga-active-title {
+  font-family: var(--sans);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  text-transform: uppercase;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
 }
 
-.carousel-dot.active {
-  width: 24px;
-  border-radius: 6px;
-  background: #ed3b24;
-  box-shadow: 0 0 10px rgba(237, 59, 36, 0.7);
-}
-
-.enter-portfolio-btn {
+.wga-enter-btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 10px 24px;
   border-radius: 9999px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #eee9df;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.1em;
-  color: #eee9df;
   cursor: pointer;
   transition: all 0.25s ease;
 }
 
-.enter-portfolio-btn:hover {
+.wga-enter-btn:hover {
   background: #ed3b24;
   border-color: #ed3b24;
   color: #171514;
@@ -465,14 +342,20 @@
 }
 
 @media (max-width: 768px) {
-  .intro-carousel-stage {
-    height: 500px;
+  .wga-container-outer {
+    height: 460px;
   }
-  .intro-carousel-card {
-    width: 280px;
-    height: 420px;
+  .wga-poster-wrap {
+    width: 250px;
+    height: 380px;
   }
-  .intro-topbar .instructions {
+  .wga-card-media {
+    height: 260px;
+  }
+  .wga-active-title {
+    font-size: 20px;
+  }
+  .wga-nav-hint {
     display: none;
   }
 }
