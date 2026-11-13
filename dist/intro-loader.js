@@ -13,88 +13,86 @@
 
   const total = posters.length;
 
-  // Pre-calculate positions once to eliminate expensive offsetTop DOM layout thrashing
-  let posterData = [];
+  let currentProgress = 0; // Floating index: 0, 1, 2, ...
+  let targetProgress = 0;
+  let activeIndex = 0;
+  let isAnimating = false;
+  let isDragging = false;
+  let startY = 0;
+  let dragStartProgress = 0;
+  let snapTimeout = null;
+
   function measure() {
-    const stageH = stage.offsetHeight || window.innerHeight;
-    posterData = posters.map((p) => {
-      const top = p.offsetTop;
-      const h = p.offsetHeight;
-      const target = (stageH / 2) - top - (h / 2);
-      return { top, h, target, center: top + (h / 2) };
+    // Center posters around origin (50%, 50%)
+    posters.forEach((p) => {
+      p.style.marginTop = (-p.offsetHeight / 2) + 'px';
+      p.style.marginLeft = (-p.offsetWidth / 2) + 'px';
     });
   }
 
-  let currentY = 0;
-  let targetY = 0;
-  let isAnimating = false;
-  let activeIndex = 0;
-
-  function getTargetForIndex(index) {
-    if (!posterData[index]) return 0;
-    return posterData[index].target;
-  }
-
-  function getClosestIndex(y) {
+  // Exact math from we-go-again.com reference:
+  // Active traversed card is big (scale 1.0, 100% opacity, crisp in center)
+  // Non-active cards are small (scale 0.55, 35% opacity), top and bottom cards peek by ~75px into view
+  function updateLayout() {
     const stageH = stage.offsetHeight || window.innerHeight;
-    const stageCenter = (stageH / 2) - y;
-    let closest = 0;
-    let minDist = Infinity;
-    for (let i = 0; i < posterData.length; i++) {
-      const dist = Math.abs(posterData[i].center - stageCenter);
-      if (dist < minDist) {
-        minDist = dist;
-        closest = i;
-      }
-    }
-    return closest;
-  }
-
-  // Continuous fluid expansion & contraction on scroll (Matches we-go-again.com)
-  function updatePosterTransforms() {
-    const stageH = stage.offsetHeight || window.innerHeight;
-    const stageCenter = (stageH / 2) - currentY;
-    const maxDistance = stageH * 0.58;
+    
+    // Calculate vertical step so diff = ±1 peeks ~75px into the stage edge
+    // Card height is ~568px, at scale 0.55 rendered height is ~312px.
+    // Half-height of small card is ~156px.
+    // Distance from stage center to stage top/bottom is stageH / 2.
+    // We want the small card edge to peek ~75px inside the viewport:
+    // stepY = (stageH / 2) - 75 + (568 * 0.55 / 2)
+    const baseH = posters[0] ? posters[0].offsetHeight : 568;
+    const stepY = (stageH / 2) - 75 + (baseH * 0.55 / 2);
 
     for (let i = 0; i < total; i++) {
-      const data = posterData[i];
-      if (!data) continue;
-      const dist = Math.abs(data.center - stageCenter);
-      const proximity = Math.max(0, 1 - Math.min(1, dist / maxDistance));
-      const eased = Math.pow(proximity, 1.8);
+      const diff = i - currentProgress;
+      const absDiff = Math.abs(diff);
 
-      const scale = 0.70 + (0.30 * eased);
-      const opacity = 0.22 + (0.78 * eased);
-      const poster = posters[i];
+      // Traversed card expansion curve:
+      // factor = 1 at center, drops to 0 when absDiff >= 1
+      const factor = Math.max(0, 1 - absDiff);
+      const easedFactor = Math.pow(factor, 1.6);
 
-      poster.style.transform = 'scale(' + scale.toFixed(4) + ')';
-      poster.style.opacity = opacity.toFixed(4);
+      // Traversed card is scale 1.0, others shrink down to 0.55
+      const scale = 0.55 + 0.45 * easedFactor;
+      // Opacity: traversed card is 1.0, others are 0.35
+      const opacity = 0.32 + 0.68 * factor;
+
+      // Displace along Y axis
+      const translateY = diff * stepY;
+
+      const p = posters[i];
+      p.style.transform = 'translate3d(0, ' + translateY.toFixed(1) + 'px, 0) scale(' + scale.toFixed(4) + ')';
+      p.style.opacity = opacity.toFixed(4);
+      p.style.zIndex = Math.round(30 - Math.min(25, absDiff * 8));
+
+      // Pointer events: only center card or close cards are clickable
+      p.style.pointerEvents = absDiff < 0.6 ? 'auto' : 'auto';
     }
-  }
 
-  // 60-120fps hardware-accelerated render loop
-  function render() {
-    currentY += (targetY - currentY) * 0.14;
-
-    track.style.transform = 'translate3d(0, ' + currentY.toFixed(1) + 'px, 0)';
-
-    updatePosterTransforms();
-
-    const closestIndex = getClosestIndex(currentY);
-    if (closestIndex !== activeIndex) {
-      activeIndex = closestIndex;
+    // Sync active title item
+    const closest = Math.round(currentProgress);
+    const clampedClosest = Math.max(0, Math.min(total - 1, closest));
+    if (clampedClosest !== activeIndex) {
+      activeIndex = clampedClosest;
       for (let i = 0; i < total; i++) {
         titleItems[i].classList.toggle('is-active', i === activeIndex);
         posters[i].classList.toggle('is-active', i === activeIndex);
       }
     }
+  }
 
-    if (Math.abs(targetY - currentY) > 0.2 || isDragging) {
+  // Smooth 60-120fps hardware-accelerated render loop
+  function render() {
+    currentProgress += (targetProgress - currentProgress) * 0.14;
+    updateLayout();
+
+    if (Math.abs(targetProgress - currentProgress) > 0.001 || isDragging) {
       requestAnimationFrame(render);
     } else {
-      currentY = targetY;
-      track.style.transform = 'translate3d(0, ' + Math.round(currentY) + 'px, 0)';
-      updatePosterTransforms();
+      currentProgress = targetProgress;
+      updateLayout();
       isAnimating = false;
     }
   }
@@ -106,11 +104,13 @@
     }
   }
 
-  function scrollToIndex(index) {
-    if (index < 0) index = 0;
-    if (index >= total) index = total - 1;
-    targetY = getTargetForIndex(index);
+  function scrollToProgress(p) {
+    targetProgress = Math.max(0, Math.min(total - 1, p));
     startAnimation();
+  }
+
+  function scrollToIndex(index) {
+    scrollToProgress(index);
   }
 
   function nextCard() {
@@ -121,13 +121,70 @@
     scrollToIndex(activeIndex - 1);
   }
 
-  titleItems.forEach((item, i) => {
-    item.addEventListener('click', (e) => {
-      e.stopPropagation();
-      scrollToIndex(i);
-    });
+  // Wheel interaction: silky smooth traversal with natural snap
+  function handleWheel(e) {
+    e.preventDefault();
+    const delta = e.deltaY;
+    targetProgress += (delta / 450);
+    targetProgress = Math.max(-0.2, Math.min(total - 0.8, targetProgress));
+
+    startAnimation();
+
+    clearTimeout(snapTimeout);
+    snapTimeout = setTimeout(() => {
+      const closest = Math.round(targetProgress);
+      scrollToIndex(closest);
+    }, 140);
+  }
+
+  stage.addEventListener('wheel', handleWheel, { passive: false });
+  theater.addEventListener('wheel', handleWheel, { passive: false });
+
+  // Touch & Drag Support
+  stage.addEventListener('mousedown', (e) => {
+    startY = e.clientY;
+    dragStartProgress = currentProgress;
+    isDragging = true;
   });
 
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const diffY = e.clientY - startY;
+    const stageH = stage.offsetHeight || window.innerHeight;
+    targetProgress = dragStartProgress - (diffY / (stageH * 0.45));
+    targetProgress = Math.max(-0.2, Math.min(total - 0.8, targetProgress));
+    startAnimation();
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    const closest = Math.round(targetProgress);
+    scrollToIndex(closest);
+  });
+
+  stage.addEventListener('touchstart', (e) => {
+    startY = e.touches[0].clientY;
+    dragStartProgress = currentProgress;
+    isDragging = true;
+  }, { passive: true });
+
+  stage.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const diffY = e.touches[0].clientY - startY;
+    const stageH = stage.offsetHeight || window.innerHeight;
+    targetProgress = dragStartProgress - (diffY / (stageH * 0.45));
+    targetProgress = Math.max(-0.2, Math.min(total - 0.8, targetProgress));
+    startAnimation();
+  }, { passive: true });
+
+  stage.addEventListener('touchend', () => {
+    isDragging = false;
+    const closest = Math.round(targetProgress);
+    scrollToIndex(closest);
+  }, { passive: true });
+
+  // Click on card: if active card clicked, trigger its action; if inactive clicked, traverse to it!
   posters.forEach((poster, i) => {
     poster.addEventListener('click', (e) => {
       if (e.target.closest('a') || e.target.closest('button')) return;
@@ -154,72 +211,13 @@
     });
   });
 
-  // Natural inertia wheel handler with rubber-band boundaries
-  let snapTimeout = null;
-  function handleWheel(e) {
-    e.preventDefault();
-    const delta = e.deltaY;
-    targetY -= delta * 0.85;
-
-    const minY = getTargetForIndex(total - 1) - 40;
-    const maxY = getTargetForIndex(0) + 40;
-    targetY = Math.max(minY, Math.min(maxY, targetY));
-
-    startAnimation();
-
-    clearTimeout(snapTimeout);
-    snapTimeout = setTimeout(() => {
-      const closest = getClosestIndex(targetY);
-      scrollToIndex(closest);
-    }, 120);
-  }
-
-  stage.addEventListener('wheel', handleWheel, { passive: false });
-  theater.addEventListener('wheel', handleWheel, { passive: false });
-
-  // Touch & Drag Support
-  let startY = 0;
-  let dragStartY = 0;
-  let isDragging = false;
-
-  stage.addEventListener('mousedown', (e) => {
-    startY = e.clientY;
-    dragStartY = targetY;
-    isDragging = true;
+  // Right column click to navigate
+  titleItems.forEach((item, i) => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      scrollToIndex(i);
+    });
   });
-
-  window.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    const diff = e.clientY - startY;
-    targetY = dragStartY + diff;
-    startAnimation();
-  });
-
-  window.addEventListener('mouseup', () => {
-    if (!isDragging) return;
-    isDragging = false;
-    const closest = getClosestIndex(targetY);
-    scrollToIndex(closest);
-  });
-
-  stage.addEventListener('touchstart', (e) => {
-    startY = e.touches[0].clientY;
-    dragStartY = targetY;
-    isDragging = true;
-  }, { passive: true });
-
-  stage.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    const diff = e.touches[0].clientY - startY;
-    targetY = dragStartY + diff;
-    startAnimation();
-  }, { passive: true });
-
-  stage.addEventListener('touchend', () => {
-    isDragging = false;
-    const closest = getClosestIndex(targetY);
-    scrollToIndex(closest);
-  }, { passive: true });
 
   // Keyboard navigation
   window.addEventListener('keydown', (e) => {
@@ -261,22 +259,22 @@
 
   function init() {
     measure();
-    currentY = getTargetForIndex(0);
-    targetY = currentY;
-    track.style.transform = `translate3d(0, ${Math.round(currentY)}px, 0)`;
+    currentProgress = 0;
+    targetProgress = 0;
+    activeIndex = 0;
+    updateLayout();
     posters.forEach((p, i) => p.classList.toggle('is-active', i === 0));
-    updatePosterTransforms();
     titleItems.forEach((t, i) => t.classList.toggle('is-active', i === 0));
   }
 
   window.addEventListener('load', init);
   window.addEventListener('resize', () => {
     measure();
-    scrollToIndex(activeIndex);
+    updateLayout();
   });
 
   requestAnimationFrame(() => {
     init();
-    setTimeout(init, 50);
+    setTimeout(init, 60);
   });
 })();
