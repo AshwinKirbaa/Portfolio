@@ -5,6 +5,7 @@
   const posters = Array.from(document.querySelectorAll('.wga-vposter'));
   const titleItems = Array.from(document.querySelectorAll('.wga-title-item'));
   const enterBtns = document.querySelectorAll('.enter-portfolio-trigger');
+  const heroCard = document.querySelector('.hero-card');
 
   if (!theater || !track || posters.length === 0) return;
 
@@ -18,30 +19,21 @@
   let activeIndex = 0;
   let isAnimating = false;
   let isDragging = false;
+  let isTransitioning = false;
   let startY = 0;
   let dragStartProgress = 0;
   let snapTimeout = null;
 
   function measure() {
-    // Center posters around origin (50%, 50%)
     posters.forEach((p) => {
       p.style.marginTop = (-p.offsetHeight / 2) + 'px';
       p.style.marginLeft = (-p.offsetWidth / 2) + 'px';
     });
   }
 
-  // Exact math from we-go-again.com reference:
-  // Active traversed card is big (scale 1.0, 100% opacity, crisp in center)
-  // Non-active cards are small (scale 0.55, 35% opacity), top and bottom cards peek by ~75px into view
   function updateLayout() {
+    if (isTransitioning) return;
     const stageH = stage.offsetHeight || window.innerHeight;
-    
-    // Calculate vertical step so diff = ±1 peeks ~75px into the stage edge
-    // Card height is ~568px, at scale 0.55 rendered height is ~312px.
-    // Half-height of small card is ~156px.
-    // Distance from stage center to stage top/bottom is stageH / 2.
-    // We want the small card edge to peek ~75px inside the viewport:
-    // stepY = (stageH / 2) - 75 + (568 * 0.55 / 2)
     const baseH = posters[0] ? posters[0].offsetHeight : 568;
     const stepY = (stageH / 2) - 75 + (baseH * 0.55 / 2);
 
@@ -49,29 +41,21 @@
       const diff = i - currentProgress;
       const absDiff = Math.abs(diff);
 
-      // Traversed card expansion curve:
-      // factor = 1 at center, drops to 0 when absDiff >= 1
       const factor = Math.max(0, 1 - absDiff);
       const easedFactor = Math.pow(factor, 1.6);
 
-      // Traversed card is scale 1.0, others shrink down to 0.55
       const scale = 0.55 + 0.45 * easedFactor;
-      // Opacity: traversed card is 1.0, others are 0.35
       const opacity = 0.32 + 0.68 * factor;
 
-      // Displace along Y axis
       const translateY = diff * stepY;
 
       const p = posters[i];
       p.style.transform = 'translate3d(0, ' + translateY.toFixed(1) + 'px, 0) scale(' + scale.toFixed(4) + ')';
       p.style.opacity = opacity.toFixed(4);
       p.style.zIndex = Math.round(30 - Math.min(25, absDiff * 8));
-
-      // Pointer events: only center card or close cards are clickable
-      p.style.pointerEvents = absDiff < 0.6 ? 'auto' : 'auto';
+      p.style.pointerEvents = 'auto';
     }
 
-    // Sync active title item
     const closest = Math.round(currentProgress);
     const clampedClosest = Math.max(0, Math.min(total - 1, closest));
     if (clampedClosest !== activeIndex) {
@@ -85,6 +69,7 @@
 
   // Smooth 60-120fps hardware-accelerated render loop
   function render() {
+    if (isTransitioning) return;
     currentProgress += (targetProgress - currentProgress) * 0.14;
     updateLayout();
 
@@ -98,13 +83,14 @@
   }
 
   function startAnimation() {
-    if (!isAnimating) {
+    if (!isAnimating && !isTransitioning) {
       isAnimating = true;
       requestAnimationFrame(render);
     }
   }
 
   function scrollToProgress(p) {
+    if (isTransitioning) return;
     targetProgress = Math.max(0, Math.min(total - 1, p));
     startAnimation();
   }
@@ -121,8 +107,9 @@
     scrollToIndex(activeIndex - 1);
   }
 
-  // Wheel interaction: silky smooth traversal with natural snap
+  // Wheel interaction
   function handleWheel(e) {
+    if (isTransitioning) return;
     e.preventDefault();
     const delta = e.deltaY;
     targetProgress += (delta / 450);
@@ -142,13 +129,14 @@
 
   // Touch & Drag Support
   stage.addEventListener('mousedown', (e) => {
+    if (isTransitioning) return;
     startY = e.clientY;
     dragStartProgress = currentProgress;
     isDragging = true;
   });
 
   window.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
+    if (!isDragging || isTransitioning) return;
     const diffY = e.clientY - startY;
     const stageH = stage.offsetHeight || window.innerHeight;
     targetProgress = dragStartProgress - (diffY / (stageH * 0.45));
@@ -157,20 +145,21 @@
   });
 
   window.addEventListener('mouseup', () => {
-    if (!isDragging) return;
+    if (!isDragging || isTransitioning) return;
     isDragging = false;
     const closest = Math.round(targetProgress);
     scrollToIndex(closest);
   });
 
   stage.addEventListener('touchstart', (e) => {
+    if (isTransitioning) return;
     startY = e.touches[0].clientY;
     dragStartProgress = currentProgress;
     isDragging = true;
   }, { passive: true });
 
   stage.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
+    if (!isDragging || isTransitioning) return;
     const diffY = e.touches[0].clientY - startY;
     const stageH = stage.offsetHeight || window.innerHeight;
     targetProgress = dragStartProgress - (diffY / (stageH * 0.45));
@@ -179,31 +168,199 @@
   }, { passive: true });
 
   stage.addEventListener('touchend', () => {
+    if (isTransitioning) return;
     isDragging = false;
     const closest = Math.round(targetProgress);
     scrollToIndex(closest);
   }, { passive: true });
 
-  // Click on card: if active card clicked, trigger its action; if inactive clicked, traverse to it!
+  // FLUID HERO TRANSITION: Morph photo card from center to lower-left portfolio hero
+  function transitionPhotoCardToHero() {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    isAnimating = false;
+
+    // Reset scroll to top of page so destination rect is perfectly calculated
+    window.scrollTo(0, 0);
+
+    const sourcePoster = posters[0];
+    const sourceCard = sourcePoster.querySelector('.profile-card');
+    const destCard = heroCard ? heroCard.querySelector('.profile-card') : null;
+
+    if (!sourceCard || !destCard || !heroCard) {
+      dismissIntro();
+      return;
+    }
+
+    // Capture precise bounding boxes
+    const fromRect = sourceCard.getBoundingClientRect();
+
+    // Temporarily ensure heroCard is visible for measurement
+    heroCard.style.visibility = 'visible';
+    heroCard.style.opacity = '1';
+    const toRect = destCard.getBoundingClientRect();
+    // Hide target card until arrival
+    destCard.style.visibility = 'hidden';
+
+    // Clone source card as flying morph element
+    const morphCard = sourceCard.cloneNode(true);
+    morphCard.classList.add('morph-flight-card');
+    morphCard.style.position = 'fixed';
+    morphCard.style.top = fromRect.top + 'px';
+    morphCard.style.left = fromRect.left + 'px';
+    morphCard.style.width = fromRect.width + 'px';
+    morphCard.style.height = fromRect.height + 'px';
+    morphCard.style.margin = '0';
+    morphCard.style.zIndex = '999999';
+    morphCard.style.pointerEvents = 'none';
+
+    document.body.appendChild(morphCard);
+
+    // Hide original source card in intro stage
+    sourcePoster.style.visibility = 'hidden';
+
+    // Trigger theater background fade to reveal red editorial portfolio background
+    theater.classList.add('is-transitioning');
+    document.body.style.overflow = '';
+
+    // Calculate delta and scale factors
+    const deltaX = toRect.left - fromRect.left;
+    const deltaY = toRect.top - fromRect.top;
+    const scaleX = toRect.width / fromRect.width;
+    const scaleY = toRect.height / fromRect.height;
+
+    // Execute 60fps morph flight using GSAP if present, else CSS transition
+    if (window.gsap) {
+      // Animate flight card
+      gsap.to(morphCard, {
+        duration: 0.95,
+        x: deltaX,
+        y: deltaY,
+        scaleX: scaleX,
+        scaleY: scaleY,
+        ease: 'power3.inOut',
+        onComplete: () => {
+          destCard.style.visibility = 'visible';
+          destCard.style.opacity = '1';
+          if (morphCard.parentNode) morphCard.parentNode.removeChild(morphCard);
+          theater.classList.add('dismissed');
+          theater.classList.remove('is-transitioning');
+          window.dispatchEvent(new Event('resize'));
+        }
+      });
+    } else {
+      morphCard.style.transition = 'transform 0.95s cubic-bezier(0.22, 1, 0.36, 1)';
+      requestAnimationFrame(() => {
+        morphCard.style.transform = `translate3d(${deltaX.toFixed(1)}px, ${deltaY.toFixed(1)}px, 0) scale(${scaleX.toFixed(4)}, ${scaleY.toFixed(4)})`;
+      });
+      setTimeout(() => {
+        destCard.style.visibility = 'visible';
+        destCard.style.opacity = '1';
+        if (morphCard.parentNode) morphCard.parentNode.removeChild(morphCard);
+        theater.classList.add('dismissed');
+        theater.classList.remove('is-transitioning');
+        window.dispatchEvent(new Event('resize'));
+      }, 980);
+    }
+
+    // Trigger portfolio reveal animations (hero-name, fold-text, meta, discipline, hero-foot)
+    triggerHeroElementsEntrance();
+  }
+
+  function triggerHeroElementsEntrance() {
+    // 1. Reveal hero-name & fold-text animation
+    const heroName = document.querySelector('.hero-name');
+    if (heroName) {
+      heroName.classList.add('visible');
+      const h1s = heroName.querySelectorAll('h1');
+      h1s.forEach((h1, idx) => {
+        h1.classList.add('visible');
+        h1.style.opacity = '1';
+        h1.style.animation = 'heroTitleIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both';
+        h1.style.animationDelay = (idx * 0.12) + 's';
+      });
+    }
+
+    // 2. Unfold letters in fold-text
+    const foldTexts = document.querySelectorAll('.hero .fold-text');
+    foldTexts.forEach(ft => {
+      const pieces = ft.querySelectorAll('.fold-text-piece');
+      if (pieces.length > 0 && window.gsap) {
+        gsap.fromTo(
+          pieces,
+          { opacity: 0, rotationY: 180 },
+          { opacity: 1, rotationY: 0, duration: 1.4, stagger: 0.08, ease: 'power3.out', delay: 0.15 }
+        );
+      } else {
+        pieces.forEach(p => { p.style.opacity = '1'; p.style.transform = 'none'; });
+      }
+    });
+
+    // 3. Stagger in hero-meta, discipline, hero-foot, scroll-cue
+    const heroMeta = document.querySelector('.hero-meta');
+    if (heroMeta) {
+      heroMeta.classList.add('visible');
+      heroMeta.style.opacity = '1';
+      heroMeta.style.transform = 'none';
+    }
+
+    const discipline = document.querySelector('.discipline');
+    if (discipline) {
+      discipline.classList.add('visible');
+      discipline.style.opacity = '1';
+      discipline.style.transform = 'none';
+      const items = discipline.querySelectorAll('a');
+      items.forEach((item, i) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(20px)';
+        if (window.gsap) {
+          gsap.to(item, { opacity: 1, x: 0, duration: 0.7, delay: 0.3 + (i * 0.1), ease: 'power2.out' });
+        } else {
+          setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'none'; }, 300 + (i * 100));
+        }
+      });
+    }
+
+    const heroFoot = document.querySelector('.hero-foot');
+    if (heroFoot) {
+      heroFoot.classList.add('visible');
+      heroFoot.style.opacity = '1';
+      heroFoot.style.transform = 'none';
+    }
+
+    const scrollCue = document.querySelector('.scroll-cue');
+    if (scrollCue) {
+      scrollCue.style.opacity = '1';
+    }
+  }
+
+  // Click on cards
   posters.forEach((poster, i) => {
     poster.addEventListener('click', (e) => {
+      if (isTransitioning) return;
       if (e.target.closest('a') || e.target.closest('button')) return;
 
       if (i === activeIndex) {
-        const link = poster.querySelector('.wga-vposter-cta');
-        if (link) {
-          if (link.tagName === 'A' && link.href) {
-            if (link.target === '_blank') {
-              window.open(link.href, '_blank', 'noopener,noreferrer');
+        if (i === 0) {
+          // Photo card clicked -> FLUID MORPH FROM CENTER TO LOWER LEFT
+          transitionPhotoCardToHero();
+        } else {
+          // Other cards: open their corresponding channel destination
+          const link = poster.querySelector('.wga-vposter-cta');
+          if (link) {
+            if (link.tagName === 'A' && link.href) {
+              if (link.target === '_blank') {
+                window.open(link.href, '_blank', 'noopener,noreferrer');
+              } else {
+                dismissIntro();
+                window.location.hash = link.getAttribute('href');
+              }
             } else {
               dismissIntro();
-              window.location.hash = link.getAttribute('href');
             }
           } else {
             dismissIntro();
           }
-        } else {
-          dismissIntro();
         }
       } else {
         scrollToIndex(i);
@@ -221,23 +378,27 @@
 
   // Keyboard navigation
   window.addEventListener('keydown', (e) => {
-    if (theater.classList.contains('dismissed')) return;
+    if (theater.classList.contains('dismissed') || isTransitioning) return;
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
       nextCard();
     } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
       prevCard();
     } else if (e.key === 'Enter') {
-      const activePoster = posters[activeIndex];
-      const link = activePoster.querySelector('.wga-vposter-cta');
-      if (link && link.tagName === 'A' && link.href) {
-        if (link.target === '_blank') {
-          window.open(link.href, '_blank', 'noopener,noreferrer');
+      if (activeIndex === 0) {
+        transitionPhotoCardToHero();
+      } else {
+        const activePoster = posters[activeIndex];
+        const link = activePoster.querySelector('.wga-vposter-cta');
+        if (link && link.tagName === 'A' && link.href) {
+          if (link.target === '_blank') {
+            window.open(link.href, '_blank', 'noopener,noreferrer');
+          } else {
+            dismissIntro();
+            window.location.hash = link.getAttribute('href');
+          }
         } else {
           dismissIntro();
-          window.location.hash = link.getAttribute('href');
         }
-      } else {
-        dismissIntro();
       }
     } else if (e.key === 'Escape') {
       dismissIntro();
@@ -248,12 +409,17 @@
     theater.classList.add('dismissed');
     document.body.style.overflow = '';
     window.dispatchEvent(new Event('resize'));
+    triggerHeroElementsEntrance();
   }
 
   enterBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      dismissIntro();
+      if (activeIndex === 0) {
+        transitionPhotoCardToHero();
+      } else {
+        dismissIntro();
+      }
     });
   });
 

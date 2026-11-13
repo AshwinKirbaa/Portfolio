@@ -407,3 +407,34 @@
     width: 300px;
   }
 }
+
+/* --- FLUID FLIP TRANSITION FROM CENTER TO LOWER LEFT HERO --- */
+.portfolio-intro-theater.is-transitioning {
+  background: transparent !important;
+  pointer-events: none !important;
+}
+
+.portfolio-intro-theater.is-transitioning .wga-bg-glow {
+  opacity: 0 !important;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.portfolio-intro-theater.is-transitioning .wga-top-nav,
+.portfolio-intro-theater.is-transitioning .wga-left-col,
+.portfolio-intro-theater.is-transitioning .wga-right-col,
+.portfolio-intro-theater.is-transitioning .wga-bottom-bar,
+.portfolio-intro-theater.is-transitioning .wga-vposter:not([data-index="0"]) {
+  opacity: 0 !important;
+  transform: scale(0.92) !important;
+  transition: opacity 0.45s ease, transform 0.45s ease !important;
+}
+
+/* Flying morph card */
+.morph-flight-card {
+  position: fixed !important;
+  z-index: 999999 !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+  will-change: transform, width, height, top, left !important;
+  transform-origin: top left !important;
+}
