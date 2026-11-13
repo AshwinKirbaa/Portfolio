@@ -317,14 +317,14 @@
   position: relative;
   z-index: 20;
   width: 100%;
-  padding: 18px 3vw 24px;
+  padding: 16px 3vw 22px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   font-family: var(--mono);
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.5);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.45);
+  border-top: none;
 }
 
 .wga-scroll-hint {
