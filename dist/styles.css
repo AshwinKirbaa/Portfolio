@@ -261,3 +261,30 @@ section:hover>.section-index{letter-spacing:.16em}
 
 @media(max-width:720px){.control-console{--console-rx:1deg;transform:perspective(1100px) rotateX(var(--console-rx)) rotateY(var(--console-ry))}.control-console:after{transform:translateZ(-20px) translateY(18px)}.console-key{transform:translateZ(22px) translateY(-4px)}.console-key:hover{transform:translateZ(28px) translateY(-5px)}.console-key.pressed,.console-key:active{transform:translateZ(7px) translateY(3px)}}
 @media(prefers-reduced-motion:reduce){.control-console{transform:perspective(1400px) rotateX(3deg)}.console-key:hover{transform:translateZ(38px) translateY(-6px)}}
+
+/* 45-degree resting camera, matching the reference object's three-quarter view */
+.contact{overflow:visible}
+.control-console{
+  --console-rx:46deg;
+  --console-ry:-2deg;
+  margin-top:150px;
+  margin-bottom:180px;
+  transform-origin:center center;
+  transform:perspective(1300px) rotateX(var(--console-rx)) rotateY(var(--console-ry)) scale(.96);
+  box-shadow:0 75px 95px rgba(0,0,0,.52),inset 0 2px 1px rgba(255,255,255,.3),inset 0 -7px 12px rgba(0,0,0,.8);
+}
+.control-console:after{top:38px;height:104%;transform:translateZ(-78px) translateY(58px);border-radius:0 0 52px 52px;box-shadow:0 70px 90px rgba(0,0,0,.72)}
+.console-left{transform:translateZ(44px)}
+.console-status{transform:translateZ(22px)}
+.console-key{transform:translateZ(58px) translateY(-8px) rotateX(7deg)}
+.console-key:hover{transform:translateZ(78px) translateY(-11px) rotateX(2deg) rotateY(-1deg)}
+.console-key.pressed,.console-key:active{transform:translateZ(22px) translateY(7px) rotateX(0)}
+.console-speaker{transform:translateZ(32px)}
+.console-screen{transform:translateZ(58px) rotateY(-2deg)}
+.console-screen:before{transform:translateZ(-38px)}
+.crt{transform:translateZ(28px)}
+.screen-screw{transform:translateZ(36px)}
+
+@media(max-width:1100px){.control-console{--console-rx:43deg;margin-top:120px;margin-bottom:150px;transform:perspective(1200px) rotateX(var(--console-rx)) rotateY(var(--console-ry)) scale(.95)}}
+@media(max-width:720px){.control-console{--console-rx:34deg;--console-ry:0deg;margin-top:90px;margin-bottom:110px;transform:perspective(950px) rotateX(var(--console-rx)) rotateY(var(--console-ry)) scale(.98)}.control-console:after{transform:translateZ(-42px) translateY(34px)}.console-key{transform:translateZ(34px) translateY(-5px)}.console-key:hover{transform:translateZ(42px) translateY(-7px)}.console-key.pressed,.console-key:active{transform:translateZ(12px) translateY(4px)}}
+@media(prefers-reduced-motion:reduce){.control-console{--console-rx:46deg;--console-ry:-2deg;transform:perspective(1300px) rotateX(var(--console-rx)) rotateY(var(--console-ry)) scale(.96)}.console-key:hover{transform:translateZ(58px) translateY(-8px) rotateX(7deg)}}

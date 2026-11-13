@@ -3,21 +3,21 @@
   const message = document.querySelector('#console-message');
   if (!consolePanel || !message) return;
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let targetX = 4, targetY = 0, currentX = 4, currentY = 0;
+  let targetX = 46, targetY = -2, currentX = 46, currentY = -2;
 
   if (!reduceMotion && matchMedia('(pointer:fine)').matches) {
     consolePanel.addEventListener('pointermove', event => {
       const rect = consolePanel.getBoundingClientRect();
       const nx = (event.clientX - rect.left) / rect.width;
       const ny = (event.clientY - rect.top) / rect.height;
-      targetY = (nx - .5) * 12;
-      targetX = 7 - ny * 8;
+      targetY = -2 + (nx - .5) * 10;
+      targetX = 48 - (ny - .5) * 10;
       consolePanel.style.setProperty('--light-x', `${nx * 100}%`);
       consolePanel.style.setProperty('--light-y', `${ny * 100}%`);
     });
     consolePanel.addEventListener('pointerleave', () => {
-      targetX = 4;
-      targetY = 0;
+      targetX = 46;
+      targetY = -2;
       consolePanel.style.setProperty('--light-x', '50%');
       consolePanel.style.setProperty('--light-y', '20%');
     });
