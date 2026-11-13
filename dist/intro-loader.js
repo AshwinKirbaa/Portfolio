@@ -1,81 +1,160 @@
 (() => {
   const theater = document.querySelector('.portfolio-intro-theater');
-  const deck = document.querySelector('.intro-deck');
-  const cardWrap = document.querySelector('.intro-card-wrap');
-  const meter = document.querySelector('.intro-hud-meter i');
-  const percentText = document.querySelector('.intro-hud-percent');
-  const statusText = document.querySelector('.intro-hud-status');
-  const skipBtn = document.querySelector('.intro-skip-hint');
+  const stage = document.querySelector('.intro-carousel-stage');
+  const track = document.querySelector('.intro-carousel-track');
+  const cards = Array.from(document.querySelectorAll('.intro-carousel-card'));
+  const dots = Array.from(document.querySelectorAll('.carousel-dot'));
+  const prevBtn = document.querySelector('.carousel-nav-btn.prev');
+  const nextBtn = document.querySelector('.carousel-nav-btn.next');
+  const enterTriggers = document.querySelectorAll('.enter-portfolio-trigger');
 
-  if (!theater || !cardWrap) return;
+  if (!theater || cards.length === 0) return;
 
-  // Prevent background scrolling while loading
+  // Lock scrolling during intro
   document.body.style.overflow = 'hidden';
 
-  let dismissed = false;
-  function dismiss() {
-    if (dismissed) return;
-    dismissed = true;
-    theater.classList.add('fly-to-hero');
-    setTimeout(() => {
-      theater.classList.add('dismissed');
-      document.body.style.overflow = '';
-      window.dispatchEvent(new Event('resize'));
-    }, 750);
-  }
+  let currentIndex = 0;
+  const totalCards = cards.length;
 
-  // Only the skip button or explicit key dismisses early so unintentional clicks don't skip the show
-  if (skipBtn) {
-    skipBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dismiss();
+  function updateCarousel() {
+    cards.forEach((card, i) => {
+      // Calculate offset relative to currentIndex (-2, -1, 0, 1, 2)
+      let offset = i - currentIndex;
+
+      const absOffset = Math.abs(offset);
+      const sign = Math.sign(offset);
+
+      let x = offset * 310;
+      let z = -absOffset * 160;
+      let rotY = -sign * Math.min(32, absOffset * 24);
+      let scale = Math.max(0.65, 1 - absOffset * 0.16);
+      let opacity = Math.max(0, 1 - absOffset * 0.35);
+      let filter = absOffset === 0 ? 'blur(0px) brightness(1)' : `blur(${absOffset * 2}px) brightness(${Math.max(0.35, 1 - absOffset * 0.28)})`;
+
+      if (absOffset > 2) {
+        opacity = 0;
+        card.style.pointerEvents = 'none';
+      } else {
+        card.style.pointerEvents = 'auto';
+      }
+
+      card.classList.toggle('is-active', absOffset === 0);
+      card.style.zIndex = 20 - absOffset;
+      card.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) scale(${scale})`;
+      card.style.opacity = opacity;
+      card.style.filter = filter;
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentIndex);
     });
   }
 
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      dismiss();
-    }
-  });
+  function goTo(index) {
+    if (index < 0) index = 0;
+    if (index >= totalCards) index = totalCards - 1;
+    currentIndex = index;
+    updateCarousel();
+  }
 
-  // Step 1: Start zoom and unmask card entrance (scale from 0.25 to 1)
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      cardWrap.classList.add('animate-in');
-      if (deck) deck.classList.add('fanned');
-    }, 120);
-  });
-
-  // Step 2: Smooth HUD progress counter
-  let progress = 0;
-  const startTime = performance.now();
-  const totalDuration = 2800; // 2.8s entrance gives time to enjoy the animation
-
-  function tick(now) {
-    if (dismissed) return;
-    const elapsed = now - startTime;
-    progress = Math.min(100, Math.round((elapsed / totalDuration) * 100));
-
-    if (meter) meter.style.width = `${progress}%`;
-    if (percentText) percentText.textContent = `${progress.toString().padStart(2, '0')}%`;
-
-    if (progress >= 20 && progress < 60 && statusText) {
-      statusText.textContent = 'DECRYPTING PORTFOLIO...';
-    } else if (progress >= 60 && progress < 95 && statusText) {
-      statusText.textContent = 'SYSTEMS OPERATIONAL';
-    } else if (progress >= 95 && statusText) {
-      statusText.textContent = 'WELCOME';
-    }
-
-    if (progress < 100) {
-      requestAnimationFrame(tick);
+  function next() {
+    if (currentIndex < totalCards - 1) {
+      goTo(currentIndex + 1);
     } else {
-      cardWrap.classList.add('floating');
-      setTimeout(() => {
-        dismiss();
-      }, 700);
+      goTo(0);
     }
   }
 
-  requestAnimationFrame(tick);
+  function prev() {
+    if (currentIndex > 0) {
+      goTo(currentIndex - 1);
+    } else {
+      goTo(totalCards - 1);
+    }
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
+  if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); next(); });
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goTo(i);
+    });
+  });
+
+  // Clicking an adjacent card shifts the carousel to focus on it
+  cards.forEach((card, i) => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('a') || e.target.closest('.enter-portfolio-trigger')) return;
+      if (i !== currentIndex) {
+        goTo(i);
+      }
+    });
+  });
+
+  // Mouse wheel scroll to cycle cards horizontally like we-go-again
+  let wheelTimeout = null;
+  stage.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (wheelTimeout) return;
+    if (e.deltaY > 15 || e.deltaX > 15) {
+      next();
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 260);
+    } else if (e.deltaY < -15 || e.deltaX < -15) {
+      prev();
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 260);
+    }
+  }, { passive: false });
+
+  // Touch & Drag Support
+  let startX = 0;
+  let isDragging = false;
+  stage.addEventListener('mousedown', (e) => {
+    startX = e.clientX;
+    isDragging = true;
+  });
+  window.addEventListener('mouseup', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    const diff = e.clientX - startX;
+    if (diff > 50) prev();
+    else if (diff < -50) next();
+  });
+  stage.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  }, { passive: true });
+  stage.addEventListener('touchend', (e) => {
+    const diff = e.changedTouches[0].clientX - startX;
+    if (diff > 40) prev();
+    else if (diff < -40) next();
+  }, { passive: true });
+
+  // Keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    if (theater.classList.contains('dismissed')) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      next();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      prev();
+    } else if (e.key === 'Escape') {
+      dismissIntro();
+    }
+  });
+
+  function dismissIntro() {
+    theater.classList.add('dismissed');
+    document.body.style.overflow = '';
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  enterTriggers.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dismissIntro();
+    });
+  });
+
+  // Initial setup: start at card 0 (Portfolio)
+  updateCarousel();
 })();

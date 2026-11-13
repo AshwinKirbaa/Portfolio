@@ -1,263 +1,478 @@
-/* --- We Go Again & Cinematic 3D Deck Entrance Loading Animation --- */
+/* --- WE-GO-AGAIN CAROUSEL DECK & FULL INTRO EXPERIENCE --- */
 
 .portfolio-intro-theater {
   position: fixed;
   inset: 0;
   z-index: 99999;
   background: #000000;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
+  opacity: 1;
+  visibility: visible;
   transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
               visibility 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .portfolio-intro-theater.dismissed {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
-/* Ambient glow & backdrop */
+/* Background grid & radial spotlight */
 .intro-theater-backdrop {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(237, 59, 36, 0.08) 0%, rgba(0, 0, 0, 0.95) 75%);
+  background: radial-gradient(circle at 50% 45%, rgba(237, 59, 36, 0.12) 0%, rgba(5, 5, 5, 0.98) 75%);
   pointer-events: none;
 }
 
-/* Subtle scanlines overlay */
 .intro-scanlines {
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-  background-size: 100% 4px;
-  opacity: 0.4;
+  background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255, 255, 255, 0.02) 4px);
   pointer-events: none;
 }
 
-/* The Stage */
-.intro-stage {
-  position: relative;
+/* Header bar inside intro */
+.intro-topbar {
   width: 100%;
-  max-width: 1200px;
-  height: 520px;
-  perspective: 1200px;
-  perspective-origin: 50% 50%;
+  padding: 24px 3vw 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-}
-
-/* Deck container holding the card fan */
-.intro-deck {
-  position: relative;
-  width: 320px;
-  height: 440px;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-/* Side flanking cards that fan out as in we-go-again */
-.intro-flank-card {
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  background: #111113;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
-  pointer-events: none;
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease, filter 1.2s ease;
-  overflow: hidden;
-}
-
-.intro-flank-card.left-card {
-  transform: translateX(0px) translateZ(-160px) rotateY(0deg) scale(0.65);
-  opacity: 0;
-  filter: blur(4px) brightness(0.4);
-}
-
-.intro-flank-card.right-card {
-  transform: translateX(0px) translateZ(-160px) rotateY(0deg) scale(0.65);
-  opacity: 0;
-  filter: blur(4px) brightness(0.4);
-}
-
-/* When active, fan out slightly like a curated gallery deck */
-.intro-deck.fanned .intro-flank-card.left-card {
-  transform: translateX(-240px) translateZ(-100px) rotateY(18deg) scale(0.82);
-  opacity: 0.35;
-  filter: blur(2px) brightness(0.5);
-}
-
-.intro-deck.fanned .intro-flank-card.right-card {
-  transform: translateX(240px) translateZ(-100px) rotateY(-18deg) scale(0.82);
-  opacity: 0.35;
-  filter: blur(2px) brightness(0.5);
-}
-
-/* Main center profile card wrapper */
-.intro-card-wrap {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-  transform-style: preserve-3d;
-  will-change: transform, opacity, filter;
-  opacity: 0;
-  transform: scale(0.25) translateY(120px) translateZ(-350px) rotateX(15deg);
-  filter: blur(10px) brightness(0.5);
-  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* In-animation state: zooms smoothly forward and levels out */
-.intro-card-wrap.animate-in {
-  opacity: 1;
-  transform: scale(1) translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg);
-  filter: blur(0px) brightness(1);
-}
-
-/* Floating micro-hover effect after entrance */
-.intro-card-wrap.floating {
-  animation: introCardHoverFloat 3.6s ease-in-out infinite alternate;
-}
-
-@keyframes introCardHoverFloat {
-  0% {
-    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-  }
-  50% {
-    transform: translateY(-8px) rotateX(2deg) rotateY(-1.5deg);
-  }
-  100% {
-    transform: translateY(3px) rotateX(-1deg) rotateY(2deg);
-  }
-}
-
-/* Exit transition settling directly towards hero card */
-.portfolio-intro-theater.fly-to-hero .intro-card-wrap {
-  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-              opacity 0.75s ease,
-              filter 0.75s ease;
-  transform: scale(0.88) translateY(-30px) translateZ(80px);
-  opacity: 0;
-  filter: blur(4px);
-}
-
-.portfolio-intro-theater.fly-to-hero .intro-flank-card {
-  transform: scale(0.6) translateY(50px) translateZ(-200px);
-  opacity: 0;
-}
-
-/* HUD System Status at bottom */
-.intro-status-hud {
-  position: absolute;
-  bottom: 48px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
   font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
   color: #a1a1aa;
-  z-index: 20;
+  z-index: 10;
 }
 
-.intro-brand-title {
-  font-family: var(--sans);
-  font-size: 13px;
+.intro-topbar .brand {
   font-weight: 700;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.75);
+  color: #fff;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.intro-brand-title span {
+.intro-topbar .brand span {
   color: #ed3b24;
 }
 
-.intro-hud-meter {
-  width: 260px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-  overflow: hidden;
-  position: relative;
-}
-
-.intro-hud-meter i {
-  display: block;
-  height: 100%;
-  width: 0%;
-  background: #ed3b24;
-  box-shadow: 0 0 12px rgba(237, 59, 36, 0.8);
-  transition: width 0.06s linear;
-}
-
-.intro-hud-readout {
+.intro-topbar .instructions {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  color: #eee9df;
+  gap: 12px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
-.intro-hud-readout .status-dot {
-  display: inline-block;
+.intro-topbar .instructions kbd {
+  background: #1c1917;
+  border: 1px solid #44403c;
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: #fff;
+}
+
+/* The Horizontal 3D Carousel Stage */
+.intro-carousel-stage {
+  position: relative;
+  width: 100vw;
+  height: 580px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.intro-carousel-stage:active {
+  cursor: grabbing;
+}
+
+/* The Track that slides cards horizontally */
+.intro-carousel-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+/* Individual Card Wrapper */
+.intro-carousel-card {
+  position: absolute;
+  width: 320px;
+  height: 480px;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+/* Interactive Card Base */
+.deck-card {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: #131110;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.intro-carousel-card.is-active .deck-card {
+  border-color: rgba(237, 59, 36, 0.6);
+  box-shadow: 0 28px 60px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(237, 59, 36, 0.25);
+}
+
+/* Card Header */
+.deck-card-header {
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #a8a29e;
+}
+
+.deck-card-header .badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #22c55e;
+}
+
+.deck-card-header .badge i {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: #22c55e;
   box-shadow: 0 0 8px #22c55e;
-  animation: introPulseDot 1.2s ease-in-out infinite alternate;
 }
 
-@keyframes introPulseDot {
-  0% { transform: scale(0.85); opacity: 0.7; }
-  100% { transform: scale(1.25); opacity: 1; }
+/* Card Visual Body */
+.deck-card-visual {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #0c0a09;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Skip hint */
-.intro-skip-hint {
+.deck-card-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Specialized Card Types */
+.deck-card-github {
+  background: radial-gradient(circle at 50% 35%, #24292e 0%, #0d1117 80%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+}
+
+.deck-card-github svg {
+  fill: #f0f6fc;
+}
+
+.deck-card-github h4 {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 700;
+  color: #f0f6fc;
+  margin: 0;
+}
+
+.deck-card-github p {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #8b949e;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.deck-card-github .repo-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.deck-card-github .repo-tags span {
+  font-family: var(--mono);
+  font-size: 9px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 3px 8px;
+  border-radius: 12px;
+  color: #c9d1d9;
+}
+
+/* LinkedIn Card */
+.deck-card-linkedin {
+  background: radial-gradient(circle at 50% 35%, #0077b533 0%, #081b29 80%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+}
+
+.deck-card-linkedin svg {
+  fill: #0a66c2;
+}
+
+.deck-card-linkedin h4 {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.deck-card-linkedin p {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Google Skills Card */
+.deck-card-skills {
+  background: radial-gradient(circle at 50% 35%, #4285f422 0%, #0a0e17 80%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+}
+
+.deck-card-skills .google-logo {
+  display: flex;
+  gap: 6px;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 28px;
+}
+
+.deck-card-skills .google-logo span:nth-child(1) { color: #4285F4; }
+.deck-card-skills .google-logo span:nth-child(2) { color: #EA4335; }
+.deck-card-skills .google-logo span:nth-child(3) { color: #FBBC05; }
+.deck-card-skills .google-logo span:nth-child(4) { color: #4285F4; }
+.deck-card-skills .google-logo span:nth-child(5) { color: #34A853; }
+.deck-card-skills .google-logo span:nth-child(6) { color: #EA4335; }
+
+.deck-card-skills h4 {
+  font-family: var(--sans);
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.deck-card-skills p {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.deck-card-skills .skill-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.deck-card-skills .skill-badges span {
+  font-family: var(--mono);
+  font-size: 9px;
+  background: rgba(66, 133, 244, 0.15);
+  border: 1px solid rgba(66, 133, 244, 0.35);
+  padding: 3px 8px;
+  border-radius: 12px;
+  color: #93c5fd;
+}
+
+/* Card Footer / Action Button */
+.deck-card-footer {
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.deck-card-footer .card-title-group h5 {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.deck-card-footer .card-title-group span {
+  font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: 0.14em;
-  color: rgba(255, 255, 255, 0.3);
-  text-transform: uppercase;
-  transition: color 0.2s ease;
-  cursor: pointer;
+  color: #78716c;
 }
 
-.intro-skip-hint:hover {
-  color: rgba(255, 255, 255, 0.7);
+.deck-card-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 9999px;
+  background: #ed3b24;
+  color: #171514;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.deck-card-action-btn:hover {
+  background: #ff5733;
+  transform: scale(1.05);
+}
+
+/* Carousel Control Dock at Bottom */
+.intro-carousel-dock {
+  width: 100%;
+  padding: 0 3vw 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 10;
+}
+
+/* Dots and Nav */
+.carousel-nav-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.carousel-nav-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #1c1917;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #eee9df;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.carousel-nav-btn:hover {
+  background: #ed3b24;
+  border-color: #ed3b24;
+  color: #171514;
+  transform: scale(1.08);
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 10px;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.carousel-dot.active {
+  width: 24px;
+  border-radius: 6px;
+  background: #ed3b24;
+  box-shadow: 0 0 10px rgba(237, 59, 36, 0.7);
+}
+
+.enter-portfolio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 10px 24px;
+  border-radius: 9999px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #eee9df;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.enter-portfolio-btn:hover {
+  background: #ed3b24;
+  border-color: #ed3b24;
+  color: #171514;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(237, 59, 36, 0.35);
 }
 
 @media (max-width: 768px) {
-  .intro-stage {
-    height: 480px;
+  .intro-carousel-stage {
+    height: 500px;
   }
-  .intro-deck {
+  .intro-carousel-card {
     width: 280px;
-    height: 390px;
+    height: 420px;
   }
-  .intro-flank-card {
+  .intro-topbar .instructions {
     display: none;
-  }
-  .intro-hud-meter {
-    width: 200px;
-  }
-}
-
-/* Ensure intro theater is never overridden by prefers-reduced-motion */
-@media (prefers-reduced-motion: reduce) {
-  .portfolio-intro-theater {
-    display: flex !important;
   }
 }
