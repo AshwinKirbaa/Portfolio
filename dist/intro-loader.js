@@ -1,123 +1,131 @@
 (() => {
   const theater = document.querySelector('.portfolio-intro-theater');
-  const containerOuter = document.querySelector('.wga-container-outer');
-  const containerInner = document.querySelector('.wga-container-inner');
-  const cards = Array.from(document.querySelectorAll('.wga-poster-wrap'));
-  const activeTitle = document.querySelector('.wga-active-title');
+  const stage = document.querySelector('.wga-center-col');
+  const track = document.querySelector('.wga-vertical-track');
+  const posters = Array.from(document.querySelectorAll('.wga-vposter'));
+  const titleItems = Array.from(document.querySelectorAll('.wga-title-item'));
   const enterBtns = document.querySelectorAll('.enter-portfolio-trigger');
 
-  if (!theater || !containerInner || cards.length === 0) return;
+  if (!theater || !track || posters.length === 0) return;
 
-  // Lock body scroll while in intro
+  // Lock scrolling of background page during intro
   document.body.style.overflow = 'hidden';
 
   let activeIndex = 0;
-  const titles = [
-    '01 // ASHWIN KIRBAA — PORTFOLIO',
-    '02 // GITHUB REPOSITORIES & BUILDS',
-    '03 // LINKEDIN PROFESSIONAL NETWORK',
-    '04 // GOOGLE CLOUD & AI SKILLS',
-    '05 // TWINEVAL AI — LIVE DEMO'
-  ];
+  const total = posters.length;
 
-  function setActiveCard(index, smoothScroll = true) {
+  function updateActiveCard(index) {
     if (index < 0) index = 0;
-    if (index >= cards.length) index = cards.length - 1;
+    if (index >= total) index = total - 1;
     activeIndex = index;
 
-    cards.forEach((card, i) => {
-      card.classList.toggle('is-active', i === activeIndex);
+    // Highlight the active title on the right, dim others
+    titleItems.forEach((item, i) => {
+      item.classList.toggle('is-active', i === activeIndex);
     });
 
-    if (activeTitle) {
-      activeTitle.style.transform = 'translateY(-100%)';
-      activeTitle.style.opacity = '0';
-      setTimeout(() => {
-        activeTitle.textContent = titles[activeIndex] || '';
-        activeTitle.style.transform = 'translateY(100%)';
-        requestAnimationFrame(() => {
-          activeTitle.style.transform = 'translateY(0)';
-          activeTitle.style.opacity = '1';
-        });
-      }, 180);
-    }
+    // Update posters transform, opacity and scale
+    posters.forEach((poster, i) => {
+      poster.classList.toggle('is-active', i === activeIndex);
+    });
 
-    // Center the active card in containerOuter
-    if (smoothScroll && containerOuter) {
-      const card = cards[activeIndex];
-      const cardLeft = card.offsetLeft;
-      const cardWidth = card.offsetWidth;
-      const outerWidth = containerOuter.offsetWidth;
-      const targetScroll = cardLeft - (outerWidth / 2) + (cardWidth / 2);
+    // Center the active poster vertically in the center stage
+    if (stage && posters[activeIndex]) {
+      const stageHeight = stage.offsetHeight;
+      const activePoster = posters[activeIndex];
+      const posterHeight = activePoster.offsetHeight;
+      const posterTop = activePoster.offsetTop;
 
-      // Shift containerInner
-      containerInner.style.transform = `translateX(${-targetScroll}px)`;
+      const targetTranslateY = (stageHeight / 2) - posterTop - (posterHeight / 2);
+      track.style.transform = `translateY(${targetTranslateY}px)`;
     }
   }
 
-  // Exact We-Go-Again Entrance Sequence:
-  // 1. Initial black state: containerInner is translateX(100vw), cards scale(0.2)
-  // 2. Trigger animate-run: containerInner sweeps in from right to centered first card, cards scale from 0.2 to 1
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      containerInner.classList.add('animate-run');
-      cards.forEach((card, i) => {
-        // slight cascade stagger
-        setTimeout(() => {
-          card.classList.add('animate-run');
-        }, i * 70);
-      });
+  // Next / Previous helpers
+  function nextCard() {
+    if (activeIndex < total - 1) {
+      updateActiveCard(activeIndex + 1);
+    } else {
+      updateActiveCard(0); // loop
+    }
+  }
 
-      // Align and center first card after entry sweep
-      setTimeout(() => {
-        setActiveCard(0, true);
-      }, 1500);
-    }, 100);
-  });
+  function prevCard() {
+    if (activeIndex > 0) {
+      updateActiveCard(activeIndex - 1);
+    } else {
+      updateActiveCard(total - 1); // loop
+    }
+  }
 
-  // Card click to center / focus
-  cards.forEach((card, i) => {
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('a') || e.target.closest('.enter-portfolio-trigger')) return;
-      setActiveCard(i, true);
+  // Right column titles click to jump to corresponding poster
+  titleItems.forEach((item, i) => {
+    item.addEventListener('click', () => {
+      updateActiveCard(i);
     });
   });
 
-  // Wheel scrolling across cards
+  // Clicking an inactive poster centers it; clicking the active poster enters portfolio
+  posters.forEach((poster, i) => {
+    poster.addEventListener('click', (e) => {
+      if (e.target.closest('a') || e.target.closest('.wga-vposter-btn')) return;
+      if (i === activeIndex) {
+        dismissIntro();
+      } else {
+        updateActiveCard(i);
+      }
+    });
+  });
+
+  // Mouse wheel up & down vertical scroll
   let wheelTimeout = null;
-  containerOuter.addEventListener('wheel', (e) => {
+  stage.addEventListener('wheel', (e) => {
     e.preventDefault();
     if (wheelTimeout) return;
-    if (e.deltaY > 15 || e.deltaX > 15) {
-      setActiveCard(activeIndex + 1, true);
-      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 260);
-    } else if (e.deltaY < -15 || e.deltaX < -15) {
-      setActiveCard(activeIndex - 1, true);
-      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 260);
+    if (e.deltaY > 15) {
+      nextCard();
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 240);
+    } else if (e.deltaY < -15) {
+      prevCard();
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 240);
     }
   }, { passive: false });
 
-  // Touch Drag
-  let startX = 0;
-  containerOuter.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-  }, { passive: true });
-  containerOuter.addEventListener('touchend', (e) => {
-    const diff = e.changedTouches[0].clientX - startX;
-    if (diff > 45) {
-      setActiveCard(activeIndex - 1, true);
-    } else if (diff < -45) {
-      setActiveCard(activeIndex + 1, true);
+  // Also support wheel when hovering anywhere in the intro theater
+  theater.addEventListener('wheel', (e) => {
+    if (wheelTimeout) return;
+    if (e.deltaY > 20) {
+      nextCard();
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 240);
+    } else if (e.deltaY < -20) {
+      prevCard();
+      wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 240);
     }
   }, { passive: true });
 
-  // Keyboard navigation
+  // Touch Swipe up & down
+  let startY = 0;
+  stage.addEventListener('touchstart', (e) => {
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  stage.addEventListener('touchend', (e) => {
+    const diff = e.changedTouches[0].clientY - startY;
+    if (diff > 40) {
+      prevCard();
+    } else if (diff < -40) {
+      nextCard();
+    }
+  }, { passive: true });
+
+  // Keyboard navigation up & down
   window.addEventListener('keydown', (e) => {
     if (theater.classList.contains('dismissed')) return;
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      setActiveCard(activeIndex + 1, true);
-    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      setActiveCard(activeIndex - 1, true);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      nextCard();
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      prevCard();
+    } else if (e.key === 'Enter') {
+      dismissIntro();
     } else if (e.key === 'Escape') {
       dismissIntro();
     }
@@ -134,5 +142,12 @@
       e.stopPropagation();
       dismissIntro();
     });
+  });
+
+  // Initial center position after layout settles
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      updateActiveCard(0);
+    }, 80);
   });
 })();

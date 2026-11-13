@@ -14,152 +14,143 @@
   <link rel="stylesheet" href="intro-loader.css">
 </head>
 <body>
-  <!-- We Go Again Exact Replica Loading & Horizontal Entrance Animation -->
+  <!-- We Go Again Exact 3-Column Vertical Scroll & Title Highlight Stage -->
   <div class="portfolio-intro-theater" aria-hidden="false">
-    <div class="intro-theater-backdrop"></div>
+    <div class="wga-bg-glow"></div>
     
-    <div class="wga-header">
-      <div class="wga-logo">ASHWIN KIRBAA <span>●</span> '26</div>
-      <div class="wga-nav-hint">SCROLL OR DRAG TO BROWSE CHANNELS</div>
-    </div>
-
-    <div class="wga-container-outer">
-      <div class="wga-container-inner">
-        
-        <!-- Card 1: Core Portfolio / ProfileCard -->
-        <div class="wga-poster-wrap is-active" data-channel="portfolio">
-          <div class="wga-card-top">
-            <span class="channel-tag">01 / PORTFOLIO</span>
-            <span class="status-dot"></span>
-          </div>
-          <div class="wga-card-media">
-            <img src="assets/profile-card-exact.jpg" alt="Ashwin Kirbaa" loading="eager" draggable="false">
-          </div>
-          <div class="wga-card-bottom">
-            <div class="card-info">
-              <h5>Ashwin Kirbaa B.</h5>
-              <span>AI & Software Developer</span>
-            </div>
-            <button type="button" class="wga-btn enter-portfolio-trigger">EXPLORE ↗</button>
-          </div>
-        </div>
-
-        <!-- Card 2: GitHub Repositories -->
-        <div class="wga-poster-wrap" data-channel="github">
-          <div class="wga-card-top">
-            <span class="channel-tag">02 / CODE REPOS</span>
-            <span>GITHUB</span>
-          </div>
-          <div class="wga-card-media github-bg">
-            <div class="wga-custom-content">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="#f0f6fc"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              <h4>@AshwinKirbaa</h4>
-              <p>Active repositories in AI security, computer vision & full-stack systems.</p>
-              <div class="wga-pill-row">
-                <span>SafeBox_AI</span>
-                <span>Dexget</span>
-                <span>ai_security</span>
-              </div>
-            </div>
-          </div>
-          <div class="wga-card-bottom">
-            <div class="card-info">
-              <h5>GitHub Projects</h5>
-              <span>Open Source</span>
-            </div>
-            <a href="https://github.com/AshwinKirbaa" target="_blank" rel="noopener noreferrer" class="wga-btn">VISIT ↗</a>
-          </div>
-        </div>
-
-        <!-- Card 3: LinkedIn Network -->
-        <div class="wga-poster-wrap" data-channel="linkedin">
-          <div class="wga-card-top">
-            <span class="channel-tag">03 / NETWORK</span>
-            <span style="color: #0a66c2;">LINKEDIN</span>
-          </div>
-          <div class="wga-card-media linkedin-bg">
-            <div class="wga-custom-content">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="#0a66c2"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              <h4>Ashwin Kirbaa B.</h4>
-              <p>CSE student at Sri Eshwar College of Engineering. Focused on intelligent systems.</p>
-            </div>
-          </div>
-          <div class="wga-card-bottom">
-            <div class="card-info">
-              <h5>LinkedIn Profile</h5>
-              <span>Professional</span>
-            </div>
-            <a href="https://www.linkedin.com/in/ashwin-kirbaa17" target="_blank" rel="noopener noreferrer" class="wga-btn">CONNECT ↗</a>
-          </div>
-        </div>
-
-        <!-- Card 4: Google Cloud & AI Skills -->
-        <div class="wga-poster-wrap" data-channel="skills">
-          <div class="wga-card-top">
-            <span class="channel-tag">04 / SPECIALTY</span>
-            <span style="color: #4285F4;">GOOGLE SKILLS</span>
-          </div>
-          <div class="wga-card-media skills-bg">
-            <div class="wga-custom-content">
-              <div style="font-family: var(--sans); font-size: 26px; font-weight: 700; display: flex; gap: 4px;">
-                <span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span>
-              </div>
-              <h4>Cloud & AI Skills</h4>
-              <p>Applied machine learning, Gemini API, Cloud Run, Vertex AI.</p>
-              <div class="wga-pill-row">
-                <span>Vertex AI</span>
-                <span>Gemini API</span>
-                <span>GCP</span>
-              </div>
-            </div>
-          </div>
-          <div class="wga-card-bottom">
-            <div class="card-info">
-              <h5>Technical Stack</h5>
-              <span>Verified Experience</span>
-            </div>
-            <button type="button" class="wga-btn enter-portfolio-trigger">VIEW ↗</button>
-          </div>
-        </div>
-
-        <!-- Card 5: TwinEval AI Live Showcase -->
-        <div class="wga-poster-wrap" data-channel="twineval">
-          <div class="wga-card-top">
-            <span class="channel-tag">05 / LIVE DEMO</span>
-            <span style="color: #ed3b24;">TWINEVAL</span>
-          </div>
-          <div class="wga-card-media" style="background: radial-gradient(circle at 50% 50%, #ed3b2422 0%, #0d0c0b 80%);">
-            <div class="wga-custom-content">
-              <div style="font-family: var(--mono); font-size: 28px; color: #ed3b24; font-weight: 700;">TwinEval AI</div>
-              <p>Automated test evaluation platform for assessing AI models with real-time metrics.</p>
-              <div class="wga-pill-row">
-                <span>91.4% ACCURACY</span>
-                <span>VERCEL DEPLOY</span>
-              </div>
-            </div>
-          </div>
-          <div class="wga-card-bottom">
-            <div class="card-info">
-              <h5>TwinEval AI Platform</h5>
-              <span>Live Application</span>
-            </div>
-            <a href="https://twineval-ai.vercel.app/" target="_blank" rel="noopener noreferrer" class="wga-btn">LAUNCH ↗</a>
-          </div>
-        </div>
-
+    <!-- Top Navigation Header -->
+    <header class="wga-top-nav">
+      <nav class="wga-nav-links">
+        <a href="#top" class="active enter-portfolio-trigger">Index</a>
+        <a href="#work" class="enter-portfolio-trigger">Work</a>
+        <a href="#contact" class="enter-portfolio-trigger">Contact</a>
+      </nav>
+      <div class="wga-filter-badge">
+        Filter: <span>All ▾</span>
       </div>
+    </header>
+
+    <!-- 3-Column Showcase -->
+    <div class="wga-main-stage">
+      
+      <!-- Left Column: Name & Bio -->
+      <div class="wga-left-col">
+        <div></div>
+        <div class="wga-name-brand">
+          <h2>ASHWIN<br>KIRBAA</h2>
+        </div>
+        <p class="wga-left-bio">
+          Computer Science Engineering student & software developer building practical AI, vision, and full-stack systems.
+        </p>
+      </div>
+
+      <!-- Center Column: Vertical Scrolling Posters Track -->
+      <div class="wga-center-col">
+        <div class="wga-vertical-track">
+          
+          <!-- Card 1: Core Portfolio / ProfileCard -->
+          <article class="wga-vposter is-active" data-index="0" data-title="Portfolio & Core Systems">
+            <div class="wga-vposter-inner">
+              <img src="assets/profile-card-exact.jpg" alt="Ashwin Kirbaa" loading="eager" draggable="false">
+              <div class="wga-vposter-overlay">
+                <span class="mono" style="font-size: 10px; color: #22c55e;">● ONLINE</span>
+                <div class="wga-vposter-title-center">
+                  <h3>ORIGINALS</h3>
+                  <p>PORTFOLIO ’26</p>
+                </div>
+                <button type="button" class="wga-vposter-btn enter-portfolio-trigger">EXPLORE ↗</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2: GitHub / Code Repositories -->
+          <article class="wga-vposter" data-index="1" data-title="GitHub Repositories">
+            <div class="wga-vposter-inner" style="background: radial-gradient(circle at 50% 40%, #1e293b 0%, #090d16 85%);">
+              <div class="wga-vposter-overlay">
+                <span class="mono" style="font-size: 10px; color: #94a3b8;">GITHUB // OPEN SOURCE</span>
+                <div class="wga-vposter-title-center">
+                  <svg width="44" height="44" viewBox="0 0 24 24" fill="#ffffff" style="margin-bottom: 8px;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                  <h3>CODE BUILDS</h3>
+                  <p>SafeBox_AI • Dexget • AI Vision</p>
+                </div>
+                <a href="https://github.com/AshwinKirbaa" target="_blank" rel="noopener noreferrer" class="wga-vposter-btn">VIEW GITHUB ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3: LinkedIn Network -->
+          <article class="wga-vposter" data-index="2" data-title="LinkedIn Professional">
+            <div class="wga-vposter-inner" style="background: radial-gradient(circle at 50% 40%, #0077b533 0%, #071724 85%);">
+              <div class="wga-vposter-overlay">
+                <span class="mono" style="font-size: 10px; color: #38bdf8;">LINKEDIN // NETWORK</span>
+                <div class="wga-vposter-title-center">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="#0a66c2" style="margin-bottom: 8px;"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                  <h3>PROFESSIONAL</h3>
+                  <p>Sri Eshwar CSE • 2025–29</p>
+                </div>
+                <a href="https://www.linkedin.com/in/ashwin-kirbaa17" target="_blank" rel="noopener noreferrer" class="wga-vposter-btn">CONNECT ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4: Google Cloud & AI Skills -->
+          <article class="wga-vposter" data-index="3" data-title="Google Cloud & AI Skills">
+            <div class="wga-vposter-inner" style="background: radial-gradient(circle at 50% 40%, #4285f422 0%, #090e17 85%);">
+              <div class="wga-vposter-overlay">
+                <span class="mono" style="font-size: 10px; color: #60a5fa;">SPECIALTY // AI & CLOUD</span>
+                <div class="wga-vposter-title-center">
+                  <div style="font-size: 32px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px;">
+                    <span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span>
+                  </div>
+                  <h3>CLOUD SKILLS</h3>
+                  <p>Vertex AI • Gemini API • Cloud Run</p>
+                </div>
+                <button type="button" class="wga-vposter-btn enter-portfolio-trigger">VIEW SKILLS ↗</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 5: TwinEval AI Showcase -->
+          <article class="wga-vposter" data-index="4" data-title="TwinEval AI Platform">
+            <div class="wga-vposter-inner" style="background: radial-gradient(circle at 50% 40%, #ed3b242a 0%, #110e0d 85%);">
+              <div class="wga-vposter-overlay">
+                <span class="mono" style="font-size: 10px; color: #f87171;">FEATURED BUILD // LIVE</span>
+                <div class="wga-vposter-title-center">
+                  <h3 style="color: #ed3b24;">TWINEVAL AI</h3>
+                  <p>Automated Digital Twin Evaluator</p>
+                </div>
+                <a href="https://twineval-ai.vercel.app/" target="_blank" rel="noopener noreferrer" class="wga-vposter-btn">LAUNCH APP ↗</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Card Titles (Highlight Active Card) -->
+      <div class="wga-right-col">
+        <ul class="wga-titles-list">
+          <li class="wga-title-item is-active" data-index="0">Portfolio & Core Systems</li>
+          <li class="wga-title-item" data-index="1">GitHub Repositories</li>
+          <li class="wga-title-item" data-index="2">LinkedIn Professional</li>
+          <li class="wga-title-item" data-index="3">Google Cloud & AI Skills</li>
+          <li class="wga-title-item" data-index="4">TwinEval AI Platform</li>
+        </ul>
+      </div>
+
     </div>
 
-    <!-- Active Title Mask & Enter Portfolio Button -->
-    <div class="wga-bottom-dock">
-      <div class="wga-active-title-mask">
-        <div class="wga-active-title">01 // ASHWIN KIRBAA — PORTFOLIO</div>
+    <!-- Bottom Controls Bar -->
+    <footer class="wga-bottom-bar">
+      <div class="wga-scroll-hint">
+        <kbd>↑</kbd> <kbd>↓</kbd> or Mouse Scroll to navigate cards
       </div>
       <button type="button" class="wga-enter-btn enter-portfolio-trigger">
         <span>ENTER ASHWIN’S PORTFOLIO</span>
         <span>↓</span>
       </button>
-    </div>
+    </footer>
+
   </div>
   <div class="noise" aria-hidden="true"></div>
   <header class="topbar">
