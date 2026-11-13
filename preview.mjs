@@ -3,17 +3,32 @@ import { readFile } from 'node:fs/promises';
 import { extname, join } from 'node:path';
 
 const root = join(process.cwd(), 'dist');
-const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript' };
+const types = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.svg': 'image/svg+xml'
+};
 http.createServer(async (request, response) => {
   if (request.url === '/favicon.ico') {
     response.writeHead(204);
     response.end();
     return;
   }
-  const path = request.url === '/' ? '/index.html' : request.url;
+  const cleanUrl = request.url.split('?')[0];
+  const path = cleanUrl === '/' ? '/index.html' : cleanUrl;
   try {
     const data = await readFile(join(root, path));
-    response.writeHead(200, { 'Content-Type': types[extname(path)] || 'application/octet-stream' });
+    const ext = extname(path);
+    const headers = {
+      'Content-Type': types[ext] || 'application/octet-stream',
+      'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=31536000, immutable'
+    };
+    response.writeHead(200, headers);
     response.end(data);
   } catch {
     response.writeHead(404);

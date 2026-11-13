@@ -118,6 +118,7 @@
   overflow: hidden;
 }
 
+.wga-name-brand h1,
 .wga-name-brand h2 {
   font-size: clamp(34px, 4.2vw, 68px);
   font-weight: 800;
@@ -129,6 +130,7 @@
   will-change: transform;
 }
 
+.wga-name-brand h1 span,
 .wga-name-brand h2 span {
   color: #ed3b24;
 }
@@ -211,6 +213,7 @@
   margin-bottom: 6px;
 }
 
+.deck-channel-visual .deck-channel-heading,
 .deck-channel-visual h4 {
   font-family: var(--sans);
   font-size: 26px;
@@ -430,6 +433,7 @@
   opacity: 0;
 }
 
+.portfolio-intro-theater.is-intro-loading .wga-name-brand h1,
 .portfolio-intro-theater.is-intro-loading .wga-name-brand h2 {
   transform: translateY(120%);
 }

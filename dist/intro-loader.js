@@ -414,7 +414,7 @@
     targetProgress = 0;
     activeIndex = 0;
 
-    const brandWordmark = theater.querySelector('.wga-name-brand h2');
+    const brandWordmark = theater.querySelector('.wga-name-brand h1, .wga-name-brand h2');
     const leftBio = theater.querySelector('.wga-left-bio');
     const bottomBar = theater.querySelector('.wga-bottom-bar');
     const stageH = stage.offsetHeight || window.innerHeight;
