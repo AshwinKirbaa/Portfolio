@@ -13,7 +13,12 @@
   const hudPills = document.querySelectorAll('.hud-step-pill');
   const processSteps = document.querySelectorAll('.process-step');
 
+  let scheduled = false;
   function update() {
+    scheduled = false;
+    const theater = document.querySelector('.portfolio-intro-theater');
+    if (theater && !theater.classList.contains('dismissed')) return;
+
     const scrollY = window.scrollY || window.pageYOffset;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
 
@@ -70,7 +75,14 @@
     }
   }
 
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
-  update();
+  function requestUpdate() {
+    if (!scheduled) {
+      scheduled = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate, { passive: true });
+  // Do not invoke synchronously on page load to avoid forced layout during initial paint
 })();

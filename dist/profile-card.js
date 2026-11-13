@@ -7,7 +7,7 @@
     const strength = 14;
     const depth = 8;
 
-    const size = { width: root.offsetWidth || 340, height: root.offsetHeight || 440 };
+    const size = { width: 340, height: 440 };
     const x = { p: 0, v: 0, target: 0 };
     const y = { p: 0, v: 0, target: 0 };
     const light = { p: 0, target: 0 };
