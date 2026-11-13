@@ -45,7 +45,7 @@
       const easedFactor = Math.pow(factor, 1.6);
 
       const scale = 0.55 + 0.45 * easedFactor;
-      const opacity = 0.32 + 0.68 * factor;
+      const opacity = Math.pow(factor, 2.5);
 
       const translateY = diff * stepY;
 
