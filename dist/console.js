@@ -1,46 +1,67 @@
 (() => {
   const consolePanel = document.querySelector('.control-console');
+  const wrapper = document.querySelector('.console-3d-wrapper') || consolePanel;
   const message = document.querySelector('#console-message');
   if (!consolePanel || !message) return;
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let targetX = 12, targetY = -5, currentX = 12, currentY = -5;
 
-  if (!reduceMotion && matchMedia('(pointer:fine)').matches) {
-    consolePanel.addEventListener('pointermove', event => {
-      const rect = consolePanel.getBoundingClientRect();
-      const nx = (event.clientX - rect.left) / rect.width;
-      const ny = (event.clientY - rect.top) / rect.height;
-      targetY = -5 + (nx - .5) * 6;
-      targetX = 12 - (ny - .5) * 5;
-      consolePanel.style.setProperty('--light-x', `${nx * 100}%`);
-      consolePanel.style.setProperty('--light-y', `${ny * 100}%`);
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  // Interactive 3D Perspective Tilt Tracking
+  let targetRx = 0;
+  let targetRy = 0;
+  let currentRx = 0;
+  let currentRy = 0;
+  let isHovered = false;
+
+  if (!reduceMotion && matchMedia('(pointer:fine)').matches && wrapper) {
+    wrapper.addEventListener('pointermove', event => {
+      isHovered = true;
+      const rect = wrapper.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width; // 0 to 1
+      const y = (event.clientY - rect.top) / rect.height; // 0 to 1
+
+      // Natural subtle tilt (max 9 degrees pitch/roll)
+      targetRx = (0.5 - y) * 12; // tilt forward/backward
+      targetRy = (x - 0.5) * 16; // tilt left/right
     });
-    consolePanel.addEventListener('pointerleave', () => {
-      targetX = 12;
-      targetY = -5;
-      consolePanel.style.setProperty('--light-x', '50%');
-      consolePanel.style.setProperty('--light-y', '20%');
+
+    wrapper.addEventListener('pointerleave', () => {
+      isHovered = false;
+      targetRx = 0;
+      targetRy = 0;
     });
-    const animateConsole = () => {
-      currentX += (targetX - currentX) * .1;
-      currentY += (targetY - currentY) * .1;
-      consolePanel.style.setProperty('--console-rx', `${currentX.toFixed(2)}deg`);
-      consolePanel.style.setProperty('--console-ry', `${currentY.toFixed(2)}deg`);
-      requestAnimationFrame(animateConsole);
+
+    const animateTilt = () => {
+      currentRx += (targetRx - currentRx) * 0.1;
+      currentRy += (targetRy - currentRy) * 0.1;
+
+      consolePanel.style.setProperty('--console-rx', `${currentRx.toFixed(2)}deg`);
+      consolePanel.style.setProperty('--console-ry', `${currentRy.toFixed(2)}deg`);
+
+      requestAnimationFrame(animateTilt);
     };
-    requestAnimationFrame(animateConsole);
+
+    requestAnimationFrame(animateTilt);
   }
 
+  // Tactile Mechanical Key Interaction
   document.querySelectorAll('.console-key').forEach(key => {
     key.addEventListener('pointerenter', () => {
-      message.textContent = `ROUTE: ${key.dataset.consoleLabel}`;
-      consolePanel.dataset.active = key.dataset.consoleLabel;
+      const label = key.dataset.consoleLabel || key.textContent.trim();
+      message.textContent = `ROUTE: ${label}`;
     });
+
     key.addEventListener('pointerleave', () => {
       message.textContent = 'AVAILABLE FOR OPPORTUNITIES';
-      delete consolePanel.dataset.active;
+      key.classList.remove('pressed');
     });
-    key.addEventListener('pointerdown', () => key.classList.add('pressed'));
-    ['pointerup', 'pointercancel', 'pointerleave'].forEach(type => key.addEventListener(type, () => key.classList.remove('pressed')));
+
+    key.addEventListener('pointerdown', () => {
+      key.classList.add('pressed');
+    });
+
+    ['pointerup', 'pointercancel'].forEach(type => {
+      key.addEventListener(type, () => key.classList.remove('pressed'));
+    });
   });
 })();
