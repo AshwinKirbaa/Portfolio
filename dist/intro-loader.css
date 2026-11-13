@@ -23,11 +23,11 @@
   visibility: visible;
   font-family: var(--sans);
   color: #ffffff;
-  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-              visibility 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: background-color 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .portfolio-intro-theater.dismissed {
+  display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
@@ -410,7 +410,7 @@
 
 /* --- FLUID FLIP TRANSITION FROM CENTER TO LOWER LEFT HERO --- */
 .portfolio-intro-theater.is-transitioning {
-  background: transparent !important;
+  background-color: transparent !important;
   pointer-events: none !important;
 }
 
@@ -423,18 +423,18 @@
 .portfolio-intro-theater.is-transitioning .wga-left-col,
 .portfolio-intro-theater.is-transitioning .wga-right-col,
 .portfolio-intro-theater.is-transitioning .wga-bottom-bar,
-.portfolio-intro-theater.is-transitioning .wga-vposter:not([data-index="0"]) {
+.portfolio-intro-theater.is-transitioning .wga-vposter {
   opacity: 0 !important;
-  transform: scale(0.92) !important;
-  transition: opacity 0.45s ease, transform 0.45s ease !important;
+  pointer-events: none !important;
+  transition: opacity 0.4s ease !important;
 }
 
-/* Flying morph card */
+/* Flying morph card - seamless continuous flight */
 .morph-flight-card {
   position: fixed !important;
   z-index: 999999 !important;
   margin: 0 !important;
   pointer-events: none !important;
-  will-change: transform, width, height, top, left !important;
+  will-change: transform !important;
   transform-origin: top left !important;
 }

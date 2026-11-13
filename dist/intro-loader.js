@@ -229,41 +229,38 @@
     const scaleX = toRect.width / fromRect.width;
     const scaleY = toRect.height / fromRect.height;
 
+    const finishLanding = () => {
+      destCard.style.visibility = 'visible';
+      destCard.style.opacity = '1';
+      destCard.style.display = 'block';
+      heroCard.style.visibility = 'visible';
+      heroCard.style.opacity = '1';
+      heroCard.style.display = 'block';
+      theater.classList.add('dismissed');
+      theater.classList.remove('is-transitioning');
+      if (morphCard.parentNode) morphCard.parentNode.removeChild(morphCard);
+    };
+
     // Execute 60fps morph flight using GSAP if present, else CSS transition
     if (window.gsap) {
-      // Animate flight card
       gsap.to(morphCard, {
-        duration: 0.95,
+        duration: 0.85,
         x: deltaX,
         y: deltaY,
         scaleX: scaleX,
         scaleY: scaleY,
         ease: 'power3.inOut',
-        onComplete: () => {
-          destCard.style.visibility = 'visible';
-          destCard.style.opacity = '1';
-          if (morphCard.parentNode) morphCard.parentNode.removeChild(morphCard);
-          theater.classList.add('dismissed');
-          theater.classList.remove('is-transitioning');
-          window.dispatchEvent(new Event('resize'));
-        }
+        onComplete: finishLanding
       });
     } else {
-      morphCard.style.transition = 'transform 0.95s cubic-bezier(0.22, 1, 0.36, 1)';
+      morphCard.style.transition = 'transform 0.85s cubic-bezier(0.22, 1, 0.36, 1)';
       requestAnimationFrame(() => {
         morphCard.style.transform = `translate3d(${deltaX.toFixed(1)}px, ${deltaY.toFixed(1)}px, 0) scale(${scaleX.toFixed(4)}, ${scaleY.toFixed(4)})`;
       });
-      setTimeout(() => {
-        destCard.style.visibility = 'visible';
-        destCard.style.opacity = '1';
-        if (morphCard.parentNode) morphCard.parentNode.removeChild(morphCard);
-        theater.classList.add('dismissed');
-        theater.classList.remove('is-transitioning');
-        window.dispatchEvent(new Event('resize'));
-      }, 980);
+      setTimeout(finishLanding, 860);
     }
 
-    // Trigger portfolio reveal animations (hero-name, fold-text, meta, discipline, hero-foot)
+    // Trigger portfolio reveal animations in sync with card flight
     triggerHeroElementsEntrance();
   }
 
@@ -273,30 +270,15 @@
     if (heroName) {
       heroName.classList.add('visible');
       const h1s = heroName.querySelectorAll('h1');
-      h1s.forEach((h1, idx) => {
+      h1s.forEach((h1) => {
         h1.classList.add('visible');
         h1.style.opacity = '1';
-        h1.style.animation = 'heroTitleIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both';
-        h1.style.animationDelay = (idx * 0.12) + 's';
+        h1.style.transform = 'none';
+        h1.style.filter = 'none';
       });
     }
 
-    // 2. Unfold letters in fold-text
-    const foldTexts = document.querySelectorAll('.hero .fold-text');
-    foldTexts.forEach(ft => {
-      const pieces = ft.querySelectorAll('.fold-text-piece');
-      if (pieces.length > 0 && window.gsap) {
-        gsap.fromTo(
-          pieces,
-          { opacity: 0, rotationY: 180 },
-          { opacity: 1, rotationY: 0, duration: 1.4, stagger: 0.08, ease: 'power3.out', delay: 0.15 }
-        );
-      } else {
-        pieces.forEach(p => { p.style.opacity = '1'; p.style.transform = 'none'; });
-      }
-    });
-
-    // 3. Stagger in hero-meta, discipline, hero-foot, scroll-cue
+    // 2. Stagger in hero-meta, discipline, hero-foot, scroll-cue
     const heroMeta = document.querySelector('.hero-meta');
     if (heroMeta) {
       heroMeta.classList.add('visible');
@@ -312,11 +294,11 @@
       const items = discipline.querySelectorAll('a');
       items.forEach((item, i) => {
         item.style.opacity = '0';
-        item.style.transform = 'translateX(20px)';
+        item.style.transform = 'translateX(15px)';
         if (window.gsap) {
-          gsap.to(item, { opacity: 1, x: 0, duration: 0.7, delay: 0.3 + (i * 0.1), ease: 'power2.out' });
+          gsap.to(item, { opacity: 1, x: 0, duration: 0.6, delay: 0.2 + (i * 0.08), ease: 'power2.out' });
         } else {
-          setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'none'; }, 300 + (i * 100));
+          setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'none'; }, 200 + (i * 80));
         }
       });
     }
