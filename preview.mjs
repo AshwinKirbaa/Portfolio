@@ -1,6 +1,7 @@
 import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join } from 'node:path';
+import { gzipSync } from 'node:zlib';
 
 const root = join(process.cwd(), 'dist');
 const types = {
@@ -24,12 +25,25 @@ http.createServer(async (request, response) => {
   try {
     const data = await readFile(join(root, path));
     const ext = extname(path);
+    const acceptEncoding = request.headers['accept-encoding'] || '';
+    const shouldGzip = /\bgzip\b/.test(acceptEncoding) && (ext === '.html' || ext === '.css' || ext === '.js' || ext === '.svg');
+
     const headers = {
       'Content-Type': types[ext] || 'application/octet-stream',
       'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=31536000, immutable'
     };
-    response.writeHead(200, headers);
-    response.end(data);
+
+    if (shouldGzip) {
+      headers['Content-Encoding'] = 'gzip';
+      const compressed = gzipSync(data);
+      headers['Content-Length'] = compressed.length;
+      response.writeHead(200, headers);
+      response.end(compressed);
+    } else {
+      headers['Content-Length'] = data.length;
+      response.writeHead(200, headers);
+      response.end(data);
+    }
   } catch {
     response.writeHead(404);
     response.end('Not found');
