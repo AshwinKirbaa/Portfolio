@@ -90,19 +90,7 @@
 
 /* Responsive recruiter-first improvements. */
 html, body { max-width: 100%; overflow-x: clip; }
-.intro-skip {
-  position: fixed; top: 22px; right: 24px; z-index: 1000001; padding: 11px 14px;
-  border: 1px solid rgba(255,255,255,.55); background: rgba(18,18,18,.68); color: #fff;
-  backdrop-filter: blur(10px); font: 10px var(--mono); letter-spacing: .08em; cursor: pointer;
-}
-.intro-skip:hover,.intro-skip:focus-visible { background: #fff; color: #171514; outline: none; }
-.portfolio-intro-theater.dismissed .intro-skip { display: none; }
-.hero-recruiter { position: absolute; z-index: 7; left: 3vw; bottom: 70px; max-width: 590px; }
-.hero-recruiter p { margin: 0 0 18px; font-size: clamp(17px,1.45vw,23px); line-height: 1.32; font-weight: 500; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 9px; }
-.hero-actions a { display: inline-flex; align-items: center; min-height: 43px; padding: 0 16px; border: 1px solid #171514; font: 10px var(--mono); letter-spacing: .04em; }
-.hero-actions a:first-child { background: #171514; color: #eee9df; }
-.hero-actions a:hover,.hero-actions a:focus-visible { background: #68ff7b; color: #171514; outline: none; }
+.menu-cv-link { display: block; width: fit-content; margin: 18px 0; padding-bottom: 4px; border-bottom: 1px solid currentColor; }
 
 .fullstack-status { display: block; padding: 0; background: #111; }
 .fullstack-status summary { list-style: none; min-height: 66px; padding: 14px 18px; display: grid; grid-template-columns: 12px 1fr auto; align-items: center; gap: 14px; cursor: pointer; }
@@ -118,17 +106,12 @@ html, body { max-width: 100%; overflow-x: clip; }
 .project-row.active>div>small { color: #d9d1c9; }
 
 @media (max-width: 900px) {
-  .hero-recruiter { position: relative; left: auto; bottom: auto; padding: 5px 20px 95px; max-width: 650px; }
-  .hero-foot { display: none; }
   .fullstack-status__details { grid-template-columns: 1fr; gap: 10px; }
   .case-copy,.case-machine,.rack,.control-console { transform: none !important; }
   .case-scene { min-height: auto !important; }
   .case-sticky { position: relative !important; min-height: auto !important; }
 }
 @media (max-width: 600px) {
-  .intro-skip { top: 14px; right: 14px; }
-  .hero-recruiter p { font-size: 17px; }
-  .hero-actions a { flex: 1 1 calc(50% - 5px); justify-content: center; }
   .fullstack-status { margin-left: 20px; margin-right: 20px; }
   .fullstack-status summary { grid-template-columns: 10px 1fr; }
   .fullstack-status summary b { grid-column: 2; }

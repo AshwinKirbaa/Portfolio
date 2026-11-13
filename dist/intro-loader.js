@@ -5,23 +5,12 @@
   const posters = Array.from(document.querySelectorAll('.wga-vposter'));
   const titleItems = Array.from(document.querySelectorAll('.wga-title-item'));
   const enterBtns = document.querySelectorAll('.enter-portfolio-trigger');
-  const skipButton = document.querySelector('.intro-skip');
   const heroCard = document.querySelector('.hero-card');
 
   if (!theater || !track || posters.length === 0) return;
 
-  const introSeen = localStorage.getItem('akb-intro-seen') === '1';
-  const compactIntro = matchMedia('(max-width: 700px)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Returning visitors go straight to the portfolio. First-time mobile visitors
-  // get a short branded moment with an always-visible skip control.
-  if (introSeen) {
-    theater.classList.add('dismissed');
-    theater.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  } else {
-    document.body.style.overflow = 'hidden';
-  }
+  // Preserve the original full intro on every visit.
+  document.body.style.overflow = 'hidden';
 
   const total = posters.length;
 
@@ -398,8 +387,6 @@
 
   function dismissIntro() {
     theater.classList.add('dismissed');
-    theater.setAttribute('aria-hidden', 'true');
-    localStorage.setItem('akb-intro-seen', '1');
     document.body.style.overflow = '';
     window.dispatchEvent(new Event('resize'));
     triggerHeroElementsEntrance();
@@ -415,7 +402,6 @@
       }
     });
   });
-  skipButton?.addEventListener('click', dismissIntro);
 
   let isIntroPlaying = true;
 
@@ -542,16 +528,11 @@
   }
 
   function init() {
-    if (introSeen) {
-      triggerHeroElementsEntrance();
-      return;
-    }
     measure();
     currentProgress = 0;
     targetProgress = 0;
     activeIndex = 0;
     playIntroAnimation();
-    if (compactIntro) setTimeout(dismissIntro, 1800);
   }
 
   window.addEventListener('load', init);
