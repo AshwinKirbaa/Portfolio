@@ -87,3 +87,50 @@
 
   .fullstack-status strong { font-size: 10px; }
 }
+
+/* Education chapter borrowed from the reference's useful information architecture. */
+.education { padding: 110px 2.5vw 140px; }
+.education-head {
+  margin: 70px 0 90px;
+  display: grid;
+  grid-template-columns: .65fr 1.5fr 1fr;
+  gap: 4vw;
+  align-items: end;
+}
+.education-head small { font: 10px var(--mono); }
+.education-head h2 {
+  margin: 0;
+  font-size: clamp(62px, 9vw, 145px);
+  line-height: .78;
+  letter-spacing: -.075em;
+}
+.education-head h2 em { color: var(--red); font-style: normal; }
+.education-head p { max-width: 420px; font-size: 17px; line-height: 1.5; }
+.education-grid {
+  display: grid;
+  grid-template-columns: 1.08fr .92fr;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.education-primary { padding: 55px 6vw 65px 0; border-right: 1px solid var(--ink); }
+.education-year { display: block; margin-bottom: 80px; color: var(--red); font-size: 12px; }
+.education-primary small,.practice-list small { font: 9px var(--mono); letter-spacing: .08em; }
+.education-primary h3 { margin: 18px 0 28px; font-size: clamp(40px, 5.2vw, 78px); line-height: .86; letter-spacing: -.055em; }
+.education-primary p { max-width: 680px; font-size: 17px; line-height: 1.55; }
+.practice-list article { min-height: 190px; padding: 32px 0 32px 4vw; display: grid; grid-template-columns: 55px 1fr; border-bottom: 1px solid var(--ink); }
+.practice-list article:last-child { border-bottom: 0; }
+.practice-list>article>span { color: var(--red); font-size: 11px; }
+.practice-list h3 { margin: 12px 0 8px; font-size: 24px; }
+.practice-list p { margin: 0; max-width: 530px; font-size: 14px; line-height: 1.5; }
+@media (max-width: 900px) {
+  .education-head,.education-grid { grid-template-columns: 1fr; }
+  .education-head { gap: 28px; }
+  .education-primary { padding-right: 0; border-right: 0; border-bottom: 1px solid var(--ink); }
+  .practice-list article { padding-left: 0; }
+}
+@media (max-width: 600px) {
+  .education { padding-left: 20px; padding-right: 20px; }
+  .education-head h2 { font-size: 18vw; }
+  .education-year { margin-bottom: 50px; }
+  .practice-list article { grid-template-columns: 42px 1fr; }
+}
