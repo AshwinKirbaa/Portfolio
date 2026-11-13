@@ -1,0 +1,22 @@
+/* Stable console controls: the hitbox stays fixed while visual feedback changes. */
+.console-key,
+.console-key:hover {
+  transform: translate3d(0, 0, 0) !important;
+}
+
+.console-key:hover,
+.console-key:focus-visible {
+  filter: brightness(1.1) saturate(1.04);
+  outline: 2px solid rgba(255, 255, 255, 0.72);
+  outline-offset: 3px;
+}
+
+.console-key.pressed,
+.console-key:active {
+  transform: translate3d(0, 5px, 0) !important;
+  filter: brightness(0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .console-key { transition: none !important; }
+}

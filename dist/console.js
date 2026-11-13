@@ -12,10 +12,12 @@
   let currentRx = 0;
   let currentRy = 0;
   let isHovered = false;
+  let activeKey = null;
 
   if (!reduceMotion && matchMedia('(pointer:fine)').matches && wrapper) {
     wrapper.addEventListener('pointermove', event => {
       isHovered = true;
+      if (activeKey) return;
       const rect = wrapper.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width; // 0 to 1
       const y = (event.clientY - rect.top) / rect.height; // 0 to 1
@@ -47,11 +49,15 @@
   // Tactile Mechanical Key Interaction
   document.querySelectorAll('.console-key').forEach(key => {
     key.addEventListener('pointerenter', () => {
+      activeKey = key;
+      targetRx = currentRx;
+      targetRy = currentRy;
       const label = key.dataset.consoleLabel || key.textContent.trim();
       message.textContent = `ROUTE: ${label}`;
     });
 
     key.addEventListener('pointerleave', () => {
+      if (activeKey === key) activeKey = null;
       message.textContent = 'AVAILABLE FOR OPPORTUNITIES';
       key.classList.remove('pressed');
     });
@@ -63,5 +69,9 @@
     ['pointerup', 'pointercancel'].forEach(type => {
       key.addEventListener(type, () => key.classList.remove('pressed'));
     });
+
+    const label = key.dataset.consoleLabel || key.textContent.trim();
+    key.setAttribute('aria-label', label);
+    key.title = label;
   });
 })();

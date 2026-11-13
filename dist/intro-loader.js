@@ -171,17 +171,15 @@
     scrollToIndex(closest);
   }, { passive: true });
 
-  // FLUID HERO TRANSITION: Morph photo card from center to lower-left portfolio hero
+  // Move the already-rendered card into the hero. Using the real element keeps
+  // its decoded image and composited layers intact, avoiding clone flicker.
   function transitionPhotoCardToHero() {
     if (isTransitioning) return;
     isTransitioning = true;
     isAnimating = false;
-
-    // Reset scroll to top of page so destination rect is perfectly calculated
     window.scrollTo(0, 0);
-
     const sourcePoster = posters[0];
-    const sourceCard = sourcePoster.querySelector('.profile-card');
+    const sourceCard = sourcePoster ? sourcePoster.querySelector('.profile-card') : null;
     const destCard = heroCard ? heroCard.querySelector('.profile-card') : null;
 
     if (!sourceCard || !destCard || !heroCard) {
@@ -189,76 +187,79 @@
       return;
     }
 
-    // Capture precise bounding boxes
-    const fromRect = sourceCard.getBoundingClientRect();
-
-    // Temporarily ensure heroCard is visible for measurement
+    // Measure both endpoints while the destination is complete and visible.
     heroCard.style.visibility = 'visible';
     heroCard.style.opacity = '1';
+    heroCard.style.display = 'block';
+    triggerHeroElementsEntrance();
+    const fromRect = sourceCard.getBoundingClientRect();
     const toRect = destCard.getBoundingClientRect();
-    // Hide target card until arrival
-    destCard.style.visibility = 'hidden';
+    // Keep the finished card in the paint/compositing tree, but transparent,
+    // during the flight. This warms its image layers without showing a duplicate.
+    destCard.style.visibility = 'visible';
+    destCard.style.opacity = '0';
+    destCard.style.transition = 'none';
 
-    // Clone source card as flying morph element
-    const morphCard = sourceCard.cloneNode(true);
-    morphCard.classList.add('morph-flight-card');
-    morphCard.style.position = 'fixed';
-    morphCard.style.top = fromRect.top + 'px';
-    morphCard.style.left = fromRect.left + 'px';
-    morphCard.style.width = fromRect.width + 'px';
-    morphCard.style.height = fromRect.height + 'px';
-    morphCard.style.margin = '0';
-    morphCard.style.zIndex = '999999';
-    morphCard.style.pointerEvents = 'none';
-
-    document.body.appendChild(morphCard);
-
-    // Hide original source card in intro stage
-    sourcePoster.style.visibility = 'hidden';
-
-    // Trigger theater background fade to reveal red editorial portfolio background
+    // Reparent the real, already-painted card above both scenes for the flight.
+    sourceCard.classList.add('morph-flight-card');
+    Object.assign(sourceCard.style, {
+      position: 'fixed',
+      top: `${fromRect.top}px`,
+      left: `${fromRect.left}px`,
+      width: `${fromRect.width}px`,
+      height: `${fromRect.height}px`,
+      margin: '0',
+      zIndex: '999999',
+      pointerEvents: 'none',
+      transformOrigin: 'top left',
+      willChange: 'top, left, width, height'
+    });
+    document.body.appendChild(sourceCard);
     theater.classList.add('is-transitioning');
     document.body.style.overflow = '';
 
-    // Calculate delta and scale factors
-    const deltaX = toRect.left - fromRect.left;
-    const deltaY = toRect.top - fromRect.top;
-    const scaleX = toRect.width / fromRect.width;
-    const scaleY = toRect.height / fromRect.height;
+    let finished = false;
 
     const finishLanding = () => {
-      destCard.style.visibility = 'visible';
+      if (finished) return;
+      finished = true;
+      // The flying card is now exactly over the destination. Reveal the warmed
+      // destination beneath it, then wait two paints before removing the flyer.
       destCard.style.opacity = '1';
-      destCard.style.display = 'block';
-      heroCard.style.visibility = 'visible';
-      heroCard.style.opacity = '1';
-      heroCard.style.display = 'block';
-      theater.classList.add('dismissed');
-      theater.classList.remove('is-transitioning');
-      if (morphCard.parentNode) morphCard.parentNode.removeChild(morphCard);
+      void destCard.offsetWidth;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          sourcePoster.appendChild(sourceCard);
+          sourceCard.classList.remove('morph-flight-card');
+          sourceCard.removeAttribute('style');
+          destCard.style.removeProperty('transition');
+          theater.classList.add('dismissed');
+          theater.classList.remove('is-transitioning');
+          window.dispatchEvent(new Event('resize'));
+        });
+      });
     };
 
-    // Execute 60fps morph flight using GSAP if present, else CSS transition
     if (window.gsap) {
-      gsap.to(morphCard, {
-        duration: 0.85,
-        x: deltaX,
-        y: deltaY,
-        scaleX: scaleX,
-        scaleY: scaleY,
+      gsap.to(sourceCard, {
+        duration: 0.9,
+        top: toRect.top,
+        left: toRect.left,
+        width: toRect.width,
+        height: toRect.height,
         ease: 'power3.inOut',
         onComplete: finishLanding
       });
     } else {
-      morphCard.style.transition = 'transform 0.85s cubic-bezier(0.22, 1, 0.36, 1)';
+      sourceCard.style.transition = 'top .9s cubic-bezier(.22,1,.36,1),left .9s cubic-bezier(.22,1,.36,1),width .9s cubic-bezier(.22,1,.36,1),height .9s cubic-bezier(.22,1,.36,1)';
       requestAnimationFrame(() => {
-        morphCard.style.transform = `translate3d(${deltaX.toFixed(1)}px, ${deltaY.toFixed(1)}px, 0) scale(${scaleX.toFixed(4)}, ${scaleY.toFixed(4)})`;
+        sourceCard.style.top = `${toRect.top}px`;
+        sourceCard.style.left = `${toRect.left}px`;
+        sourceCard.style.width = `${toRect.width}px`;
+        sourceCard.style.height = `${toRect.height}px`;
       });
-      setTimeout(finishLanding, 860);
+      setTimeout(finishLanding, 920);
     }
-
-    // Trigger portfolio reveal animations in sync with card flight
-    triggerHeroElementsEntrance();
   }
 
   function triggerHeroElementsEntrance() {
