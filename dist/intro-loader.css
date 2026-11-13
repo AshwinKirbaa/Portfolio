@@ -254,3 +254,10 @@
     width: 200px;
   }
 }
+
+/* Ensure intro theater is never overridden by prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-intro-theater {
+    display: flex !important;
+  }
+}

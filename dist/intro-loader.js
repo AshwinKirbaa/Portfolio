@@ -9,12 +9,6 @@
 
   if (!theater || !cardWrap) return;
 
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced) {
-    theater.classList.add('dismissed');
-    return;
-  }
-
   // Prevent background scrolling while loading
   document.body.style.overflow = 'hidden';
 
@@ -30,13 +24,16 @@
     }, 750);
   }
 
-  if (skipBtn) skipBtn.addEventListener('click', dismiss);
-  theater.addEventListener('click', (e) => {
-    // If clicked anywhere during intro, allow fast-forward dismissal
-    dismiss();
-  });
+  // Only the skip button or explicit key dismisses early so unintentional clicks don't skip the show
+  if (skipBtn) {
+    skipBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dismiss();
+    });
+  }
+
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' || e.key === ' ') {
+    if (e.key === 'Escape') {
       dismiss();
     }
   });
@@ -46,13 +43,13 @@
     setTimeout(() => {
       cardWrap.classList.add('animate-in');
       if (deck) deck.classList.add('fanned');
-    }, 80);
+    }, 120);
   });
 
-  // Step 2: Progress indicator
+  // Step 2: Smooth HUD progress counter
   let progress = 0;
   const startTime = performance.now();
-  const totalDuration = 2200; // 2.2s entrance
+  const totalDuration = 2800; // 2.8s entrance gives time to enjoy the animation
 
   function tick(now) {
     if (dismissed) return;
@@ -62,11 +59,11 @@
     if (meter) meter.style.width = `${progress}%`;
     if (percentText) percentText.textContent = `${progress.toString().padStart(2, '0')}%`;
 
-    if (progress >= 30 && progress < 70 && statusText) {
+    if (progress >= 20 && progress < 60 && statusText) {
       statusText.textContent = 'DECRYPTING PORTFOLIO...';
-    } else if (progress >= 70 && progress < 100 && statusText) {
+    } else if (progress >= 60 && progress < 95 && statusText) {
       statusText.textContent = 'SYSTEMS OPERATIONAL';
-    } else if (progress >= 100 && statusText) {
+    } else if (progress >= 95 && statusText) {
       statusText.textContent = 'WELCOME';
     }
 
@@ -76,7 +73,7 @@
       cardWrap.classList.add('floating');
       setTimeout(() => {
         dismiss();
-      }, 650);
+      }, 700);
     }
   }
 
