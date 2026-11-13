@@ -50,15 +50,36 @@
     return closest;
   }
 
+  // Continuous fluid expansion & contraction on scroll (Matches we-go-again.com)
+  function updatePosterTransforms() {
+    const stageH = stage.offsetHeight || window.innerHeight;
+    const stageCenter = (stageH / 2) - currentY;
+    const maxDistance = stageH * 0.58;
+
+    for (let i = 0; i < total; i++) {
+      const data = posterData[i];
+      if (!data) continue;
+      const dist = Math.abs(data.center - stageCenter);
+      const proximity = Math.max(0, 1 - Math.min(1, dist / maxDistance));
+      const eased = Math.pow(proximity, 1.8);
+
+      const scale = 0.70 + (0.30 * eased);
+      const opacity = 0.22 + (0.78 * eased);
+      const poster = posters[i];
+
+      poster.style.transform = 'scale(' + scale.toFixed(4) + ')';
+      poster.style.opacity = opacity.toFixed(4);
+    }
+  }
+
   // 60-120fps hardware-accelerated render loop
   function render() {
-    // 0.12 lerp factor gives snappy, silky-smooth responsiveness without floaty lag
-    currentY += (targetY - currentY) * 0.12;
+    currentY += (targetY - currentY) * 0.14;
 
-    // Direct GPU composition using translate3d
-    track.style.transform = `translate3d(0, ${currentY.toFixed(1)}px, 0)`;
+    track.style.transform = 'translate3d(0, ' + currentY.toFixed(1) + 'px, 0)';
 
-    // Check closest card
+    updatePosterTransforms();
+
     const closestIndex = getClosestIndex(currentY);
     if (closestIndex !== activeIndex) {
       activeIndex = closestIndex;
@@ -68,11 +89,12 @@
       }
     }
 
-    if (Math.abs(targetY - currentY) > 0.3 || isDragging) {
+    if (Math.abs(targetY - currentY) > 0.2 || isDragging) {
       requestAnimationFrame(render);
     } else {
       currentY = targetY;
-      track.style.transform = `translate3d(0, ${Math.round(currentY)}px, 0)`;
+      track.style.transform = 'translate3d(0, ' + Math.round(currentY) + 'px, 0)';
+      updatePosterTransforms();
       isAnimating = false;
     }
   }
@@ -243,6 +265,7 @@
     targetY = currentY;
     track.style.transform = `translate3d(0, ${Math.round(currentY)}px, 0)`;
     posters.forEach((p, i) => p.classList.toggle('is-active', i === 0));
+    updatePosterTransforms();
     titleItems.forEach((t, i) => t.classList.toggle('is-active', i === 0));
   }
 

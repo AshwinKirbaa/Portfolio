@@ -41,7 +41,7 @@
   --pc-holo-detail: 0;
 
   position: relative;
-  width: 340px;
+  width: 100%;
   max-width: 100%;
   perspective: 1000px;
   touch-action: pan-y;
