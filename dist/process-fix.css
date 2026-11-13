@@ -1,4 +1,9 @@
 /* --- Interactive HOW I WORK (Sticky Process Engine & Animation) --- */
+.cursor {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
 .process {
   padding-bottom: 120px;
   position: relative;
@@ -223,3 +228,4 @@
     padding: 25px 20px;
   }
 }
+
