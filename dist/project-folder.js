@@ -650,19 +650,19 @@
         document.body.appendChild(flyer);
         el.style.opacity = '0';
 
-        // Animate maximization across two frames
+        // Animate maximization smoothly and deliberately
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             flyer.classList.add('is-maximized');
             
-            // At the peak of expansion, navigate smoothly
+            // Allow the smooth, deliberate expansion animation to complete fully (820ms) before transitioning
             setTimeout(() => {
               if (window.navigateSmoothly) {
                 window.navigateSmoothly(destUrl);
               } else {
                 window.location.href = destUrl;
               }
-            }, 420);
+            }, 780);
           });
         });
       });
