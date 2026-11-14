@@ -3,11 +3,11 @@ import postgres from "postgres";
 const connectionString = process.env.DATABASE_URL_POOLED || process.env.POSTGRES_URL || process.env.DATABASE_URL;
 
 const seedProjects = [
-  ["safebox", "SAFEBOX AI", "AI SECURITY PLATFORM", "Evidence-driven testing for adversarial AI behavior, policy adherence, sensitive-data exposure, and sandbox isolation.", 2026, "https://safebox-ai.vercel.app/", 1],
-  ["twineval", "TWINEVAL AI", "SEMANTIC EVALUATION", "AI-assisted answer evaluation using sentence embeddings and cosine similarity to compare meaning beyond keyword matches.", 2026, "https://twineval-ai.vercel.app/", 2],
-  ["camera", "AI SECURITY CAMERA", "COMPUTER VISION", "Real-time visitor identification using OpenCV, InsightFace, facial embeddings, and recognition workflows.", 2026, "https://github.com/AshwinKirbaa/ai_security_camera", 3],
-  ["gesture", "GESTURE CONTROL", "HUMAN-COMPUTER INTERACTION", "Touchless computer controls built from hand-landmark tracking, gesture recognition, and configurable actions.", 2026, "https://github.com/AshwinKirbaa/ai_gesture_control", 4],
-  ["dexget", "DEXGET", "WINDOWS DESKTOP ASSISTANT", "A Windows 11 Dynamic Island and local-first assistant for search, controls, automations, clipboard history, and phone transfer.", 2026, "https://github.com/AshwinKirbaa/Dexget", 5],
+  ["safebox", "SAFEBOX AI", "AI SECURITY PLATFORM", "Evidence-driven testing for adversarial AI behavior, policy adherence, sensitive-data exposure, and sandbox isolation.", 2026, "/projects/safebox-ai.html", 1],
+  ["twineval", "TWINEVAL AI", "SEMANTIC EVALUATION", "AI-assisted answer evaluation using sentence embeddings and cosine similarity to compare meaning beyond keyword matches.", 2026, "/projects/twineval-ai.html", 2],
+  ["camera", "AI SECURITY CAMERA", "COMPUTER VISION", "Real-time visitor identification using OpenCV, InsightFace, facial embeddings, and recognition workflows.", 2026, "/projects/ai-security-camera.html", 3],
+  ["gesture", "GESTURE CONTROL", "HUMAN-COMPUTER INTERACTION", "Touchless computer controls built from hand-landmark tracking, gesture recognition, and configurable actions.", 2026, "/projects/gesture-control.html", 4],
+  ["dexget", "DEXGET", "WINDOWS DESKTOP ASSISTANT", "A Windows 11 Dynamic Island and local-first assistant for search, controls, automations, clipboard history, and phone transfer.", 2026, "/projects/dexget.html", 5],
 ];
 
 let initialized = false;
