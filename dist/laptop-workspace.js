@@ -139,4 +139,26 @@
   }
 
   renderApp('github', false);
+
+  // Interactive Keyboard Key Feedback
+  const keys = showcase.querySelectorAll('.macbook__key');
+  keys.forEach(k => {
+    k.addEventListener('click', () => {
+      k.classList.add('is-pressed');
+      setTimeout(() => k.classList.remove('is-pressed'), 140);
+    });
+  });
+
+  // Real physical keyboard listener to light up matching laptop keys
+  window.addEventListener('keydown', (e) => {
+    const activeKey = e.key.toUpperCase();
+    keys.forEach(k => {
+      const dataKey = (k.dataset.key || '').toUpperCase();
+      if (dataKey === activeKey || (activeKey === ' ' && dataKey === 'SPACE')) {
+        k.classList.add('is-pressed');
+        setTimeout(() => k.classList.remove('is-pressed'), 180);
+      }
+    });
+  });
+
 })();

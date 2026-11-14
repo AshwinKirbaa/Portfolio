@@ -41,22 +41,7 @@
   z-index: 2;
 }
 
-/* Base of MacBook */
-.macbook__base {
-  position: relative;
-  width: 106%;
-  height: 18px;
-  background: linear-gradient(180deg, #3d3b45 0%, #201e25 60%, #151419 100%);
-  border-radius: 2px 2px 14px 14px;
-  box-shadow: 
-    0 16px 36px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  margin-top: -2px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  z-index: 3;
-}
+
 
 /* Camera Notch / Bezel */
 .macbook__camera {
@@ -1088,42 +1073,270 @@
   align-self: center;
 }
 
-/* MacBook Keyboard Base */
+/* MacBook Keyboard Base - Sleek, Authentic 3D Laptop Chassis */
 .macbook__base {
   position: relative;
   width: 104%;
   left: -2%;
-  height: 24px;
-  background: linear-gradient(180deg, #3d3b43 0%, #201f24 50%, #151418 100%);
-  border-radius: 2px 2px 14px 14px;
+  margin-top: -3px;
+  background: linear-gradient(180deg, #2b2930 0%, #1e1d22 25%, #161519 100%);
+  border-radius: 4px 4px 18px 18px;
   box-shadow: 
-    0 16px 36px rgba(0, 0, 0, 0.65),
-    inset 0 1px 1px rgba(255, 255, 255, 0.35);
+    0 30px 60px rgba(0, 0, 0, 0.75),
+    0 10px 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 12px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
   z-index: 5;
 }
 
-.macbook__notch {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 110px;
-  height: 8px;
-  background: #111014;
-  border-radius: 0 0 8px 8px;
+.macbook__base-top {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  gap: 12px;
 }
 
-/* MacBook Shadow Base Reflection */
-.macbook__reflection {
-  position: absolute;
-  bottom: -22px;
-  left: 5%;
-  right: 5%;
+/* MacBook Left and Right Speaker Grilles */
+.macbook__speaker {
+  width: 28px;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 3px 3px;
+  border-radius: 4px;
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+
+/* Keyboard Well / Enclosure */
+.macbook__keyboard-well {
+  flex: 1;
+  max-width: 720px;
+  background: #0d0c10;
+  border-radius: 8px;
+  padding: 8px 10px;
+  box-shadow: 
+    inset 0 2px 6px rgba(0, 0, 0, 0.95),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.8),
+    0 1px 0 rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Keyboard Rows */
+.macbook__key-row {
+  display: flex;
+  width: 100%;
+  gap: 4px;
+}
+
+/* Individual MacBook Key Styling */
+.macbook__key {
+  position: relative;
+  flex: 1;
   height: 26px;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.65) 0%, transparent 75%);
-  filter: blur(8px);
+  background: linear-gradient(180deg, #1e1d22 0%, #17161a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 2px solid #09090c;
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.78);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  user-select: none;
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 0.06s ease, background 0.06s ease, box-shadow 0.06s ease;
+}
+
+.macbook__key span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
   pointer-events: none;
 }
+
+.macbook__key span small {
+  font-size: 7px;
+  opacity: 0.6;
+  margin-bottom: 1px;
+}
+
+.macbook__key span b {
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.macbook__key:hover {
+  background: linear-gradient(180deg, #26242c 0%, #1e1d23 100%);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.macbook__key:active,
+.macbook__key.is-pressed {
+  transform: translateY(1.5px);
+  background: #111014;
+  border-bottom-width: 1px;
+  box-shadow: 
+    inset 0 1px 3px rgba(0, 0, 0, 0.8),
+    0 0 0 transparent;
+  color: #4285f4;
+}
+
+/* Specific Key Widths */
+.macbook__key-row--1 .macbook__key {
+  height: 16px;
+  font-size: 7.5px;
+}
+.macbook__key.touch-id {
+  background: #111014;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.9);
+}
+
+.macbook__key.key-delete { flex: 1.5; font-size: 8px; justify-content: flex-end; padding-right: 6px; }
+.macbook__key.key-tab { flex: 1.5; font-size: 8px; justify-content: flex-start; padding-left: 6px; }
+.macbook__key.key-caps { flex: 1.8; font-size: 8px; justify-content: flex-start; padding-left: 6px; }
+.macbook__key.key-return { flex: 1.8; font-size: 8px; justify-content: flex-end; padding-right: 6px; }
+.macbook__key.key-shift-l { flex: 2.3; font-size: 8px; justify-content: flex-start; padding-left: 6px; }
+.macbook__key.key-shift-r { flex: 2.3; font-size: 8px; justify-content: flex-end; padding-right: 6px; }
+
+.macbook__key.mod-key { flex: 1.2; font-size: 8px; }
+.macbook__key.key-cmd { flex: 1.35; font-size: 8px; }
+.macbook__key.key-space { flex: 5.5; }
+
+/* Arrow Keys Cluster */
+.macbook__key-arrow-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+.macbook__key--arrow-up,
+.macbook__key--arrow-down {
+  height: 12px !important;
+  font-size: 7px;
+}
+.macbook__key.arrow-key {
+  font-size: 7.5px;
+}
+
+/* Trackpad Area */
+.macbook__trackpad-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.macbook__trackpad {
+  width: 220px;
+  height: 80px;
+  background: linear-gradient(180deg, #242228 0%, #1c1b20 100%);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.macbook__trackpad:hover {
+  background: linear-gradient(180deg, #28262d 0%, #201f24 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* MacBook Front Edge Notch */
+.macbook__notch {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 7px;
+  background: #0d0c10;
+  border-radius: 6px 6px 0 0;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* Base Shadow Reflection */
+.macbook__reflection {
+  position: absolute;
+  bottom: -28px;
+  left: 6%;
+  right: 6%;
+  height: 32px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.75) 0%, transparent 75%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .macbook__speaker {
+    display: none;
+  }
+  .macbook__key {
+    height: 22px;
+    font-size: 8px;
+  }
+  .macbook__key-row--1 .macbook__key {
+    height: 14px;
+    font-size: 6.5px;
+  }
+  .macbook__trackpad {
+    width: 170px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 640px) {
+  .macbook__base {
+    padding: 8px 10px 14px;
+  }
+  .macbook__key-row {
+    gap: 2px;
+  }
+  .macbook__keyboard-well {
+    padding: 5px 6px;
+    gap: 3px;
+  }
+  .macbook__key {
+    height: 18px;
+    font-size: 6.5px;
+    border-radius: 2px;
+  }
+  .macbook__key-row--1 .macbook__key {
+    height: 12px;
+    font-size: 5.5px;
+  }
+  .macbook__key span small {
+    display: none;
+  }
+  .macbook__trackpad {
+    width: 130px;
+    height: 45px;
+  }
+}
+
 
 /* Responsive Styling */
 @media (max-width: 900px) {
