@@ -8,77 +8,88 @@
       alt: 'Render Rush First Place Certificate',
       title: 'Render Rush — First Place',
       subtitle: 'Kalam 2026 · Sri Shakthi',
-      anchor: 'render-rush'
+      anchor: 'render-rush',
+      aspectRatio: 1.444
     },
     {
       src: 'assets/certificates/hacksprint-2026.png',
       alt: 'HackSprint 2026 24-hour Hackathon Certificate',
       title: 'HackSprint ’26',
       subtitle: '24-hour AI Hackathon',
-      anchor: 'hacksprint-26'
+      anchor: 'hacksprint-26',
+      aspectRatio: 1.444
     },
     {
       src: 'assets/certificates/ibm-bob-2-hackathon.png',
       alt: 'IBM BoB 2.0 Hackathon Completion Certificate',
       title: 'IBM BoB 2.0',
       subtitle: 'Agentic AI Solution Build',
-      anchor: 'ibm-bob-2'
+      anchor: 'ibm-bob-2',
+      aspectRatio: 0.703
     },
     {
       src: 'assets/certificates/hack-in-hills-top-500.png',
       alt: 'Hack in Hills 2026 Top 500 Builder Pass',
       title: 'Hack in Hills',
       subtitle: 'Top 500 Builder Pass',
-      anchor: 'hack-in-hills'
+      anchor: 'hack-in-hills',
+      aspectRatio: 0.8
     },
     {
       src: 'assets/certificates/hackday-1.png',
       alt: 'HackDay 1.0 Rapid Prototyping Certificate',
       title: 'HackDay 1.0',
       subtitle: '8-Hour Rapid Prototyping',
-      anchor: 'hackday-1'
+      anchor: 'hackday-1',
+      aspectRatio: 1.501
     },
     {
       src: 'assets/certificates/promptwars-gdg-cit.png',
       alt: 'PromptWars GDG on Campus CIT Certificate',
       title: 'PromptWars × GDG CIT',
       subtitle: 'Antigravity AI Prototype',
-      anchor: 'promptwars'
+      anchor: 'promptwars',
+      aspectRatio: 1.363
     },
     {
       src: 'assets/certificates/hackerrank-orchestrate-rank-1134.png',
       alt: 'HackerRank Orchestrate Rank 1134 Certificate',
       title: 'HackerRank Orchestrate',
       subtitle: 'Final Rank #1,134 · AI Agent',
-      anchor: 'hackerrank-orchestrate'
+      anchor: 'hackerrank-orchestrate',
+      aspectRatio: 1.466
     },
     {
       src: 'assets/certificates/hackerrank-frontend-react.png',
       alt: 'HackerRank Frontend Developer React Certificate',
       title: 'Frontend Developer',
       subtitle: 'React Role Certification',
-      anchor: 'frontend-react'
+      anchor: 'frontend-react',
+      aspectRatio: 1.307
     },
     {
       src: 'assets/certificates/ijrti-publication.png',
       alt: 'TwinEval AI IJRTI Certificate of Publication',
       title: 'TwinEval AI',
       subtitle: 'IJRTI Paper ID: IJRTI2610875',
-      anchor: 'twineval-ijrti'
+      anchor: 'twineval-ijrti',
+      aspectRatio: 1.415
     },
     {
       src: 'assets/certificates/nptel-cloud-computing-elite.png',
       alt: 'NPTEL Cloud Computing Elite Certificate',
       title: 'Cloud Computing',
       subtitle: 'NPTEL Elite · 12 Weeks IIT',
-      anchor: 'nptel-cloud'
+      anchor: 'nptel-cloud',
+      aspectRatio: 1.416
     },
     {
       src: 'assets/certificates/gemini-quiz-war.png',
       alt: 'Gemini Quiz War Certificate',
       title: 'Gemini Quiz War',
       subtitle: 'DecodeP Participation',
-      anchor: 'gemini-quiz-war'
+      anchor: 'gemini-quiz-war',
+      aspectRatio: 1.437
     }
   ];
 
@@ -200,37 +211,70 @@
     const curveValue = layout.billboard ? 0 : clamp(curve ?? layout.curve, 0, 1);
     const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
-    const cardW = Math.max(40, cardWidth);
-    const cardH = cardW / clamp(aspectRatio, 0.2, 5);
-    const along = axis === 'x' ? cardH : cardW;
+    // Sizing
+    // Standard target frame height in panorama mode
+    const baseH = cardWidth / clamp(aspectRatio, 0.2, 5); // ~320px
+    const cardH = baseH;
+
+    // Precalculate per-item geometry so every certificate renders in its true aspect ratio
+    const itemsGeo = list.map((item) => {
+      const itemRatio = item.aspectRatio || aspectRatio;
+      let w, h;
+      if (itemRatio >= 1) {
+        // Landscape certificate: wide format
+        w = Math.round(cardH * itemRatio);
+        h = cardH;
+        // Cap max width if needed to fit comfortably
+        if (w > 450) {
+          w = 450;
+          h = Math.round(w / itemRatio);
+        }
+      } else {
+        // Portrait certificate: tall format
+        h = cardH;
+        w = Math.round(cardH * itemRatio);
+        if (w < 200) {
+          w = 200;
+          h = Math.round(w / itemRatio);
+        }
+      }
+      return { w, h, ratio: itemRatio };
+    });
+
+    // Use max width across items for pitch/chord calculation to guarantee comfortable spacing
+    const maxItemW = Math.max(...itemsGeo.map(g => g.w));
+    const cardW = maxItemW;
+    const along = cardW;
     const step = 360 / count;
 
-    // Radius calculation
+    // Radius calculation based on maximum card width
     const n = Math.max(count, 3);
     const pitch = (along + gap) * layout.spread;
     const chord = pitch / (2 * Math.sin(Math.PI / n));
     const arc = (n * pitch) / (2 * Math.PI);
     const radius = Math.max(chord + (arc - chord) * curveValue, along * 0.6);
 
-    // Tiles calculation
-    const totalTiles = curveValue > 0.001 ? TILES : 1;
-    const length = along / totalTiles;
-    const bend = curveValue > 0.001 ? radius / curveValue : 0;
-    const tiles = Array.from({ length: totalTiles }, (_, index) => {
-      const start = index * length - (index > 0 ? OVERLAP / 2 : 0);
-      const end = (index + 1) * length + (index < totalTiles - 1 ? OVERLAP / 2 : 0);
-      const center = (start + end) / 2 - along / 2;
-      const alpha = bend ? center / bend : 0;
-      const shift = bend ? bend * Math.sin(alpha) : center;
-      const sink = bend ? bend * (1 - Math.cos(alpha)) : 0;
-      const depth = layout.inward ? sink : -sink;
-      const turn = ((layout.inward ? -alpha : alpha) * 180) / Math.PI;
-      const move =
-        axis === 'x'
-          ? `translate3d(0px, ${shift}px, ${depth}px) rotateX(${-turn}deg)`
-          : `translate3d(${shift}px, 0px, ${depth}px) rotateY(${turn}deg)`;
-      return { index, total: totalTiles, start, end, size: end - start, move };
-    });
+    // Compute tiles dynamically per item width
+    const buildTilesForItem = (itemW) => {
+      const totalTiles = curveValue > 0.001 ? TILES : 1;
+      const length = itemW / totalTiles;
+      const bend = curveValue > 0.001 ? radius / curveValue : 0;
+      return Array.from({ length: totalTiles }, (_, index) => {
+        const start = index * length - (index > 0 ? OVERLAP / 2 : 0);
+        const end = (index + 1) * length + (index < totalTiles - 1 ? OVERLAP / 2 : 0);
+        const center = (start + end) / 2 - itemW / 2;
+        const alpha = bend ? center / bend : 0;
+        const shift = bend ? bend * Math.sin(alpha) : center;
+        const sink = bend ? bend * (1 - Math.cos(alpha)) : 0;
+        const depth = layout.inward ? sink : -sink;
+        const turn = ((layout.inward ? -alpha : alpha) * 180) / Math.PI;
+        const move =
+          axis === 'x'
+            ? `translate3d(0px, ${shift}px, ${depth}px) rotateX(${-turn}deg)`
+            : `translate3d(${shift}px, 0px, ${depth}px) rotateY(${turn}deg)`;
+        return { index, total: totalTiles, start, end, size: end - start, move };
+      });
+    };
 
     const settings = {
       count,
@@ -314,7 +358,7 @@
 
     const cardElements = [];
 
-    const renderTileNode = (item, tile, back) => {
+    const renderTileNode = (item, geo, tile, back) => {
       const strip = back ? tile.total - 1 - tile.index : tile.index;
       const first = strip === 0;
       const last = strip === tile.total - 1;
@@ -323,16 +367,16 @@
         axis === 'x'
           ? `${first ? r : 0} ${first ? r : 0} ${last ? r : 0} ${last ? r : 0}`
           : `${first ? r : 0} ${last ? r : 0} ${last ? r : 0} ${first ? r : 0}`;
-      const offset = back ? along - tile.end : tile.start;
+      const offset = back ? geo.w - tile.end : tile.start;
       const size = tile.size;
       const boxStyle =
         axis === 'x'
-          ? `left: ${-cardW / 2}px; top: ${-size / 2}px; width: ${cardW}px; height: ${size}px;`
-          : `left: ${-size / 2}px; top: ${-cardH / 2}px; width: ${size}px; height: ${cardH}px;`;
+          ? `left: ${-geo.w / 2}px; top: ${-size / 2}px; width: ${geo.w}px; height: ${size}px;`
+          : `left: ${-size / 2}px; top: ${-geo.h / 2}px; width: ${size}px; height: ${geo.h}px;`;
       const photoStyle =
         axis === 'x'
-          ? `left: 0; top: ${-offset}px; width: ${cardW}px; height: ${cardH}px;`
-          : `left: ${-offset}px; top: 0; width: ${cardW}px; height: ${cardH}px;`;
+          ? `left: 0; top: ${-offset}px; width: ${geo.w}px; height: ${geo.h}px;`
+          : `left: ${-offset}px; top: 0; width: ${geo.w}px; height: ${geo.h}px;`;
       const flip = axis === 'x' ? ' rotateX(180deg)' : ' rotateY(180deg)';
 
       const tileEl = document.createElement('div');
@@ -341,7 +385,7 @@
       tileEl.style.cssText = `${boxStyle} transform: ${tile.move + (back ? flip : '')};`;
 
       tileEl.innerHTML = `
-        <div class="circular-carousel__frame" style="height: ${axis === 'x' ? size : cardH}px; border-radius: ${frameRadius};">
+        <div class="circular-carousel__frame" style="height: ${axis === 'x' ? size : geo.h}px; border-radius: ${frameRadius};">
           <img class="circular-carousel__photo" src="${item.src}" alt="" draggable="false" style="${photoStyle}">
           ${back ? '<div class="circular-carousel__inner"></div>' : ''}
           <div class="circular-carousel__shade"></div>
@@ -351,6 +395,9 @@
     };
 
     list.forEach((item, index) => {
+      const geo = itemsGeo[index] || { w: cardW, h: cardH };
+      const itemTiles = buildTilesForItem(geo.w);
+
       const card = document.createElement('div');
       card.className = 'circular-carousel__card';
       card.setAttribute('data-cc-index', String(index));
@@ -358,9 +405,9 @@
       card.setAttribute('aria-roledescription', 'slide');
       card.setAttribute('aria-label', `${item.title || item.alt || `Certificate ${index + 1}`}, ${index + 1} of ${count}`);
 
-      tiles.forEach(tile => card.appendChild(renderTileNode(item, tile, false)));
+      itemTiles.forEach(tile => card.appendChild(renderTileNode(item, geo, tile, false)));
       if (layout.backfaces) {
-        tiles.forEach(tile => card.appendChild(renderTileNode(item, tile, true)));
+        itemTiles.forEach(tile => card.appendChild(renderTileNode(item, geo, tile, true)));
       }
 
       ring.appendChild(card);
