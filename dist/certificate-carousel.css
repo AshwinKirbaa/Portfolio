@@ -46,6 +46,12 @@
   mask-image: linear-gradient(to right, transparent, #000000 12%, #000000 88%, transparent);
 }
 
+.circular-carousel__stage,
+.circular-carousel__camera,
+.circular-carousel__ring {
+  pointer-events: none;
+}
+
 .circular-carousel__stage {
   position: absolute;
   inset: 0;
@@ -81,6 +87,7 @@
 
 .circular-carousel__card {
   cursor: pointer;
+  pointer-events: auto;
   filter: drop-shadow(0 20px 32px rgba(0, 0, 0, 0.75));
   transition: filter 0.25s ease;
 }
@@ -93,6 +100,7 @@
 .circular-carousel__tile {
   position: absolute;
   outline: 1px solid transparent;
+  pointer-events: auto;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
@@ -103,6 +111,7 @@
   top: 0;
   width: 100%;
   overflow: hidden;
+  pointer-events: auto;
   background: #171514;
 }
 
@@ -111,7 +120,7 @@
   display: block;
   max-width: none;
   object-fit: cover;
-  pointer-events: none;
+  pointer-events: auto;
   user-select: none;
   -webkit-user-drag: none;
   background: #0f0e0d;

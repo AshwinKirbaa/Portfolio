@@ -853,11 +853,22 @@
         state.suppressClick = false;
         return;
       }
+      // Check if click originated on or inside a card
       const card = event.target.closest?.('[data-cc-index]');
-      if (!card) return;
-      const index = Number(card.getAttribute('data-cc-index'));
-      if (focusOnClick) focusIndex(index);
-      onItemClick(list[index], index);
+      if (card) {
+        const index = Number(card.getAttribute('data-cc-index'));
+        if (focusOnClick) focusIndex(index);
+        onItemClick(list[index], index);
+        return;
+      }
+
+      // If clicked anywhere in view area (not on CTA/controls), open the currently focused front card
+      if (!event.target.closest?.('.circular-carousel__cta-pill')) {
+        const activeItem = list[state.active];
+        if (activeItem) {
+          onItemClick(activeItem, state.active);
+        }
+      }
     });
 
     root.addEventListener('keydown', event => {
