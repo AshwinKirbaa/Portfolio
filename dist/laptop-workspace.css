@@ -16,6 +16,9 @@
   max-width: 860px;
   margin: 0 auto;
   transform: none !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Screen Lid - Rock-solid stationary without cursor tilt */
@@ -35,6 +38,24 @@
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  z-index: 2;
+}
+
+/* Base of MacBook */
+.macbook__base {
+  position: relative;
+  width: 106%;
+  height: 18px;
+  background: linear-gradient(180deg, #3d3b45 0%, #201e25 60%, #151419 100%);
+  border-radius: 2px 2px 14px 14px;
+  box-shadow: 
+    0 16px 36px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  margin-top: -2px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 3;
 }
 
 /* Camera Notch / Bezel */
