@@ -141,7 +141,7 @@
   };
 
   const INTRO_LENGTH = { assemble: 1500, rise: 1400, spin: 1800, none: 0 };
-  const TILES = 8;
+  const TILES = 1;
   const OVERLAP = 2.5;
   const DRAG_THRESHOLD = 5;
   const SPRING = 118;

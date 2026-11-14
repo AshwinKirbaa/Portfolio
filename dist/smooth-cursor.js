@@ -35,7 +35,10 @@
     return from + delta;
   };
 
+  let renderScheduled = false;
+
   const render = () => {
+    renderScheduled = false;
     currentX += (targetX - currentX) * followStrength;
     currentY += (targetY - currentY) * followStrength;
 
@@ -50,7 +53,18 @@
 
     previousX = currentX;
     previousY = currentY;
-    requestAnimationFrame(render);
+
+    if (visible && (Math.abs(targetX - currentX) > 0.1 || Math.abs(targetY - currentY) > 0.1 || Math.abs(shortestAngle(rotation, targetRotation) - rotation) > 0.1)) {
+      renderScheduled = true;
+      requestAnimationFrame(render);
+    }
+  };
+
+  const scheduleRender = () => {
+    if (!renderScheduled && visible) {
+      renderScheduled = true;
+      requestAnimationFrame(render);
+    }
   };
 
   addEventListener('pointermove', (event) => {
@@ -65,10 +79,12 @@
       visible = true;
       cursor.classList.add('is-visible');
     }
+    scheduleRender();
   }, { passive: true });
 
   addEventListener('pointerover', (event) => {
     cursor.classList.toggle('is-interactive', Boolean(event.target.closest('a, button, [role="button"], input, textarea, select, summary')));
+    scheduleRender();
   }, { passive: true });
 
   addEventListener('pointerout', (event) => {
@@ -80,7 +96,10 @@
 
   addEventListener('blur', () => cursor.classList.remove('is-visible'));
   addEventListener('focus', () => {
-    if (visible) cursor.classList.add('is-visible');
+    if (visible) {
+      cursor.classList.add('is-visible');
+      scheduleRender();
+    }
   });
 
   render();

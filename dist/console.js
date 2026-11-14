@@ -25,24 +25,7 @@
   let activeKey = null;
 
   if (!reduceMotion && matchMedia('(pointer:fine)').matches && wrapper) {
-    wrapper.addEventListener('pointermove', event => {
-      isHovered = true;
-      if (activeKey) return;
-      const rect = wrapper.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width; // 0 to 1
-      const y = (event.clientY - rect.top) / rect.height; // 0 to 1
-
-      // Natural subtle tilt (max 9 degrees pitch/roll)
-      targetRx = (0.5 - y) * 12; // tilt forward/backward
-      targetRy = (x - 0.5) * 16; // tilt left/right
-    });
-
-    wrapper.addEventListener('pointerleave', () => {
-      isHovered = false;
-      targetRx = 0;
-      targetRy = 0;
-    });
-
+    let tiltRaf = 0;
     const animateTilt = () => {
       currentRx += (targetRx - currentRx) * 0.1;
       currentRy += (targetRy - currentRy) * 0.1;
@@ -50,10 +33,35 @@
       consolePanel.style.setProperty('--console-rx', `${currentRx.toFixed(2)}deg`);
       consolePanel.style.setProperty('--console-ry', `${currentRy.toFixed(2)}deg`);
 
-      requestAnimationFrame(animateTilt);
+      if (Math.abs(targetRx - currentRx) > 0.01 || Math.abs(targetRy - currentRy) > 0.01 || isHovered) {
+        tiltRaf = requestAnimationFrame(animateTilt);
+      } else {
+        tiltRaf = 0;
+      }
     };
 
-    requestAnimationFrame(animateTilt);
+    const wakeTilt = () => {
+      if (!tiltRaf) tiltRaf = requestAnimationFrame(animateTilt);
+    };
+
+    wrapper.addEventListener('pointermove', event => {
+      isHovered = true;
+      if (activeKey) return;
+      const rect = wrapper.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / (rect.width || 1); // 0 to 1
+      const y = (event.clientY - rect.top) / (rect.height || 1); // 0 to 1
+
+      targetRx = (0.5 - y) * 12;
+      targetRy = (x - 0.5) * 16;
+      wakeTilt();
+    }, { passive: true });
+
+    wrapper.addEventListener('pointerleave', () => {
+      isHovered = false;
+      targetRx = 0;
+      targetRy = 0;
+      wakeTilt();
+    }, { passive: true });
   }
 
   // Tactile Mechanical Key Interaction

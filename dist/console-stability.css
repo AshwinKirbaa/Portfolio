@@ -483,3 +483,41 @@ h1, h2, h3, h4, h5, h6,
     line-height: 0.94 !important;
   }
 }
+
+/* ==========================================================================
+   PERFORMANCE & SMOOTH RENDERING OPTIMIZATIONS
+   Eliminate CPU/GPU raster bottlenecks and heavy SVG filter repaints
+   ========================================================================== */
+
+/* 1. Disable expensive SVG feTurbulence continuous repaint on full viewport */
+.noise,
+.cs-noise {
+  display: none !important;
+}
+
+/* 2. Hardware acceleration & will-change hints for smooth scrolling surfaces */
+.wga-vertical-track,
+.wga-vposter,
+.circular-carousel,
+.circular-carousel__stage,
+.circular-carousel__camera,
+.circular-carousel__ring,
+.circular-carousel__card,
+.folder-stage,
+.folder-layer,
+.project-stage,
+.preview-wrap {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* 3. Streamline card drop shadows and composite layers to maintain 60-120fps */
+.circular-carousel__card {
+  filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.65)) !important;
+}
+
+.profile-card {
+  --pc-grain: none !important;
+}
+

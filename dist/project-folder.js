@@ -606,7 +606,7 @@
     };
 
     const wake = () => {
-      if (!state.raf) state.raf = requestAnimationFrame(frame);
+      if (!state.raf && state.visible) state.raf = requestAnimationFrame(frame);
     };
 
     const setOpen = open => {
@@ -728,6 +728,20 @@
     });
 
     setOpen(defaultOpen);
+
+    state.visible = true;
+    const io = new IntersectionObserver(([entry]) => {
+      state.visible = entry.isIntersecting;
+      if (state.visible) {
+        state.raf = 0;
+        wake();
+      } else {
+        if (state.raf) cancelAnimationFrame(state.raf);
+        state.raf = 0;
+      }
+    }, { threshold: 0.05 });
+    io.observe(root);
+
     wake();
   }
 
