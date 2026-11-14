@@ -952,7 +952,12 @@
     perspective: 1800,
     onItemClick: (item) => {
       if (item && item.anchor) {
-        window.location.href = `certificates.html#${item.anchor}`;
+        const dest = `certificates.html#${item.anchor}`;
+        if (window.navigateSmoothly) {
+          window.navigateSmoothly(dest);
+        } else {
+          window.location.href = dest;
+        }
       }
     }
   });

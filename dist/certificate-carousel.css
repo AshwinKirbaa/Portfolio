@@ -219,7 +219,7 @@
   transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.circular-carousel__reel > span {
+.circular-carousel__reel>span {
   height: 1em;
 }
 
@@ -286,6 +286,7 @@
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -296,6 +297,7 @@
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
@@ -305,6 +307,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -316,10 +319,12 @@
     min-height: 440px;
     margin: 0 0 60px;
   }
+
   .certificate-carousel-shell::before {
     left: 14px;
     font-size: 8px;
   }
+
   .circular-carousel__caption {
     bottom: 18px;
     padding: 0 10px;
@@ -327,6 +332,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .circular-carousel__stage,
   .circular-carousel__reel {
     transition: none;

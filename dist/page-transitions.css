@@ -1,0 +1,85 @@
+/* Modern Cinematic Page Transition Styles */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: 320ms cubic-bezier(0.4, 0, 1, 1) both page-fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 380ms cubic-bezier(0, 0, 0.2, 1) both page-fade-in;
+}
+
+@keyframes page-fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.985);
+    filter: blur(4px);
+  }
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(1.015);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* Page Transition Overlay Fallback & Enhancement */
+.page-transition-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  pointer-events: none;
+  background: #121110;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1), visibility 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, visibility;
+}
+
+.page-transition-curtain.is-leaving {
+  pointer-events: auto;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Red accent accent bar on top during transition */
+.page-transition-curtain::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ed3b24, #ff6b4a, #ed3b24);
+  background-size: 200% 100%;
+  animation: pt-shimmer 1.2s infinite linear;
+}
+
+@keyframes pt-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+  .page-transition-curtain {
+    transition-duration: 0.01ms !important;
+  }
+}
