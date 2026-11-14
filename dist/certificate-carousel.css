@@ -14,7 +14,7 @@
 .certificate-carousel-shell::before { content: "CERTIFICATE ARCHIVE / DRAG TO EXPLORE"; position: absolute; top: 22px; left: 2.5vw; z-index: 4; color: #aaa097; font: 9px var(--mono); letter-spacing: .08em; }
 .certificate-carousel-viewport { position: absolute; inset: 0; perspective: 1500px; perspective-origin: 50% 48%; overflow: hidden; }
 .certificate-carousel-ring { position: absolute; top: 47%; left: 50%; width: 220px; height: 154px; transform-style: preserve-3d; will-change: transform; }
-.certificate-carousel-card { position: absolute; inset: 0; display: block; overflow: hidden; border: 1px solid #ffffff3a; border-radius: 10px; background: #25211f; box-shadow: 0 25px 55px #0009; backface-visibility: hidden; transform-style: preserve-3d; transition: border-color .25s ease, filter .25s ease; }
+.certificate-carousel-card { position: absolute; inset: 0; display: block; overflow: hidden; border: 1px solid #ffffff3a; border-radius: 10px; background: #25211f; box-shadow: 0 25px 55px #0009; backface-visibility: hidden; transform-style: preserve-3d; transition: border-color .25s ease, filter .25s ease; cursor: pointer; }
 .certificate-carousel-card::after { content: "OPEN ARCHIVE ↗"; position: absolute; inset: auto 8px 8px; padding: 7px 8px; color: #f5eee7; background: #171514df; border: 1px solid #ffffff29; font: 8px var(--mono); text-align: center; opacity: 0; transform: translateY(6px); transition: .2s ease; }
 .certificate-carousel-card:hover,.certificate-carousel-card:focus-visible { border-color: var(--red); filter: brightness(1.08); outline: none; }
 .certificate-carousel-card:hover::after,.certificate-carousel-card:focus-visible::after { opacity: 1; transform: none; }
