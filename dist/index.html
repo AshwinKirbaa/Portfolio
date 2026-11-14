@@ -530,28 +530,221 @@
               <div class="macbook__window">
                 <div class="macbook__window-bar">
                   <div class="macbook__window-controls">
-                    <span class="macbook__win-dot red"></span>
-                    <span class="macbook__win-dot yellow"></span>
-                    <span class="macbook__win-dot green"></span>
+                    <span class="macbook__win-dot red" title="Reset view"></span>
+                    <span class="macbook__win-dot yellow" title="Minimize"></span>
+                    <span class="macbook__win-dot green" title="Expand"></span>
+                  </div>
+                  <div class="macbook__window-nav">
+                    <button class="macbook__nav-btn macbook__nav-btn--back" title="Back" aria-label="Back">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <button class="macbook__nav-btn macbook__nav-btn--forward" title="Forward" aria-label="Forward">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
                   </div>
                   <div class="macbook__window-url">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    <span>github.com/AshwinKirbaa</span>
+                    <div class="macbook__url-left">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                      <span class="macbook__url-text">github.com/AshwinKirbaa</span>
+                    </div>
+                    <a class="macbook__open-ext-btn" href="https://github.com/AshwinKirbaa" target="_blank" rel="noreferrer" title="Open externally">↗</a>
                   </div>
-                  <div></div>
                 </div>
-                <div class="macbook__window-body">
-                  <div class="macbook__preview-header">
-                    <div class="macbook__preview-icon"></div>
-                    <div>
-                      <h4 class="macbook__preview-title">GitHub Repositories</h4>
-                      <span class="macbook__preview-handle">@AshwinKirbaa</span>
+                <div class="macbook__browser-frame">
+                  <!-- GitHub View -->
+                  <div class="macbook__app-view is-visible" data-view="github">
+                    <div class="inlaptop-hero">
+                      <div class="inlaptop-profile">
+                        <img class="inlaptop-avatar" src="assets/profile-photo.png" alt="Ashwin Kirbaa" />
+                        <div class="inlaptop-info">
+                          <h3>Ashwin Kirbaa B.</h3>
+                          <p>@AshwinKirbaa · AI & Systems Developer</p>
+                        </div>
+                      </div>
+                      <a class="inlaptop-action-btn" href="https://github.com/AshwinKirbaa" target="_blank" rel="noreferrer">Open GitHub ↗</a>
+                    </div>
+                    <div class="inlaptop-content">
+                      <div class="inlaptop-grid">
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">SafeBox AI <span>Active</span></div>
+                          <p>Intelligent security camera & edge anomaly alert pipeline.</p>
+                          <div class="inlaptop-card-tags"><span>Python</span> · <span>OpenCV</span> · <span>FastAPI</span></div>
+                        </div>
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">TwinEval AI <span>Published</span></div>
+                          <p>Smart handwritten answer scripts evaluation research prototype.</p>
+                          <div class="inlaptop-card-tags"><span>AI / ML</span> · <span>NLP</span> · <span>OCR</span></div>
+                        </div>
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">AI Security Camera <span>Edge</span></div>
+                          <p>Real-time face recognition and identity embedding matching.</p>
+                          <div class="inlaptop-card-tags"><span>Computer Vision</span> · <span>PyTorch</span></div>
+                        </div>
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">Gesture Control <span>HCI</span></div>
+                          <p>Vision-based touchless human-computer interface controls.</p>
+                          <div class="inlaptop-card-tags"><span>MediaPipe</span> · <span>Python</span></div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <p class="macbook__preview-desc">Open-source machine learning models, computer vision systems, and full-stack applications with reproducible code.</p>
-                  <div class="macbook__preview-footer">
-                    <span class="macbook__preview-status"><i>●</i> Active Commits · Public Work</span>
-                    <a class="macbook__preview-btn" href="https://github.com/AshwinKirbaa" target="_blank" rel="noreferrer">VISIT GITHUB REPOS ↗</a>
+
+                  <!-- LinkedIn View -->
+                  <div class="macbook__app-view" data-view="linkedin">
+                    <div class="inlaptop-hero">
+                      <div class="inlaptop-profile">
+                        <img class="inlaptop-avatar" src="assets/profile-photo.png" alt="Ashwin Kirbaa" />
+                        <div class="inlaptop-info">
+                          <h3>Ashwin Kirbaa B.</h3>
+                          <p>Computer Science Engineering @ Sri Shakthi Institute · AI Developer</p>
+                        </div>
+                      </div>
+                      <a class="inlaptop-action-btn" href="https://www.linkedin.com/in/ashwin-kirbaa17" target="_blank" rel="noreferrer">Connect ↗</a>
+                    </div>
+                    <div class="inlaptop-content">
+                      <div class="inlaptop-grid">
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">Education <span>2025–2029</span></div>
+                          <p>B.E. Computer Science and Engineering at Sri Shakthi Institute of Engineering and Technology.</p>
+                          <div class="inlaptop-card-tags"><span>CGPA: Active</span> · <span>Coimbatore, IN</span></div>
+                        </div>
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">Core Competencies <span>Verified</span></div>
+                          <p>Applied Machine Learning, Computer Vision, Backend Services, and Linux Self-Hosting.</p>
+                          <div class="inlaptop-card-tags"><span>Python</span> · <span>Java</span> · <span>React</span> · <span>Docker</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- X / Twitter View -->
+                  <div class="macbook__app-view" data-view="x">
+                    <div class="inlaptop-hero">
+                      <div class="inlaptop-profile">
+                        <img class="inlaptop-avatar" src="assets/profile-photo.png" alt="Ashwin Kirbaa" />
+                        <div class="inlaptop-info">
+                          <h3>Ashwin Kirbaa</h3>
+                          <p>@AshwinKirbaa · Building in public</p>
+                        </div>
+                      </div>
+                      <a class="inlaptop-action-btn" href="https://x.com/AshwinKirbaa" target="_blank" rel="noreferrer">Follow @AshwinKirbaa ↗</a>
+                    </div>
+                    <div class="inlaptop-content">
+                      <div class="inlaptop-grid">
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">Latest Thread <span>Pinned</span></div>
+                          <p>Engineering real-time computer vision models that run efficiently on commodity edge hardware without cloud lag.</p>
+                          <div class="inlaptop-card-tags"><span>#BuildInPublic</span> · <span>#AI</span> · <span>#ComputerVision</span></div>
+                        </div>
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">Project Build Log <span>Recent</span></div>
+                          <p>Benchmarking facial embedding cosine similarity thresholds for low false-positive access systems.</p>
+                          <div class="inlaptop-card-tags"><span>Open Source</span> · <span>Deep Learning</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Instagram View -->
+                  <div class="macbook__app-view" data-view="instagram">
+                    <div class="inlaptop-hero">
+                      <div class="inlaptop-profile">
+                        <img class="inlaptop-avatar" src="assets/profile-photo.png" alt="Ashwin Kirbaa" />
+                        <div class="inlaptop-info">
+                          <h3>unfav.ashwin_x</h3>
+                          <p>Ashwin Kirbaa · Tech, life, and side experiments</p>
+                        </div>
+                      </div>
+                      <a class="inlaptop-action-btn" href="https://www.instagram.com/unfav.ashwin_x" target="_blank" rel="noreferrer">View Profile ↗</a>
+                    </div>
+                    <div class="inlaptop-content">
+                      <div class="inlaptop-grid">
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">Hardware Setup <span>Workstation</span></div>
+                          <p>Minimalist development setup, Linux server racks, and mechanical peripherals.</p>
+                          <div class="inlaptop-card-tags"><span>DeskSetup</span> · <span>Workstation</span></div>
+                        </div>
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">Campus & Engineering <span>Moments</span></div>
+                          <p>College engineering sprints, hackathons, and prototype testing sessions.</p>
+                          <div class="inlaptop-card-tags"><span>College</span> · <span>Hackathon</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Google Skills View -->
+                  <div class="macbook__app-view" data-view="google">
+                    <div class="inlaptop-hero">
+                      <div class="inlaptop-profile">
+                        <img class="inlaptop-avatar" src="assets/profile-photo.png" alt="Ashwin Kirbaa" />
+                        <div class="inlaptop-info">
+                          <h3>Google Cloud Skills</h3>
+                          <p>Verified Credentials & Skill Badges</p>
+                        </div>
+                      </div>
+                      <a class="inlaptop-action-btn" href="https://www.skills.google/public_profiles/fc1d22cc-384e-495c-8ca9-7fab2e97a896" target="_blank" rel="noreferrer">Verify Badges ↗</a>
+                    </div>
+                    <div class="inlaptop-content">
+                      <div class="inlaptop-grid">
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">Generative AI Explorer <span>Badge</span></div>
+                          <p>Foundations of Large Language Models, prompt tuning, and responsible AI practices.</p>
+                          <div class="inlaptop-card-tags"><span>Google Cloud</span> · <span>GenAI</span></div>
+                        </div>
+                        <div class="inlaptop-card">
+                          <div class="inlaptop-card-title">Vertex AI & Gemini API <span>Badge</span></div>
+                          <p>Multimodal prompts, function calling, vector search, and model deployments.</p>
+                          <div class="inlaptop-card-tags"><span>Vertex AI</span> · <span>Gemini</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Email View -->
+                  <div class="macbook__app-view" data-view="email">
+                    <div class="inlaptop-hero">
+                      <div class="inlaptop-profile">
+                        <div class="inlaptop-avatar" style="display:grid;place-items:center;background:var(--red);color:#fff;font-weight:700;font-size:20px;">@</div>
+                        <div class="inlaptop-info">
+                          <h3>Send an Email</h3>
+                          <p>ashwinkirbaa17@gmail.com</p>
+                        </div>
+                      </div>
+                      <a class="inlaptop-action-btn" href="mailto:ashwinkirbaa17@gmail.com">Compose Email ↗</a>
+                    </div>
+                    <div class="inlaptop-content">
+                      <div class="inlaptop-card" style="padding:18px;">
+                        <div class="inlaptop-card-title">Direct Inquiry <span>Fast Response</span></div>
+                        <p style="margin-top:6px;font-size:12px;color:rgba(255,255,255,0.8);">Available for software engineering internships, research collaborations, machine learning systems, and client development projects.</p>
+                        <div style="margin-top:12px;">
+                          <a class="inlaptop-action-btn" href="mailto:ashwinkirbaa17@gmail.com?subject=Hello%20Ashwin">Write to ashwinkirbaa17@gmail.com ✉</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Resume (CV) View -->
+                  <div class="macbook__app-view" data-view="cv">
+                    <div class="inlaptop-hero">
+                      <div class="inlaptop-profile">
+                        <div class="inlaptop-avatar" style="display:grid;place-items:center;background:#232028;color:#65ff7b;font-weight:700;font-size:18px;">CV</div>
+                        <div class="inlaptop-info">
+                          <h3>Curriculum Vitae</h3>
+                          <p>Ashwin_Kirbaa_Resume.pdf · Updated 2026</p>
+                        </div>
+                      </div>
+                      <a class="inlaptop-action-btn" href="assets/ashwin-kirbaa-cv.pdf" target="_blank" rel="noreferrer">Download PDF ↗</a>
+                    </div>
+                    <div class="inlaptop-content">
+                      <div class="inlaptop-card" style="padding:18px;">
+                        <div class="inlaptop-card-title">Ashwin Kirbaa B. — Resume Overview <span>PDF</span></div>
+                        <p style="margin-top:6px;font-size:12px;color:rgba(255,255,255,0.8);">B.E. Computer Science and Engineering @ Sri Shakthi Institute of Engineering and Technology (2025–2029). Focus: AI Systems, Computer Vision, Full-Stack and Edge Infrastructure.</p>
+                        <div style="margin-top:12px;display:flex;gap:10px;">
+                          <a class="inlaptop-action-btn" href="assets/ashwin-kirbaa-cv.pdf" target="_blank" rel="noreferrer">Open Full Resume ↗</a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
