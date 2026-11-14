@@ -960,11 +960,15 @@
     perspective: 1800,
     onItemClick: (item) => {
       if (item && item.anchor) {
-        const dest = `certificates.html#${item.anchor}`;
-        if (window.navigateSmoothly) {
-          window.navigateSmoothly(dest);
+        if (window.openCertificateDetails) {
+          window.openCertificateDetails(item.anchor);
         } else {
-          window.location.href = dest;
+          const dest = 'certificates.html#' + item.anchor;
+          if (window.navigateSmoothly) {
+            window.navigateSmoothly(dest);
+          } else {
+            window.location.href = dest;
+          }
         }
       }
     }
