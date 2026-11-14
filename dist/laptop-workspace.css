@@ -1073,48 +1073,94 @@
   align-self: center;
 }
 
-/* MacBook Lower Base (Connected Chin) - Seamlessly attached to display screen */
+/* MacBook 3D Perspective Base (Trapezoid Keyboard Deck & Trackpad) */
 .macbook__base {
   position: relative;
-  width: 101.5%;
-  left: 0;
+  width: 100%;
   margin: 0 auto;
-  margin-top: 0;
-  height: 8px;
-  background: linear-gradient(180deg, #2a2930 0%, #1a191d 60%, #100f13 100%);
-  border-radius: 0 0 8px 8px;
-  box-shadow: 
-    0 8px 20px rgba(0, 0, 0, 0.65),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 1px rgba(0, 0, 0, 0.8);
+  margin-top: -2px;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   z-index: 5;
   box-sizing: border-box;
 }
 
-/* Hinge connection seamlessly binding screen to base */
-.macbook__hinge {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 26%;
+/* Perspective top surface of keyboard base angled forward */
+.macbook__base-surface {
+  position: relative;
+  width: 100%;
+  height: 52px;
+  background: linear-gradient(180deg, #18171b 0%, #201f24 40%, #26252b 100%);
+  /* Isometric / perspective trapezoid matching the user's sketch: narrower at screen hinge (8%), wider at front (0%) */
+  clip-path: polygon(7.5% 0%, 92.5% 0%, 100% 100%, 0% 100%);
+  -webkit-clip-path: polygon(7.5% 0%, 92.5% 0%, 100% 100%, 0% 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px 0 0;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Screen hinge joint */
+.macbook__hinge-groove {
+  width: 45%;
   height: 2px;
   background: #09080c;
   border-radius: 0 0 2px 2px;
+  margin-bottom: 5px;
 }
 
-/* Sleek Display Opening Notch */
+/* Sleek minimalist recessed keyboard well */
+.macbook__keyboard-deck {
+  width: 68%;
+  height: 22px;
+  background: linear-gradient(180deg, #100f13 0%, #161519 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  box-shadow: 
+    inset 0 1px 3px rgba(0, 0, 0, 0.9),
+    0 1px 0 rgba(255, 255, 255, 0.06);
+  clip-path: polygon(2.5% 0%, 97.5% 0%, 100% 100%, 0% 100%);
+  -webkit-clip-path: polygon(2.5% 0%, 97.5% 0%, 100% 100%, 0% 100%);
+}
+
+/* Sleek glass trackpad */
+.macbook__trackpad-deck {
+  width: 22%;
+  height: 12px;
+  margin-top: 4px;
+  background: linear-gradient(180deg, #1d1c21 0%, #222126 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Front edge vertical lip with opening notch */
+.macbook__front-lip {
+  position: relative;
+  width: 100%;
+  height: 7px;
+  background: linear-gradient(180deg, #2b2a30 0%, #19181d 70%, #111014 100%);
+  border-radius: 0 0 10px 10px;
+  box-shadow: 
+    0 12px 28px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Front display thumb-notch */
 .macbook__notch {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 64px;
+  width: 70px;
   height: 3px;
-  background: #08070a;
+  background: #09080c;
   border-radius: 0 0 4px 4px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.9);
 }
@@ -1122,13 +1168,45 @@
 /* MacBook Shadow Base Reflection */
 .macbook__reflection {
   position: absolute;
-  bottom: -10px;
-  left: 10%;
-  right: 10%;
-  height: 12px;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, transparent 75%);
-  filter: blur(6px);
+  bottom: -14px;
+  left: 5%;
+  right: 5%;
+  height: 18px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.75) 0%, transparent 75%);
+  filter: blur(8px);
   pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .macbook__base-surface {
+    height: 44px;
+  }
+  .macbook__keyboard-deck {
+    height: 18px;
+    width: 72%;
+  }
+  .macbook__trackpad-deck {
+    height: 10px;
+    width: 25%;
+  }
+}
+
+@media (max-width: 640px) {
+  .macbook__base-surface {
+    height: 34px;
+  }
+  .macbook__keyboard-deck {
+    height: 14px;
+    width: 76%;
+  }
+  .macbook__trackpad-deck {
+    height: 8px;
+    width: 28%;
+  }
+  .macbook__front-lip {
+    height: 5px;
+  }
 }
 
 /* Responsive Styling */
