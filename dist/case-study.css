@@ -51,6 +51,7 @@ a{color:inherit;text-decoration:none}
 .cs-next b{font-size:50px}
 .cs-footer{padding:24px 4vw;display:flex;justify-content:space-between;gap:20px;font:8px var(--mono)}
 .cert-hero{min-height:82svh}
+.certificate-card{scroll-margin-top:90px}
 .proof-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:1px;background:#aaa;border:1px solid #aaa}
 .proof-card{min-height:420px;padding:34px;background:var(--ink);display:flex;flex-direction:column}
 .proof-card.primary{background:var(--red);color:var(--ink)}
