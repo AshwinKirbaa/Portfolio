@@ -15,7 +15,7 @@
   function initKineticHeadings() {
     if (reduceMotion) return;
 
-    const targets = document.querySelectorAll('.intro-statement p, .section-title h2, .cases-intro h2, .cap-head h2, .process-head h2, .about-grid h2, .contact-main p');
+    const targets = []; // Disabled word splitting to prevent word-break distortion
     
     targets.forEach(heading => {
       // Avoid re-splitting
