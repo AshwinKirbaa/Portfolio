@@ -690,13 +690,14 @@
 }
 
 .inlaptop-x-avatar {
-  width: 58px;
-  height: 58px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #2f3336;
   background: #16181c;
   flex-shrink: 0;
+  display: block;
 }
 
 .inlaptop-x-details h4 {
