@@ -9,8 +9,16 @@
 
   if (!theater || !track || posters.length === 0) return;
 
-  // Preserve the original full intro on every visit.
-  document.body.style.overflow = 'hidden';
+  // Check if returning directly to portfolio from a case study or certificate page
+  const isDirectPortfolio = window.location.hash === '#portfolio' || window.location.search.includes('view=portfolio');
+
+  if (isDirectPortfolio) {
+    theater.classList.add('dismissed');
+    document.body.style.overflow = '';
+    triggerHeroElementsEntrance();
+  } else {
+    document.body.style.overflow = 'hidden';
+  }
 
   const total = posters.length;
 
@@ -552,6 +560,10 @@
   }
 
   function init() {
+    if (isDirectPortfolio) {
+      dismissIntro();
+      return;
+    }
     measure();
     currentProgress = 0;
     targetProgress = 0;
