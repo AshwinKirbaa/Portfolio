@@ -433,6 +433,43 @@
     }
   }
 
+  function showIntroHome() {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    if (history.replaceState) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    document.body.style.overflow = 'hidden';
+    document.documentElement.classList.remove('direct-portfolio');
+    theater.classList.remove('dismissed', 'is-transitioning');
+    
+    // Reset positions and animate back in smoothly
+    currentProgress = 0;
+    targetProgress = 0;
+    activeIndex = 0;
+    playIntroAnimation();
+  }
+
+  // Expose for external calls
+  window.showIntroHome = showIntroHome;
+
+  // Clicking the topbar wordmark returns back to the interactive Home stage
+  const topWordmark = document.querySelector('.topbar .wordmark');
+  if (topWordmark) {
+    topWordmark.addEventListener('click', (e) => {
+      e.preventDefault();
+      showIntroHome();
+    });
+  }
+
+  // Also support console HOME key if clicked
+  const consoleHomeKey = document.querySelector('.console-key.key-home');
+  if (consoleHomeKey) {
+    consoleHomeKey.addEventListener('click', (e) => {
+      e.preventDefault();
+      showIntroHome();
+    });
+  }
+
   enterBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
