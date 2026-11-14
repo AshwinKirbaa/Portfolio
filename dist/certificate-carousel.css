@@ -1,27 +1,330 @@
+/* React Bits <CircularCarousel /> Component Styles */
+.circular-carousel {
+  --cc-fade: #121110;
+  --cc-radius: 12px;
+  --cc-inner: 0.4;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  outline: none;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.circular-carousel[data-axis='x'] {
+  touch-action: pan-x;
+}
+
+.circular-carousel[data-draggable] {
+  cursor: grab;
+}
+
+.circular-carousel[data-dragging] {
+  cursor: grabbing;
+}
+
+.circular-carousel:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(237, 59, 36, 0.65);
+}
+
+.circular-carousel__view {
+  position: absolute;
+  inset: 0;
+}
+
+.circular-carousel[data-shape='wheel'] .circular-carousel__view {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000000 18%, #000000 82%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000000 18%, #000000 82%, transparent);
+}
+
+.circular-carousel[data-shape='panorama'] .circular-carousel__view {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000000 10%, #000000 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000000 10%, #000000 90%, transparent);
+}
+
+.circular-carousel__stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.circular-carousel[data-ready] .circular-carousel__stage {
+  opacity: 1;
+}
+
+.circular-carousel__camera,
+.circular-carousel__ring,
+.circular-carousel__card {
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+.circular-carousel__camera {
+  position: relative;
+}
+
+.circular-carousel__ring,
+.circular-carousel__card {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.circular-carousel__tile {
+  position: absolute;
+  outline: 1px solid transparent;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.circular-carousel__frame {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #171514;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.circular-carousel__card {
+  cursor: pointer;
+}
+
+.circular-carousel__card:hover .circular-carousel__frame,
+.circular-carousel__card:focus-visible .circular-carousel__frame {
+  border-color: #ed3b24;
+  box-shadow: 0 20px 48px rgba(237, 59, 36, 0.28);
+}
+
+.circular-carousel__photo {
+  position: absolute;
+  display: block;
+  max-width: none;
+  object-fit: contain;
+  background: #0f0e0d;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.circular-carousel__photo--leaving {
+  animation: circular-carousel-leave 700ms cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+.circular-carousel__shade,
+.circular-carousel__inner {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.circular-carousel__shade {
+  background: var(--cc-fade);
+  opacity: var(--cc-depth, 0);
+}
+
+.circular-carousel__inner {
+  background: #000000;
+  opacity: var(--cc-inner);
+}
+
+.circular-carousel__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  color: #f5eee7;
+  text-align: center;
+  pointer-events: none;
+  animation: circular-carousel-reveal 900ms ease both;
+  z-index: 5;
+}
+
+.circular-carousel__title {
+  display: flex;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--sans, 'Space Grotesk', sans-serif);
+  font-size: clamp(22px, 3.2vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: #f5eee7;
+}
+
+.circular-carousel__subtitle {
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #aaa097;
+  margin-top: 6px;
+}
+
+.circular-carousel__count {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--red, #ed3b24);
+  margin-top: 2px;
+}
+
+.circular-carousel__slash {
+  color: #777;
+}
+
+.circular-carousel__digits {
+  display: inline-flex;
+}
+
+.circular-carousel__digit {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+
+.circular-carousel__reel {
+  display: flex;
+  flex-direction: column;
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.circular-carousel__reel > span {
+  height: 1em;
+}
+
+.circular-carousel__cta-pill {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 5px 12px;
+  background: rgba(237, 59, 36, 0.14);
+  border: 1px solid rgba(237, 59, 36, 0.4);
+  border-radius: 999px;
+  color: #ed3b24;
+  font: 9px var(--mono, 'IBM Plex Mono', monospace);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.circular-carousel__cta-pill:hover {
+  background: rgba(237, 59, 36, 0.26);
+  transform: translateY(-1px);
+}
+
+.circular-carousel__live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Container integration */
 .certificate-carousel-shell {
   position: relative;
-  height: min(620px, 70vw);
-  min-height: 470px;
-  margin: 0 -2.5vw 90px;
+  width: 100%;
+  height: 580px;
+  min-height: 500px;
+  margin: 0 0 90px;
   overflow: hidden;
-  color: var(--paper);
-  background: radial-gradient(circle at 50% 55%, #ed3b2433 0, transparent 38%), linear-gradient(180deg, #171514 0%, #0d0c0b 100%);
-  border-block: 1px solid #3f3934;
+  color: var(--paper, #f5eee7);
+  background: radial-gradient(circle at 50% 50%, rgba(237, 59, 36, 0.16) 0, transparent 55%), #121110;
+  border: 1px solid #3f3934;
   isolation: isolate;
   user-select: none;
-  touch-action: pan-y;
 }
-.certificate-carousel-shell::before { content: "CERTIFICATE ARCHIVE / DRAG TO EXPLORE"; position: absolute; top: 22px; left: 2.5vw; z-index: 4; color: #aaa097; font: 9px var(--mono); letter-spacing: .08em; }
-.certificate-carousel-viewport { position: absolute; inset: 0; perspective: 1500px; perspective-origin: 50% 48%; overflow: hidden; }
-.certificate-carousel-ring { position: absolute; top: 47%; left: 50%; width: 220px; height: 154px; transform-style: preserve-3d; will-change: transform; }
-.certificate-carousel-card { position: absolute; inset: 0; display: block; overflow: hidden; border: 1px solid #ffffff3a; border-radius: 10px; background: #25211f; box-shadow: 0 25px 55px #0009; backface-visibility: hidden; transform-style: preserve-3d; transition: border-color .25s ease, filter .25s ease; cursor: pointer; }
-.certificate-carousel-card::after { content: "OPEN ARCHIVE ↗"; position: absolute; inset: auto 8px 8px; padding: 7px 8px; color: #f5eee7; background: #171514df; border: 1px solid #ffffff29; font: 8px var(--mono); text-align: center; opacity: 0; transform: translateY(6px); transition: .2s ease; }
-.certificate-carousel-card:hover,.certificate-carousel-card:focus-visible { border-color: var(--red); filter: brightness(1.08); outline: none; }
-.certificate-carousel-card:hover::after,.certificate-carousel-card:focus-visible::after { opacity: 1; transform: none; }
-.certificate-carousel-card img { width: 100%; height: 100%; display: block; object-fit: cover; background: #efeae1; pointer-events: none; }
-.certificate-carousel-caption { position: absolute; left: 50%; bottom: 28px; z-index: 4; width: min(92vw, 620px); transform: translateX(-50%); text-align: center; pointer-events: none; }
-.certificate-carousel-caption strong { display: block; font-size: clamp(24px, 3vw, 44px); line-height: .95; letter-spacing: -.045em; }
-.certificate-carousel-caption span { display: block; margin-top: 9px; color: #9f958d; font: 9px var(--mono); letter-spacing: .08em; }
-.certificate-carousel-shell.is-dragging { cursor: grabbing; }
-@media (max-width: 720px) { .certificate-carousel-shell { height: 500px; min-height: 500px; margin: 0 -14px 60px; } .certificate-carousel-ring { width: 160px; height: 112px; } .certificate-carousel-shell::before { left: 14px; } .certificate-carousel-caption { bottom: 34px; padding: 0 14px; } }
-@media (prefers-reduced-motion: reduce) { .certificate-carousel-card,.certificate-carousel-card::after { transition: none; } }
+
+.certificate-carousel-shell::before {
+  content: "CERTIFICATE ARCHIVE / REACT BITS PANORAMA / DRAG TO EXPLORE";
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  z-index: 4;
+  color: #aaa097;
+  font: 9px var(--mono, 'IBM Plex Mono', monospace);
+  letter-spacing: .08em;
+  pointer-events: none;
+}
+
+@keyframes circular-carousel-title {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes circular-carousel-leave {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes circular-carousel-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .certificate-carousel-shell {
+    height: 500px;
+    min-height: 480px;
+    margin: 0 0 60px;
+  }
+  .certificate-carousel-shell::before {
+    left: 14px;
+    font-size: 8px;
+  }
+  .circular-carousel__caption {
+    bottom: 20px;
+    padding: 0 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circular-carousel__stage,
+  .circular-carousel__reel {
+    transition: none;
+  }
+
+  .circular-carousel__caption,
+  .circular-carousel__title {
+    animation: none;
+  }
+}
