@@ -1,4 +1,4 @@
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+@media (hover: hover) and (pointer: fine) {
   html.smooth-cursor-enabled,
   html.smooth-cursor-enabled body,
   html.smooth-cursor-enabled a,
@@ -53,7 +53,7 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+@media (hover: none), (pointer: coarse) {
   .smooth-cursor {
     display: none !important;
   }

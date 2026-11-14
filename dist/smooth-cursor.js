@@ -2,7 +2,10 @@
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
-  if (!finePointer.matches || reducedMotion.matches) return;
+  if (!finePointer.matches) return;
+
+  const followStrength = reducedMotion.matches ? 1 : 0.22;
+  const rotationStrength = reducedMotion.matches ? 1 : 0.16;
 
   document.documentElement.classList.add('smooth-cursor-enabled');
 
@@ -33,8 +36,8 @@
   };
 
   const render = () => {
-    currentX += (targetX - currentX) * 0.22;
-    currentY += (targetY - currentY) * 0.22;
+    currentX += (targetX - currentX) * followStrength;
+    currentY += (targetY - currentY) * followStrength;
 
     const velocityX = currentX - previousX;
     const velocityY = currentY - previousY;
@@ -42,7 +45,7 @@
       targetRotation = Math.atan2(velocityY, velocityX) * (180 / Math.PI) + 45;
     }
 
-    rotation += (shortestAngle(rotation, targetRotation) - rotation) * 0.16;
+    rotation += (shortestAngle(rotation, targetRotation) - rotation) * rotationStrength;
     cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) rotate(${rotation}deg) scale(var(--cursor-scale))`;
 
     previousX = currentX;
