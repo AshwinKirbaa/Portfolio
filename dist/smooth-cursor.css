@@ -1,0 +1,60 @@
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html.smooth-cursor-enabled,
+  html.smooth-cursor-enabled body,
+  html.smooth-cursor-enabled a,
+  html.smooth-cursor-enabled button,
+  html.smooth-cursor-enabled [role="button"],
+  html.smooth-cursor-enabled input,
+  html.smooth-cursor-enabled textarea,
+  html.smooth-cursor-enabled select {
+    cursor: none !important;
+  }
+
+  .cursor,
+  .nika-cursor-dot,
+  .nika-cursor-follower {
+    display: none !important;
+  }
+
+  .smooth-cursor {
+    --cursor-scale: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000000;
+    width: 32px;
+    height: 32px;
+    pointer-events: none;
+    opacity: 0;
+    color: #f4efe6;
+    filter: drop-shadow(0 2px 5px rgb(0 0 0 / 0.35));
+    transform: translate3d(-80px, -80px, 0) rotate(0deg) scale(var(--cursor-scale));
+    transform-origin: 8px 8px;
+    will-change: transform, opacity;
+    transition: opacity 160ms ease, color 180ms ease;
+    mix-blend-mode: difference;
+  }
+
+  .smooth-cursor.is-visible {
+    opacity: 1;
+  }
+
+  .smooth-cursor.is-interactive {
+    --cursor-scale: 1.22;
+    color: #ed3b24;
+    mix-blend-mode: normal;
+  }
+
+  .smooth-cursor svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .smooth-cursor {
+    display: none !important;
+  }
+}
