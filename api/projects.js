@@ -7,7 +7,7 @@ const seedProjects = [
   ["twineval", "TWINEVAL AI", "SEMANTIC EVALUATION", "AI-assisted answer evaluation using sentence embeddings and cosine similarity to compare meaning beyond keyword matches.", 2026, "https://twineval-ai.vercel.app/", 2],
   ["camera", "AI SECURITY CAMERA", "COMPUTER VISION", "Real-time visitor identification using OpenCV, InsightFace, facial embeddings, and recognition workflows.", 2026, "https://github.com/AshwinKirbaa/ai_security_camera", 3],
   ["gesture", "GESTURE CONTROL", "HUMAN-COMPUTER INTERACTION", "Touchless computer controls built from hand-landmark tracking, gesture recognition, and configurable actions.", 2026, "https://github.com/AshwinKirbaa/ai_gesture_control", 4],
-  ["dexget", "DEXGET", "SOFTWARE PROJECT", "An independent software build focused on taking an idea through implementation, testing, and delivery.", 2026, "https://github.com/AshwinKirbaa/Dexget", 5],
+  ["dexget", "DEXGET", "WINDOWS DESKTOP ASSISTANT", "A Windows 11 Dynamic Island and local-first assistant for search, controls, automations, clipboard history, and phone transfer.", 2026, "https://github.com/AshwinKirbaa/Dexget", 5],
 ];
 
 let initialized = false;
