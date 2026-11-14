@@ -2,6 +2,7 @@
  * Interactive MacBook / Laptop Workspace Component
  * - Stationary laptop (zero cursor movement/tilt)
  * - Opens all links and social platforms directly inside the laptop screen itself
+ * - Fetches live GitHub repos dynamically via GitHub API
  */
 (() => {
   const showcase = document.querySelector('.laptop-showcase-wrapper');
@@ -14,6 +15,8 @@
   const navBack = showcase.querySelector('.macbook__nav-btn--back');
   const navForward = showcase.querySelector('.macbook__nav-btn--forward');
   const macbook = showcase.querySelector('.macbook');
+  const liveReposContainer = showcase.querySelector('.github-live-repos');
+  const liveRepoCountEl = showcase.querySelector('.github-live-count');
 
   // Ensure stationary laptop - NO tilt or pointer movement
   if (macbook) {
@@ -96,6 +99,43 @@
     updateNavButtons();
   }
 
+  // Live GitHub Repos Fetcher (Option 3 integration)
+  async function fetchLiveGitHubData() {
+    if (!liveReposContainer) return;
+    try {
+      const res = await fetch('https://api.github.com/users/AshwinKirbaa/repos?sort=updated&per_page=6');
+      if (!res.ok) throw new Error('Network error');
+      const repos = await res.json();
+      if (!Array.isArray(repos) || repos.length === 0) return;
+
+      if (liveRepoCountEl) {
+        liveRepoCountEl.textContent = `${repos.length} Live Repos`;
+      }
+
+      liveReposContainer.innerHTML = repos.slice(0, 4).map(repo => {
+        const lang = repo.language || 'Python';
+        const stars = repo.stargazers_count > 0 ? `★ ${repo.stargazers_count}` : 'Live';
+        const updatedTime = new Date(repo.pushed_at || repo.updated_at).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric'
+        });
+        const desc = repo.description || 'Public engineering repository and prototype system.';
+        return `
+          <a class="inlaptop-card" href="${repo.html_url}" target="_blank" rel="noreferrer">
+            <div class="inlaptop-card-title">${repo.name} <span>${stars}</span></div>
+            <p>${desc}</p>
+            <div class="inlaptop-card-tags">
+              <span>● ${lang}</span> · <span>Updated ${updatedTime}</span>
+            </div>
+          </a>
+        `;
+      }).join('');
+    } catch (err) {
+      // Keep curated fallback cards if API is offline or rate-limited
+      console.log('GitHub API live fetch using cached fallback');
+    }
+  }
+
   // Dock items switch view inside laptop
   dockItems.forEach(item => {
     item.addEventListener('click', (e) => {
@@ -103,16 +143,6 @@
       const appKey = item.dataset.app;
       if (appKey) renderApp(appKey);
     });
-  });
-
-  // Internal link clicks inside laptop apps (e.g. "View on GitHub", "Send Email", etc.)
-  showcase.addEventListener('click', (e) => {
-    const internalTrigger = e.target.closest('[data-switch-app]');
-    if (internalTrigger) {
-      e.preventDefault();
-      const targetApp = internalTrigger.getAttribute('data-switch-app');
-      if (targetApp) renderApp(targetApp);
-    }
   });
 
   // Browser Navigation inside the laptop
@@ -138,7 +168,6 @@
 
   // Window dots interactions
   const winClose = showcase.querySelector('.macbook__win-dot.red');
-  const winMin = showcase.querySelector('.macbook__win-dot.yellow');
   const winMax = showcase.querySelector('.macbook__win-dot.green');
   const windowEl = showcase.querySelector('.macbook__window');
 
@@ -158,4 +187,5 @@
 
   // Initial load
   renderApp('github', false);
+  fetchLiveGitHubData();
 })();
