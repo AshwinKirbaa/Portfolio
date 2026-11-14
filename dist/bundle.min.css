@@ -108,7 +108,7 @@ section[id]{scroll-margin-top:78px}
 .cap-detail:hover{transform:rotate(.5deg) scale(1.012);box-shadow:18px 18px 0 rgba(237,59,36,.75)}
 .magnetic{will-change:translate;transition:translate .28s var(--ease)}
 .topbar{transition:height .4s var(--ease),top .4s var(--ease),background .4s}
-body.is-scrolled .topbar{top:9px;height:42px;background:rgba(23,21,20,.97)}
+body.is-scrolled .topbar{top:9px;height:42px;background:transparent}
 .section-index{transition:letter-spacing .45s var(--ease)}
 section:hover>.section-index{letter-spacing:.16em}
 

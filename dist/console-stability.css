@@ -521,3 +521,12 @@ h1, h2, h3, h4, h5, h6,
   --pc-grain: none !important;
 }
 
+/* Ensure topbar remains a transparent floating pill container without dark background fill when scrolling */
+.topbar,
+body.is-scrolled .topbar {
+  background: transparent !important;
+  border: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
