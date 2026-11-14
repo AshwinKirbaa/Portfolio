@@ -18,12 +18,12 @@
     { x: 0.14, y: 0, r: -1.2 }
   ];
   const FLAP_REST = [
-    { x: 0.16, rise: 0, r: 3 },
-    { x: -0.17, rise: 0.05, r: -3.5 },
-    { x: 0, rise: 0.1, r: 0.5 },
-    { x: 0.25, rise: 0.08, r: 5 },
-    { x: -0.25, rise: 0.09, r: -5.5 },
-    { x: 0.08, rise: 0.12, r: 1.5 }
+    { x: 0.16, rise: 0.13, r: 3 },
+    { x: -0.17, rise: 0.17, r: -3.5 },
+    { x: 0, rise: 0.21, r: 0.5 },
+    { x: 0.24, rise: 0.18, r: 4.5 },
+    { x: -0.24, rise: 0.19, r: -5 },
+    { x: 0.08, rise: 0.22, r: 1.5 }
   ];
   const SPREAD_TURN = [4, -5, 3, -6, 5, -3];
   const SPREAD_DROP = [0.03, -0.04, 0.05, -0.02, 0.04, -0.05];
@@ -129,7 +129,7 @@
       frontTop,
       frontH: tabH + h - frontTop,
       docW,
-      docH: docW * (book ? 1.28 : 1.22)
+      docH: docW * (book ? 1.28 : 1.34)
     };
   };
 
@@ -160,7 +160,7 @@
     const floor = g.tabH + g.h - 5 * g.scale - g.docH / 2;
     const mid = (count - 1) / 2;
     if (phase === 'open') {
-      const lift = g.tabH - g.h * 0.02;
+      const lift = g.tabH - g.h * 0.05;
       if (layout === 'stack') {
         const strip = Math.min(30 * g.scale, (g.h * 0.62) / Math.max(1, count - 1));
         const fit = 1.04 - rank * 0.05;

@@ -142,9 +142,7 @@
   box-shadow:
     0 0 0 0.5px rgba(0, 0, 0, 0.06),
     0 calc(1px * var(--folder-scale)) calc(2px * var(--folder-scale)) rgba(0, 0, 0, 0.12),
-    0 calc((2px + var(--folder-lift, 0) * 16px) * var(--folder-scale))
-      calc((5px + var(--folder-lift, 0) * 26px) * var(--folder-scale))
-      rgba(0, 0, 0, calc(0.1 + var(--folder-lift, 0) * 0.14));
+    0 calc((2px + var(--folder-lift, 0) * 16px) * var(--folder-scale)) calc((5px + var(--folder-lift, 0) * 26px) * var(--folder-scale)) rgba(0, 0, 0, calc(0.1 + var(--folder-lift, 0) * 0.14));
   outline: none;
   text-decoration: none;
   color: inherit;
@@ -232,12 +230,10 @@
 }
 
 .folder-root[data-variant='solid'] .folder-face-outer {
-  background: linear-gradient(
-    160deg,
-    var(--folder-front-top) 0%,
-    var(--folder-base) 48%,
-    var(--folder-front-bottom) 100%
-  );
+  background: linear-gradient(160deg,
+      var(--folder-front-top) 0%,
+      var(--folder-base) 48%,
+      var(--folder-front-bottom) 100%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.28),
     inset 0 0 0 1px rgba(255, 255, 255, 0.05);
@@ -250,12 +246,10 @@
 .folder-root[data-variant='glass'] .folder-face-outer,
 .folder-root[data-variant='glass'] .folder-face-inner {
   background:
-    linear-gradient(
-      160deg,
+    linear-gradient(160deg,
       rgba(255, 255, 255, 0.34) 0%,
       rgba(255, 255, 255, 0.08) 46%,
-      rgba(255, 255, 255, 0.16) 100%
-    ),
+      rgba(255, 255, 255, 0.16) 100%),
     rgba(var(--folder-rgb), 0.24);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.34),
@@ -288,34 +282,41 @@
   height: 100%;
   box-sizing: border-box;
   flex-direction: column;
-  gap: calc(6px * var(--folder-scale));
-  padding: calc(14px * var(--folder-scale)) calc(13px * var(--folder-scale));
+  padding: calc(16px * var(--folder-scale)) calc(12px * var(--folder-scale)) calc(12px * var(--folder-scale));
   position: relative;
+  overflow: hidden;
+  background: var(--folder-paper);
 }
 
 .folder-doc-title {
-  overflow: hidden;
-  margin-bottom: calc(4px * var(--folder-scale));
+  display: block;
+  margin: 0 0 calc(3px * var(--folder-scale));
   color: var(--folder-paper-text);
-  font-size: calc(11px * var(--folder-scale));
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-family: var(--sans);
+  font-size: calc(10.5px * var(--folder-scale));
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  white-space: normal;
+  word-break: break-word;
+  overflow: visible;
 }
 
 .folder-doc-text {
-  margin-top: calc(-6px * var(--folder-scale));
-  margin-bottom: calc(4px * var(--folder-scale));
+  display: block;
+  margin: 0 0 calc(6px * var(--folder-scale));
   color: var(--folder-paper-ink-strong);
-  font-size: calc(9px * var(--folder-scale));
-  line-height: 1.3;
+  font-family: var(--sans);
+  font-size: calc(8.5px * var(--folder-scale));
+  line-height: 1.35;
+  white-space: normal;
+  word-break: break-word;
+  overflow: visible;
 }
 
 .folder-doc-heading {
   width: 56%;
-  height: calc(7px * var(--folder-scale));
+  height: calc(5px * var(--folder-scale));
   flex: none;
   margin-bottom: calc(4px * var(--folder-scale));
   border-radius: 999px;
@@ -323,17 +324,18 @@
 }
 
 .folder-doc-line {
-  height: calc(4px * var(--folder-scale));
+  height: calc(3px * var(--folder-scale));
   flex: none;
+  margin-bottom: calc(4px * var(--folder-scale));
   border-radius: 999px;
   background: var(--folder-paper-ink);
 }
 
 .folder-doc-block {
-  height: calc(40px * var(--folder-scale));
+  height: calc(32px * var(--folder-scale));
   flex: none;
-  margin: calc(3px * var(--folder-scale)) 0;
-  border-radius: calc(5px * var(--folder-scale));
+  margin: calc(2px * var(--folder-scale)) 0 calc(4px * var(--folder-scale));
+  border-radius: calc(4px * var(--folder-scale));
   background: var(--folder-paper-ink);
   opacity: 0.75;
 }
@@ -368,10 +370,33 @@
   overflow: hidden;
 }
 
-.project-folder-copy small { color: var(--red); font: 9px var(--mono); }
-.project-folder-copy h3 { margin: 18px 0 16px; color: var(--paper); font-size: clamp(38px, 5.5vw, 74px); line-height: .86; letter-spacing: -.065em; }
-.project-folder-copy p { max-width: 390px; color: #aaa09a; font-size: 14px; line-height: 1.55; }
-.project-folder-copy b { display: block; margin-top: 24px; color: var(--paper); font: 9px var(--mono); font-weight: 400; }
+.project-folder-copy small {
+  color: var(--red);
+  font: 9px var(--mono);
+}
+
+.project-folder-copy h3 {
+  margin: 18px 0 16px;
+  color: var(--paper);
+  font-size: clamp(38px, 5.5vw, 74px);
+  line-height: .86;
+  letter-spacing: -.065em;
+}
+
+.project-folder-copy p {
+  max-width: 390px;
+  color: #aaa09a;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.project-folder-copy b {
+  display: block;
+  margin-top: 24px;
+  color: var(--paper);
+  font: 9px var(--mono);
+  font-weight: 400;
+}
 
 .project-folder-mount {
   display: flex;
@@ -382,7 +407,16 @@
 }
 
 @media (max-width: 1000px) {
-  .project-folder-block { grid-template-columns: 1fr; padding-top: 44px; }
-  .project-folder-copy { text-align: center; }
-  .project-folder-copy p { margin-inline: auto; }
+  .project-folder-block {
+    grid-template-columns: 1fr;
+    padding-top: 44px;
+  }
+
+  .project-folder-copy {
+    text-align: center;
+  }
+
+  .project-folder-copy p {
+    margin-inline: auto;
+  }
 }
