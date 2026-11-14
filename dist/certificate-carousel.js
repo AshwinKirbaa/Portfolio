@@ -90,6 +90,14 @@
       subtitle: 'DecodeP Participation',
       anchor: 'gemini-quiz-war',
       aspectRatio: 1.437
+    },
+    {
+      src: 'assets/certificates/nasa-space-apps-galactic-problem-solver.png',
+      alt: 'NASA Space Apps Challenge Galactic Problem Solver Certificate',
+      title: 'NASA Space Apps',
+      subtitle: 'Galactic Problem Solver · 2026',
+      anchor: 'nasa-space-apps',
+      aspectRatio: 1.294
     }
   ];
 
