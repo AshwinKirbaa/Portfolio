@@ -48,42 +48,9 @@
   }
 
   // --- 2. INTERACTIVE CURSOR FOLLOWER ---
+  // Disabled to prevent duplicate follower circles competing with smooth cursor
   function initCursorFollower() {
-    if (reduceMotion || !matchMedia('(pointer:fine)').matches) return;
-
-    const dot = document.createElement('div');
-    dot.className = 'nika-cursor-dot';
-    const follower = document.createElement('div');
-    follower.className = 'nika-cursor-follower';
-
-    document.body.appendChild(dot);
-    document.body.appendChild(follower);
-
-    let mouseX = -100, mouseY = -100;
-    let followerX = -100, followerY = -100;
-
-    window.addEventListener('mousemove', e => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-    }, { passive: true });
-
-    // Smooth LERP follower loop
-    function updateFollower() {
-      followerX += (mouseX - followerX) * 0.15;
-      followerY += (mouseY - followerY) * 0.15;
-
-      follower.style.transform = `translate3d(${followerX.toFixed(2)}px, ${followerY.toFixed(2)}px, 0) translate(-50%, -50%)`;
-      requestAnimationFrame(updateFollower);
-    }
-    requestAnimationFrame(updateFollower);
-
-    // Hover scale triggers
-    const interactiveSelectors = 'a, button, .roll-btn, .project-row, .cap-item, .console-key, .hud-step-pill';
-    document.querySelectorAll(interactiveSelectors).forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('nika-cursor-hovered'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('nika-cursor-hovered'));
-    });
+    return;
   }
 
   // --- 3. DYNAMIC SCROLL REVEAL OBSERVER ---

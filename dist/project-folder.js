@@ -189,9 +189,9 @@
     const part = phase === 'receive' ? 1.7 : phase === 'peek' ? 1.3 : 1;
     const x = g.w / 2 + rest.x * g.w * part;
     if (phase === 'rest') return { x, y: floor - rest.rise * g.h, z: 0, r: rest.r, ry: 0, s: 1 };
-    const near = phase === 'peek' && pointer != null ? Math.max(0, 1 - Math.abs(pointer - x) / (g.w * 0.32)) : 0;
+    const near = 0;
     const rise = rest.rise + (phase === 'receive' ? 0.03 : 0.1);
-    return { x, y: floor - rise * g.h - near * near * g.h * 0.09, z: 0, r: rest.r * 1.6, ry: 0, s: 1 };
+    return { x, y: floor - rise * g.h, z: 0, r: rest.r * 1.6, ry: 0, s: 1 };
   };
 
   const projectItems = [
@@ -505,9 +505,9 @@
 
       busy = integrate(state.front, frontTarget, frontOmega, zeta, dt) || busy;
 
-      const engaged = state.hovered && !reduce;
-      busy = integrate(state.rx, engaged ? -state.pointerY * 8 * tilt : 0, soft, 1, dt) || busy;
-      busy = integrate(state.ry, engaged ? state.pointerX * 10 * tilt : 0, soft, 1, dt) || busy;
+      const engaged = false;
+      busy = integrate(state.rx, 0, soft, 1, dt) || busy;
+      busy = integrate(state.ry, 0, soft, 1, dt) || busy;
       busy = integrate(state.lift, state.hovered && currentPhase !== 'open' ? 1 : 0, soft, 1, dt) || busy;
       busy = integrate(state.squash, state.pressed ? 0.975 : 1, TAU * 3.2, 0.6, dt) || busy;
 
@@ -554,8 +554,8 @@
         busy = integrate(item.r, target.r, itemOmega, zeta, dt) || busy;
         busy = integrate(item.s, target.s, itemOmega, zeta, dt) || busy;
         busy = integrate(item.hover, lift, itemOmega, zeta, dt) || busy;
-        busy = integrate(item.mx, magnet ? item.localX * 7 * g.scale : 0, soft, 0.85, dt) || busy;
-        busy = integrate(item.my, magnet ? item.localY * 7 * g.scale : 0, soft, 0.85, dt) || busy;
+        busy = integrate(item.mx, 0, soft, 0.85, dt) || busy;
+        busy = integrate(item.my, 0, soft, 0.85, dt) || busy;
       });
 
       write();

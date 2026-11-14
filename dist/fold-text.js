@@ -19,7 +19,7 @@
     const ease = root.dataset.ease || 'back.out(1.2)';
     const perspective = parseFloat(root.dataset.perspective || '900');
     const creaseShading = parseFloat(root.dataset.creaseShading || '0.45');
-    const hoverRefold = root.dataset.hoverRefold !== 'false';
+    const hoverRefold = false;
     const refoldRadius = parseFloat(root.dataset.refoldRadius || '140');
     const refoldAngle = parseFloat(root.dataset.refoldAngle || '45');
 
