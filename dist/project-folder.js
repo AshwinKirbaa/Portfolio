@@ -617,6 +617,57 @@
       wake();
     };
 
+    let isExpanding = false;
+
+    itemElements.forEach((el, index) => {
+      el.addEventListener('click', e => {
+        if (!isOpen) return;
+        e.preventDefault();
+        e.stopPropagation();
+        if (isExpanding) return;
+        isExpanding = true;
+
+        const destUrl = el.getAttribute('href');
+        const rect = el.getBoundingClientRect();
+
+        // Create the expanding paper flyer
+        const flyer = el.cloneNode(true);
+        flyer.className = 'folder-layer folder-item project-paper-flight-card';
+        flyer.removeAttribute('style');
+        flyer.removeAttribute('data-folder-item');
+
+        Object.assign(flyer.style, {
+          position: 'fixed',
+          top: `${rect.top}px`,
+          left: `${rect.left}px`,
+          width: `${rect.width}px`,
+          height: `${rect.height}px`,
+          zIndex: '9999999',
+          transform: 'none',
+          pointerEvents: 'none'
+        });
+
+        document.body.appendChild(flyer);
+        el.style.opacity = '0';
+
+        // Animate maximization across two frames
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            flyer.classList.add('is-maximized');
+            
+            // At the peak of expansion, navigate smoothly
+            setTimeout(() => {
+              if (window.navigateSmoothly) {
+                window.navigateSmoothly(destUrl);
+              } else {
+                window.location.href = destUrl;
+              }
+            }, 420);
+          });
+        });
+      });
+    });
+
     stage.addEventListener('click', e => {
       if (e.target.closest('.folder-item')) return;
       setOpen(!isOpen);

@@ -84,3 +84,4 @@
   // Expose global helper for programmatic transitions (e.g. from certificate carousel or buttons)
   window.navigateSmoothly = navigateSmoothly;
 })();
+
