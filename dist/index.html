@@ -9,7 +9,14 @@
   <meta property="og:title" content="Ashwin Kirbaa — AI & Software Developer"><meta property="og:description" content="Five deployed and open-source builds across AI security, semantic evaluation, computer vision, interaction, and software engineering."><meta property="og:image" content="https://ashwin-kirbaa-portfolio.vercel.app/assets/profile-card-exact.jpg">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Ashwin Kirbaa — AI & Software Developer"><meta name="twitter:description" content="AI, computer-vision, full-stack, and infrastructure systems built end to end."><meta name="twitter:image" content="https://ashwin-kirbaa-portfolio.vercel.app/assets/profile-card-exact.jpg">
   <title>Ashwin Kirbaa — AI & Software Developer</title>
-  <script>if('scrollRestoration'in history)history.scrollRestoration='manual';if(location.hash==='#top')scrollTo(0,0);addEventListener('pageshow',()=>{if(location.hash==='#top')requestAnimationFrame(()=>scrollTo(0,0))});</script>
+  <script>
+    if('scrollRestoration'in history)history.scrollRestoration='manual';
+    if(location.hash==='#top')scrollTo(0,0);
+    addEventListener('pageshow',()=>{if(location.hash==='#top')requestAnimationFrame(()=>scrollTo(0,0))});
+    if(location.hash==='#portfolio'||location.search.includes('view=portfolio')){
+      document.documentElement.classList.add('direct-portfolio');
+    }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap">

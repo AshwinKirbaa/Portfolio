@@ -460,6 +460,9 @@
       if (titleItems.length) gsap.set(titleItems, { y: 30, opacity: 0 });
       if (bottomBar) gsap.set(bottomBar, { y: 20, opacity: 0 });
 
+      // Set ready class to reveal laid-out elements cleanly
+      theater.classList.add('is-ready');
+
       // Create master intro timeline matching we-go-again.com
       const tl = gsap.timeline({
         onComplete: () => {
@@ -553,6 +556,7 @@
 
     } else {
       // Fallback if GSAP is somehow not loaded
+      theater.classList.add('is-ready');
       measure();
       updateLayout();
       isIntroPlaying = false;
@@ -571,7 +575,6 @@
     playIntroAnimation();
   }
 
-  window.addEventListener('load', init);
   window.addEventListener('resize', () => {
     measure();
     // Resizing can happen during the entrance animation. Recalculate on the
@@ -579,5 +582,9 @@
     requestAnimationFrame(updateLayout);
   });
 
-  if (document.readyState === 'complete') requestAnimationFrame(init);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
