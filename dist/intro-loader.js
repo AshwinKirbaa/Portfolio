@@ -269,6 +269,9 @@
           theater.classList.add('dismissed');
           theater.classList.remove('is-transitioning');
           window.dispatchEvent(new Event('resize'));
+          if (history.replaceState) {
+            history.replaceState(null, '', window.location.pathname + '#portfolio' + window.location.search);
+          }
         });
       });
     };
@@ -423,6 +426,11 @@
     document.body.style.overflow = '';
     window.dispatchEvent(new Event('resize'));
     triggerHeroElementsEntrance();
+    if (window.location.hash !== '#portfolio' && (!window.location.hash || window.location.hash === '#top')) {
+      if (history.replaceState) {
+        history.replaceState(null, '', window.location.pathname + '#portfolio' + window.location.search);
+      }
+    }
   }
 
   enterBtns.forEach(btn => {
@@ -580,6 +588,12 @@
     // Resizing can happen during the entrance animation. Recalculate on the
     // next paint so the resting layout always matches the current viewport.
     requestAnimationFrame(updateLayout);
+  });
+
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#portfolio' || window.location.hash.startsWith('#work') || window.location.hash.startsWith('#contact') || window.location.hash.startsWith('#about') || window.location.hash.startsWith('#education')) {
+      dismissIntro();
+    }
   });
 
   if (document.readyState === 'loading') {
