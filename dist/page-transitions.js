@@ -33,6 +33,7 @@
   // Intercept local page navigation
   function shouldIntercept(a, event) {
     if (!a || !a.href) return false;
+    if (a.closest('.folder-item') || a.closest('.project-folder-mount')) return false;
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return false;
     if (a.target && a.target !== '_self') return false;
     if (a.hasAttribute('download')) return false;

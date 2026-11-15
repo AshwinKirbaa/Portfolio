@@ -676,26 +676,14 @@
         const rect = el.getBoundingClientRect();
         const itemData = entries[index] || {};
 
+        const scaleX = rect.width / window.innerWidth;
+        const scaleY = rect.height / window.innerHeight;
+
         // Create the expanding paper flyer
         const flyer = document.createElement('div');
         flyer.className = 'folder-layer folder-item project-paper-flight-card';
 
         flyer.innerHTML = `
-          <!-- Mockup of the destination case-study page layout for a seamless morph -->
-          <div class="flight-paper-preview">
-            <span class="folder-doc-kicker">${itemData.kicker || 'CASE STUDY'}</span>
-            <span class="folder-doc-title">${itemData.title || ''}</span>
-            <span class="folder-doc-text">${itemData.description || ''}</span>
-            <span class="folder-doc-line" style="width: 92%"></span>
-            <span class="folder-doc-line" style="width: 84%"></span>
-            <div class="folder-doc-meta-strip">
-              <span>${itemData.role || 'ENGINEER'}</span>
-              <span>${itemData.year || '2026'}</span>
-            </div>
-            <span class="folder-doc-block"></span>
-            <span class="folder-doc-line" style="width: 78%"></span>
-          </div>
-
           <div class="flight-cs-container">
             <div class="flight-cs-noise"></div>
             <header class="flight-cs-header">
@@ -746,6 +734,12 @@
           pointerEvents: 'none'
         });
 
+        const container = flyer.querySelector('.flight-cs-container');
+        if (container) {
+          container.style.transform = `scale(${scaleX}, ${scaleY})`;
+          container.style.transition = 'transform 680ms cubic-bezier(0.2, 0.9, 0.25, 1)';
+        }
+
         document.body.appendChild(flyer);
         el.style.opacity = '0';
 
@@ -753,8 +747,11 @@
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             flyer.classList.add('is-maximized');
+            if (container) {
+              container.style.transform = 'scale(1, 1)';
+            }
             
-            // Allow the smooth, deliberate expansion animation to complete before navigating
+            // Allow the smooth expansion animation to reach destination before navigating
             setTimeout(() => {
               if (window.navigateSeamlessly) {
                 window.navigateSeamlessly(destUrl);
@@ -763,7 +760,7 @@
               } else {
                 window.location.href = destUrl;
               }
-            }, 750);
+            }, 640);
           });
         });
       });
