@@ -256,16 +256,17 @@
 .profile-card__footer {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 8px;
   min-width: 0;
-  padding: 6px 14px 8px;
+  padding: 6px 8px 8px;
 }
 
 .profile-card__avatar {
   position: relative;
   flex: none;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--pc-tile);
   overflow: hidden;
@@ -289,17 +290,18 @@
 
 .profile-card__meta {
   display: flex;
-  flex: 1;
+  flex: 1 1 auto;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   min-width: 0;
+  overflow: hidden;
 }
 
 .profile-card__handle {
   overflow: hidden;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.2;
   color: var(--pc-ink);
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -309,31 +311,35 @@
 .profile-card__status {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  line-height: 1.25;
+  gap: 5px;
+  font-size: 10px;
+  line-height: 1.2;
   color: var(--pc-muted);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-family: var(--mono);
 }
 
 .profile-card__status::before {
   content: '';
   flex: none;
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--pc-status);
   box-shadow: 0 0 8px var(--pc-status);
 }
 
 .profile-card__contact {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  flex: none;
-  height: 34px;
-  padding: 0 13px;
+  justify-content: center;
+  gap: 5px;
+  flex: 0 0 auto;
+  height: 30px;
+  padding: 0 10px;
+  margin-left: auto;
   border: none;
   border-radius: calc(var(--pc-radius) * 0.75);
   background: var(--pc-tile);
@@ -343,10 +349,11 @@
     var(--pc-tile-shadow);
   color: var(--pc-ink);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
+  white-space: nowrap;
   transition:
     filter 0.2s ease,
     transform 0.2s ease;
