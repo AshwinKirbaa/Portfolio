@@ -99,3 +99,184 @@ a{color:inherit;text-decoration:none}
 .proof-card{min-height:340px;padding:24px}
 .milestone{grid-template-columns:1fr;min-height:260px}
 }
+
+/* Paper Theme: Makes project case studies look like the physical paper from the folder */
+.paper-theme {
+  background: var(--paper, #eee9df) !important;
+  color: var(--ink, #171514) !important;
+}
+
+.paper-theme .cs-noise {
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+}
+
+.paper-theme .cs-header {
+  background: rgba(238, 233, 223, 0.94) !important;
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(23, 21, 20, 0.12) !important;
+}
+
+.paper-theme .cs-back-btn {
+  color: var(--ink, #171514) !important;
+  border-right: 1px solid rgba(23, 21, 20, 0.12) !important;
+}
+
+.paper-theme .cs-back-btn:hover,
+.paper-theme .cs-back-btn:focus-visible {
+  background: var(--red, #ed3b24) !important;
+  color: #ffffff !important;
+}
+
+.paper-theme .cs-brand {
+  color: var(--ink, #171514) !important;
+}
+
+.paper-theme .cs-brand span {
+  color: var(--red, #ed3b24) !important;
+}
+
+.paper-theme .cs-nav a {
+  color: var(--ink, #171514) !important;
+  border-left: 1px solid rgba(23, 21, 20, 0.12) !important;
+}
+
+.paper-theme .cs-nav a:hover,
+.paper-theme .cs-nav a:focus-visible {
+  background: var(--red, #ed3b24) !important;
+  color: #ffffff !important;
+}
+
+.paper-theme .cs-hero {
+  background: var(--paper, #eee9df) !important;
+  background-image: linear-gradient(90deg, rgba(23, 21, 20, 0.05) 1px, transparent 1px),
+                    linear-gradient(rgba(23, 21, 20, 0.05) 1px, transparent 1px) !important;
+  background-size: 25% 100%, 100% 20% !important;
+  color: var(--ink, #171514) !important;
+}
+
+.paper-theme .cs-hero h1 {
+  color: var(--ink, #171514) !important;
+}
+
+.paper-theme .cs-hero h1 em {
+  color: var(--red, #ed3b24) !important;
+}
+
+.paper-theme .cs-lede {
+  color: #453f3a !important;
+}
+
+.paper-theme .cs-hero-side {
+  border-top: 1px solid rgba(23, 21, 20, 0.22) !important;
+}
+
+.paper-theme .cs-meta span {
+  color: #7a726b !important;
+}
+
+.paper-theme .cs-meta strong {
+  color: var(--ink, #171514) !important;
+}
+
+.paper-theme .cs-button {
+  border: 1px solid rgba(23, 21, 20, 0.24) !important;
+  color: var(--ink, #171514) !important;
+  background: transparent !important;
+}
+
+.paper-theme .cs-button.primary,
+.paper-theme .cs-button:hover {
+  background: var(--red, #ed3b24) !important;
+  border-color: var(--red, #ed3b24) !important;
+  color: #ffffff !important;
+}
+
+.paper-theme .cs-section {
+  border-top: 1px solid rgba(23, 21, 20, 0.16) !important;
+  background: var(--paper, #eee9df) !important;
+  color: var(--ink, #171514) !important;
+}
+
+.paper-theme .cs-section.light {
+  background: #fbf8f2 !important;
+}
+
+.paper-theme .cs-section h2 {
+  color: var(--ink, #171514) !important;
+}
+
+.paper-theme .cs-section-copy p {
+  color: #3d3732 !important;
+}
+
+.paper-theme .cs-step {
+  border-right: 1px solid rgba(23, 21, 20, 0.16) !important;
+  border-bottom: 1px solid rgba(23, 21, 20, 0.16) !important;
+  background: var(--paper, #eee9df) !important;
+}
+
+.paper-theme .cs-flow {
+  border-top: 1px solid rgba(23, 21, 20, 0.16) !important;
+  border-left: 1px solid rgba(23, 21, 20, 0.16) !important;
+}
+
+.paper-theme .cs-step h3 {
+  color: var(--ink, #171514) !important;
+}
+
+.paper-theme .cs-step p {
+  color: #5e5751 !important;
+}
+
+.paper-theme .cs-stack {
+  background: rgba(23, 21, 20, 0.14) !important;
+  border: 1px solid rgba(23, 21, 20, 0.14) !important;
+}
+
+.paper-theme .cs-stack article {
+  background: var(--paper, #eee9df) !important;
+}
+
+.paper-theme .cs-stack h3 {
+  color: var(--ink, #171514) !important;
+}
+
+.paper-theme .cs-stack p {
+  color: #554e48 !important;
+}
+
+.paper-theme .cs-feature-list {
+  border-top: 1px solid rgba(23, 21, 20, 0.16) !important;
+}
+
+.paper-theme .cs-feature {
+  border-bottom: 1px solid rgba(23, 21, 20, 0.16) !important;
+}
+
+.paper-theme .cs-feature h3 {
+  color: var(--ink, #171514) !important;
+}
+
+.paper-theme .cs-feature p {
+  color: #554e48 !important;
+}
+
+.paper-theme .cs-next {
+  background: var(--red, #ed3b24) !important;
+  color: #ffffff !important;
+}
+
+.paper-theme .cs-next b {
+  color: #ffffff !important;
+}
+
+.paper-theme .cs-footer {
+  border-top: 1px solid rgba(23, 21, 20, 0.14) !important;
+  background: #e6e0d4 !important;
+  color: #635c55 !important;
+}
+
+.paper-theme .cs-footer a {
+  color: var(--ink, #171514) !important;
+}
