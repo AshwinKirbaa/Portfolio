@@ -196,23 +196,10 @@
 
   const projectItems = [
     {
-      title: 'SafeBox AI',
-      description: 'Adversarial AI testing & security',
-      url: 'projects/safebox-ai.html',
-      kicker: 'PROJECT 01 / AI SECURITY',
-      titleHtml: 'SAFEBOX<em>AI</em>',
-      lede: 'An evidence-driven security lab for testing how AI systems respond to prompt injection, policy challenges, sensitive-data risks, and isolated execution.',
-      role: 'FULL-STACK / AI SECURITY',
-      year: '2026',
-      status: 'LIVE',
-      focus: 'ADVERSARIAL TESTING',
-      buttonText: 'OPEN LIVE PROJECT ↗'
-    },
-    {
       title: 'TwinEval AI',
       description: 'Smart handwritten answer evaluation',
       url: 'projects/twineval-ai.html',
-      kicker: 'PROJECT 02 / NATURAL LANGUAGE PROCESSING',
+      kicker: 'PROJECT 01 / NATURAL LANGUAGE PROCESSING',
       titleHtml: 'TWINEVAL<em>AI</em>',
       lede: 'A semantic evaluation system that compares the meaning of written answers using sentence embeddings instead of relying only on exact keywords.',
       role: 'AI / FULL-STACK',
@@ -222,36 +209,36 @@
       buttonText: 'OPEN LIVE PROJECT ↗'
     },
     {
-      title: 'Security Camera',
-      description: 'Real-time face recognition system',
-      url: 'projects/ai-security-camera.html',
-      kicker: 'PROJECT 03 / COMPUTER VISION',
-      titleHtml: 'SECURITY<em>CAMERA</em>',
-      lede: 'A real-time recognition pipeline that detects faces, creates identity embeddings, and matches visitors against known records from a live camera feed.',
-      role: 'COMPUTER VISION',
+      title: 'QPGen',
+      description: 'Secure AI question paper generator',
+      url: 'projects/qpgen.html',
+      kicker: 'PROJECT 02 / FULL-STACK AI & SYSTEMS',
+      titleHtml: 'QP<em>GEN</em>',
+      lede: 'A question-bank-driven exam paper generator with deterministic constraint validation, multi-dimensional backtracking selection, and server-authoritative integrity.',
+      role: 'FULL-STACK / SYSTEM ARCHITECTURE',
       year: '2026',
-      status: 'SOURCE AVAILABLE',
-      focus: 'FACE RECOGNITION',
-      buttonText: 'VIEW SOURCE ↗'
+      status: 'LIVE',
+      focus: 'BACKTRACKING SOLVER',
+      buttonText: 'OPEN LIVE PROJECT ↗'
     },
     {
-      title: 'Gesture Control',
-      description: 'Touchless computer interaction',
-      url: 'projects/gesture-control.html',
-      kicker: 'PROJECT 04 / HUMAN–COMPUTER INTERACTION',
-      titleHtml: 'GESTURE<em>CONTROL</em>',
-      lede: 'A touchless input system that interprets hand landmarks and maps recognized gestures to useful computer actions.',
-      role: 'COMPUTER VISION',
+      title: 'SafeBox AI',
+      description: 'Adversarial AI testing & security',
+      url: 'projects/safebox-ai.html',
+      kicker: 'PROJECT 03 / AI SECURITY',
+      titleHtml: 'SAFEBOX<em>AI</em>',
+      lede: 'An evidence-driven security lab for testing how AI systems respond to prompt injection, policy challenges, sensitive-data risks, and isolated execution.',
+      role: 'FULL-STACK / AI SECURITY',
       year: '2026',
-      status: 'SOURCE AVAILABLE',
-      focus: 'TOUCHLESS INPUT',
-      buttonText: 'VIEW SOURCE ↗'
+      status: 'LIVE',
+      focus: 'ADVERSARIAL TESTING',
+      buttonText: 'OPEN LIVE PROJECT ↗'
     },
     {
       title: 'Dexget',
       description: 'Local-first desktop assistant',
       url: 'projects/dexget.html',
-      kicker: 'PROJECT 05 / WINDOWS + LOCAL AI',
+      kicker: 'PROJECT 04 / WINDOWS + LOCAL AI',
       titleHtml: 'DEX<em>GET</em>',
       lede: 'A Windows 11 Dynamic Island and local-first desktop assistant for media, notifications, search, files, automations, clipboard history, and phone transfer.',
       role: 'DESKTOP / AI / SYSTEMS',
@@ -261,17 +248,30 @@
       buttonText: 'VIEW SOURCE ↗'
     },
     {
-      title: 'QPGen',
-      description: 'Secure AI question paper generator',
-      url: 'projects/qpgen.html',
-      kicker: 'PROJECT 06 / FULL-STACK AI & SYSTEMS',
-      titleHtml: 'QP<em>GEN</em>',
-      lede: 'A question-bank-driven exam paper generator with deterministic constraint validation, multi-dimensional backtracking selection, and server-authoritative integrity.',
-      role: 'FULL-STACK / SYSTEM ARCHITECTURE',
+      title: 'AI Gesture Control',
+      description: 'Touchless computer interaction',
+      url: 'projects/gesture-control.html',
+      kicker: 'PROJECT 05 / HUMAN–COMPUTER INTERACTION',
+      titleHtml: 'GESTURE<em>CONTROL</em>',
+      lede: 'A touchless input system that interprets hand landmarks and maps recognized gestures to useful computer actions.',
+      role: 'COMPUTER VISION',
       year: '2026',
-      status: 'LIVE',
-      focus: 'BACKTRACKING SOLVER',
-      buttonText: 'OPEN LIVE PROJECT ↗'
+      status: 'SOURCE AVAILABLE',
+      focus: 'TOUCHLESS INPUT',
+      buttonText: 'VIEW SOURCE ↗'
+    },
+    {
+      title: 'AI Security Camera',
+      description: 'Real-time face recognition system',
+      url: 'projects/ai-security-camera.html',
+      kicker: 'PROJECT 06 / COMPUTER VISION',
+      titleHtml: 'SECURITY<em>CAMERA</em>',
+      lede: 'A real-time recognition pipeline that detects faces, creates identity embeddings, and matches visitors against known records from a live camera feed.',
+      role: 'COMPUTER VISION',
+      year: '2026',
+      status: 'SOURCE AVAILABLE',
+      focus: 'FACE RECOGNITION',
+      buttonText: 'VIEW SOURCE ↗'
     }
   ];
 
