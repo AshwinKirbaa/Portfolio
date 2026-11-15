@@ -373,10 +373,15 @@
       el.setAttribute('tabindex', '-1');
       el.innerHTML = `
         <div class="folder-doc">
+          <span class="folder-doc-kicker">${item.kicker || 'CASE STUDY'}</span>
           <span class="folder-doc-title">${item.title}</span>
           <span class="folder-doc-text">${item.description}</span>
           <span class="folder-doc-line" style="width: 92%"></span>
           <span class="folder-doc-line" style="width: 84%"></span>
+          <div class="folder-doc-meta-strip">
+            <span>${item.role || 'ENGINEER'}</span>
+            <span>${item.year || '2026'}</span>
+          </div>
           <span class="folder-doc-block"></span>
           <span class="folder-doc-line" style="width: 78%"></span>
         </div>
@@ -678,10 +683,17 @@
         flyer.innerHTML = `
           <!-- Mockup of the destination case-study page layout for a seamless morph -->
           <div class="flight-paper-preview">
+            <span class="folder-doc-kicker">${itemData.kicker || 'CASE STUDY'}</span>
             <span class="folder-doc-title">${itemData.title || ''}</span>
             <span class="folder-doc-text">${itemData.description || ''}</span>
             <span class="folder-doc-line" style="width: 92%"></span>
             <span class="folder-doc-line" style="width: 84%"></span>
+            <div class="folder-doc-meta-strip">
+              <span>${itemData.role || 'ENGINEER'}</span>
+              <span>${itemData.year || '2026'}</span>
+            </div>
+            <span class="folder-doc-block"></span>
+            <span class="folder-doc-line" style="width: 78%"></span>
           </div>
 
           <div class="flight-cs-container">
