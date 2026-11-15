@@ -21,10 +21,10 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000000;
+    z-index: 2147483647;
     width: 32px;
     height: 32px;
-    pointer-events: none;
+    pointer-events: none !important;
     opacity: 0;
     color: #f4efe6;
     filter: drop-shadow(0 2px 5px rgb(0 0 0 / 0.35));
@@ -32,7 +32,7 @@
     transform-origin: 8px 8px;
     will-change: transform, opacity;
     transition: opacity 160ms ease, color 180ms ease;
-    mix-blend-mode: difference;
+    mix-blend-mode: normal;
   }
 
   .smooth-cursor.is-visible {
@@ -42,7 +42,6 @@
   .smooth-cursor.is-interactive {
     --cursor-scale: 1.22;
     color: #ed3b24;
-    mix-blend-mode: normal;
   }
 
   .smooth-cursor svg {
@@ -50,6 +49,13 @@
     width: 100%;
     height: 100%;
     overflow: visible;
+  }
+
+  .smooth-cursor svg path {
+    fill: currentColor;
+    stroke: #171514;
+    stroke-width: 1.5;
+    paint-order: stroke fill;
   }
 }
 

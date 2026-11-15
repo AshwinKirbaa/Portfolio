@@ -88,7 +88,8 @@
   }, { passive: true });
 
   addEventListener('pointerout', (event) => {
-    if (!event.relatedTarget) {
+    // Only hide the custom cursor when the pointer actually exits the root window viewport
+    if (!event.relatedTarget && (event.clientX <= 0 || event.clientX >= window.innerWidth || event.clientY <= 0 || event.clientY >= window.innerHeight)) {
       visible = false;
       cursor.classList.remove('is-visible', 'is-interactive');
     }
