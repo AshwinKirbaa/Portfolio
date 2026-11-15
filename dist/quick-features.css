@@ -1,0 +1,182 @@
+/* Quick Copy Toast & Floating Dock Pill Styles */
+
+.copy-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: #171514;
+  border: 1px solid var(--red, #ed3b24);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  color: #eee9df;
+  font-family: var(--mono, monospace);
+  font-size: 12px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.copy-toast.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.copy-email-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+
+.copy-email-btn:hover {
+  color: var(--red, #ed3b24);
+}
+
+.copy-email-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+
+/* Floating Recruiter Dock Pill */
+.floating-recruiter-pill {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: rgba(23, 21, 20, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(237, 59, 36, 0.2);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-recruiter-pill.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.floating-pill-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  color: #eee9df;
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.floating-pill-link:hover {
+  background: var(--red, #ed3b24);
+  color: #171514;
+  font-weight: 600;
+}
+
+.floating-pill-link.primary {
+  background: var(--red, #ed3b24);
+  color: #171514;
+  font-weight: 600;
+}
+
+.floating-pill-link.primary:hover {
+  background: #ffffff;
+  color: #171514;
+}
+
+.floating-pill-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #eee9df;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.floating-pill-top:hover {
+  background: var(--red, #ed3b24);
+  color: #171514;
+}
+
+/* GitHub Live Stats Bar in Macbook View */
+.inlaptop-github-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 12px 0 16px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+}
+
+.inlaptop-stat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: center;
+}
+
+.inlaptop-stat-num {
+  font-family: var(--sans, sans-serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.inlaptop-stat-label {
+  font-family: var(--mono, monospace);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: #8b949e;
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .floating-recruiter-pill {
+    bottom: 16px;
+    right: 16px;
+    padding: 4px 6px;
+  }
+  .floating-pill-link {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+}
