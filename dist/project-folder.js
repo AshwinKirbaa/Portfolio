@@ -723,6 +723,13 @@
           </div>
         `;
 
+        // Store state so returning via back button restores the open folder and scroll position
+        try {
+          sessionStorage.setItem('portfolio-entered', '1');
+          sessionStorage.setItem('project-folder-open', '1');
+          sessionStorage.setItem('portfolio-scroll-pos', String(window.scrollY || window.pageYOffset || 0));
+        } catch (e) {}
+
         Object.assign(flyer.style, {
           position: 'fixed',
           top: `${rect.top}px`,
@@ -768,7 +775,15 @@
 
     stage.addEventListener('click', e => {
       if (e.target.closest('.folder-item')) return;
-      setOpen(!isOpen);
+      const nextOpen = !isOpen;
+      setOpen(nextOpen);
+      try {
+        if (nextOpen) {
+          sessionStorage.setItem('project-folder-open', '1');
+        } else {
+          sessionStorage.removeItem('project-folder-open');
+        }
+      } catch (err) {}
     });
 
     root.addEventListener('pointermove', event => {
@@ -816,16 +831,20 @@
     document.addEventListener('pointerdown', e => {
       if (!root.contains(e.target) && isOpen && closeOnOutsideClick) {
         setOpen(false);
+        try { sessionStorage.removeItem('project-folder-open'); } catch (err) {}
       }
     });
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && isOpen && closeOnOutsideClick) {
         setOpen(false);
+        try { sessionStorage.removeItem('project-folder-open'); } catch (err) {}
       }
     });
 
-    setOpen(defaultOpen);
+    // Check if returning from a project case study where folder was open
+    const shouldRestoreOpen = defaultOpen || sessionStorage.getItem('project-folder-open') === '1' || window.location.hash === '#work';
+    setOpen(shouldRestoreOpen);
 
     state.visible = true;
     const io = new IntersectionObserver(([entry]) => {

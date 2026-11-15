@@ -15,11 +15,30 @@
   <title>Ashwin Kirbaa — AI & Software Developer</title>
   <script>
     if('scrollRestoration'in history)history.scrollRestoration='manual';
-    if(location.hash==='#top')scrollTo(0,0);
-    addEventListener('pageshow',()=>{if(location.hash==='#top')requestAnimationFrame(()=>scrollTo(0,0))});
-    if(location.hash==='#portfolio'||location.search.includes('view=portfolio')){
+    const isDirect = location.hash==='#portfolio'||location.hash==='#work'||location.search.includes('view=portfolio')||sessionStorage.getItem('portfolio-entered')==='1'||sessionStorage.getItem('project-folder-open')==='1';
+    if(isDirect){
       document.documentElement.classList.add('direct-portfolio');
     }
+    const restoreScroll = () => {
+      const savedPos = sessionStorage.getItem('portfolio-scroll-pos');
+      if (savedPos !== null && (isDirect || sessionStorage.getItem('project-folder-open') === '1')) {
+        const top = parseInt(savedPos, 10);
+        if (!isNaN(top) && top > 0) {
+          window.scrollTo({ top, behavior: 'instant' });
+        }
+      } else if (location.hash === '#work') {
+        const workSec = document.getElementById('work');
+        if (workSec) workSec.scrollIntoView({ behavior: 'instant' });
+      } else if (location.hash === '#top') {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    };
+    addEventListener('pageshow', () => {
+      requestAnimationFrame(restoreScroll);
+    });
+    addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(restoreScroll);
+    });
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

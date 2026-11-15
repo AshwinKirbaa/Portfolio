@@ -9,11 +9,16 @@
 
   if (!theater || !track || posters.length === 0) return;
 
-  // Check if returning directly to portfolio from a case study or certificate page
-  const isDirectPortfolio = window.location.hash === '#portfolio' || window.location.search.includes('view=portfolio');
+  // Check if returning directly to portfolio from a case study or certificate page,
+  // or if the portfolio was already entered previously in this session
+  const isDirectPortfolio = window.location.hash === '#portfolio' || 
+    window.location.search.includes('view=portfolio') || 
+    sessionStorage.getItem('portfolio-entered') === '1' ||
+    sessionStorage.getItem('project-folder-open') === '1';
 
   if (isDirectPortfolio) {
     theater.classList.add('dismissed');
+    document.documentElement.classList.add('direct-portfolio');
     document.body.style.overflow = '';
     triggerHeroElementsEntrance();
   } else {
@@ -267,6 +272,8 @@
           sourceCard.removeAttribute('style');
           destCard.style.removeProperty('transition');
           theater.classList.add('dismissed');
+          document.documentElement.classList.add('direct-portfolio');
+          sessionStorage.setItem('portfolio-entered', '1');
           theater.classList.remove('is-transitioning');
           window.dispatchEvent(new Event('resize'));
           if (history.replaceState) {
@@ -422,7 +429,9 @@
   });
 
   function dismissIntro() {
+    sessionStorage.setItem('portfolio-entered', '1');
     theater.classList.add('dismissed');
+    document.documentElement.classList.add('direct-portfolio');
     document.body.style.overflow = '';
     window.dispatchEvent(new Event('resize'));
     triggerHeroElementsEntrance();
@@ -434,6 +443,9 @@
   }
 
   function showIntroHome() {
+    sessionStorage.removeItem('portfolio-entered');
+    sessionStorage.removeItem('project-folder-open');
+    sessionStorage.removeItem('portfolio-scroll-pos');
     window.scrollTo({ top: 0, behavior: 'instant' });
     if (history.replaceState) {
       history.replaceState(null, '', window.location.pathname + window.location.search);
@@ -609,7 +621,7 @@
   }
 
   function init() {
-    if (isDirectPortfolio) {
+    if (isDirectPortfolio || sessionStorage.getItem('portfolio-entered') === '1' || sessionStorage.getItem('project-folder-open') === '1') {
       dismissIntro();
       return;
     }
