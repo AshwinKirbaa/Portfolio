@@ -962,3 +962,9 @@ section:hover>.section-index{letter-spacing:.16em}
     padding: 25px 20px;
   }
 }
+.cv-channel {
+  background: radial-gradient(circle at 50% 35%, rgba(237, 59, 36, 0.22) 0%, #150f11 85%);
+}
+.profile-card--cv {
+  --pc-status: #ed3b24;
+}
