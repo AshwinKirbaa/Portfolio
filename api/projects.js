@@ -3,12 +3,12 @@ import postgres from "postgres";
 const connectionString = process.env.DATABASE_URL_POOLED || process.env.POSTGRES_URL || process.env.DATABASE_URL;
 
 const seedProjects = [
-  ["twineval", "TWINEVAL AI", "SEMANTIC EVALUATION", "AI-assisted answer evaluation using sentence embeddings and cosine similarity to compare meaning beyond keyword matches.", 2026, "/projects/twineval-ai.html", 1],
-  ["qpgen", "QPGEN", "QUESTION PAPER GENERATOR", "A question-bank-driven exam generator with deterministic constraint validation, multi-dimensional backtracking selection, and server-authoritative integrity.", 2026, "/projects/qpgen.html", 2],
-  ["safebox", "SAFEBOX AI", "AI SECURITY PLATFORM", "Evidence-driven testing for adversarial AI behavior, policy adherence, sensitive-data exposure, and sandbox isolation.", 2026, "/projects/safebox-ai.html", 3],
-  ["dexget", "DEXGET", "WINDOWS DESKTOP ASSISTANT", "A Windows 11 Dynamic Island and local-first assistant for search, controls, automations, clipboard history, and phone transfer.", 2026, "/projects/dexget.html", 4],
-  ["gesture", "AI GESTURE CONTROL", "HUMAN-COMPUTER INTERACTION", "Touchless computer controls built from hand-landmark tracking, gesture recognition, and configurable actions.", 2026, "/projects/gesture-control.html", 5],
-  ["camera", "AI SECURITY CAMERA", "COMPUTER VISION", "Real-time visitor identification using OpenCV, InsightFace, facial embeddings, and recognition workflows.", 2026, "/projects/ai-security-camera.html", 6],
+  ["twineval", "TWINEVAL AI", "SEMANTIC EVALUATION", "AI-assisted answer evaluation using sentence embeddings and cosine similarity to compare meaning beyond keyword matches.", 2026, "https://twineval-ai.vercel.app/", 1],
+  ["qpgen", "QPGEN", "QUESTION PAPER GENERATOR", "A question-bank-driven exam generator with deterministic constraint validation, multi-dimensional backtracking selection, and server-authoritative integrity.", 2026, "https://qp-gen-six.vercel.app/", 2],
+  ["safebox", "SAFEBOX AI", "AI SECURITY PLATFORM", "Evidence-driven testing for adversarial AI behavior, policy adherence, sensitive-data exposure, and sandbox isolation.", 2026, "https://safebox-ai.vercel.app/", 3],
+  ["dexget", "DEXGET", "WINDOWS DESKTOP ASSISTANT", "A Windows 11 Dynamic Island and local-first assistant for search, controls, automations, clipboard history, and phone transfer.", 2026, "https://github.com/AshwinKirbaa/Dexget", 4],
+  ["gesture", "AI GESTURE CONTROL", "HUMAN-COMPUTER INTERACTION", "Touchless computer controls built from hand-landmark tracking, gesture recognition, and configurable actions.", 2026, "https://github.com/AshwinKirbaa/ai_gesture_control", 5],
+  ["camera", "AI SECURITY CAMERA", "COMPUTER VISION", "Real-time visitor identification using OpenCV, InsightFace, facial embeddings, and recognition workflows.", 2026, "https://github.com/AshwinKirbaa/ai_security_camera", 6],
 ];
 
 let initialized = false;
