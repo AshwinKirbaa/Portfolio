@@ -269,9 +269,9 @@
       lede: 'A question-bank-driven exam paper generator with deterministic constraint validation, multi-dimensional backtracking selection, and server-authoritative integrity.',
       role: 'FULL-STACK / SYSTEM ARCHITECTURE',
       year: '2026',
-      status: 'SOURCE AVAILABLE',
+      status: 'LIVE',
       focus: 'BACKTRACKING SOLVER',
-      buttonText: 'VIEW SOURCE ↗'
+      buttonText: 'OPEN LIVE PROJECT ↗'
     }
   ];
 
