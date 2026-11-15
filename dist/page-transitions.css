@@ -87,13 +87,14 @@
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 0, 0, 0.12) !important;
   overflow: hidden !important;
   transform-origin: center center !important;
-  will-change: top, left, width, height, border-radius, box-shadow, opacity !important;
-  transition: top 900ms cubic-bezier(0.16, 1, 0.3, 1),
-              left 900ms cubic-bezier(0.16, 1, 0.3, 1),
-              width 900ms cubic-bezier(0.16, 1, 0.3, 1),
-              height 900ms cubic-bezier(0.16, 1, 0.3, 1),
-              border-radius 900ms cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 900ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: top, left, width, height, border-radius, box-shadow, background !important;
+  transition: top 850ms cubic-bezier(0.16, 1, 0.3, 1),
+              left 850ms cubic-bezier(0.16, 1, 0.3, 1),
+              width 850ms cubic-bezier(0.16, 1, 0.3, 1),
+              height 850ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 850ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 850ms cubic-bezier(0.16, 1, 0.3, 1),
+              background 850ms cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .project-paper-flight-card.is-maximized {
@@ -103,54 +104,182 @@
   height: 100vh !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+  background: var(--ink, #171514) !important;
+  color: var(--paper, #eee9df) !important;
 }
 
-.project-paper-flight-card .folder-doc {
-  padding: 44px 52px;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+/* Initial folded paper preview state inside flight card */
+.flight-paper-preview {
+  position: absolute;
+  inset: 0;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
+  transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  pointer-events: none;
 }
 
-.project-paper-flight-card .folder-doc-title {
+.is-maximized .flight-paper-preview {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.flight-paper-preview .folder-doc-title {
   font-family: var(--sans, 'Space Grotesk', sans-serif);
-  font-size: clamp(32px, 5.5vw, 76px) !important;
-  font-weight: 800 !important;
-  line-height: 0.95 !important;
-  letter-spacing: -0.05em !important;
-  margin-bottom: 18px !important;
-  color: #171514 !important;
-  transition: font-size 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #171514;
+  margin-bottom: 4px;
 }
 
-.project-paper-flight-card .folder-doc-text {
+.flight-paper-preview .folder-doc-text {
   font-family: var(--mono, monospace);
-  font-size: clamp(14px, 1.4vw, 20px) !important;
-  line-height: 1.55 !important;
-  color: #5e5751 !important;
-  max-width: 680px !important;
-  margin-bottom: 32px !important;
-  transition: font-size 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  font-size: 9.5px;
+  line-height: 1.35;
+  color: #5e5751;
+  margin-bottom: 8px;
 }
 
-.project-paper-flight-card .folder-doc-line {
-  background: rgba(23, 21, 20, 0.12) !important;
-  margin-bottom: 14px !important;
-  height: 6px !important;
-  border-radius: 999px !important;
-  transition: all 900ms cubic-bezier(0.16, 1, 0.3, 1);
+.flight-paper-preview .folder-doc-line {
+  background: rgba(23, 21, 20, 0.12);
+  margin-bottom: 5px;
+  height: 2.5px;
+  border-radius: 999px;
 }
 
-.project-paper-flight-card .folder-doc-block {
+/* Full Destination Case-Study Layout inside flight card */
+.flight-cs-container {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  background: var(--ink, #171514);
+  color: var(--paper, #eee9df);
+  transition: opacity 450ms cubic-bezier(0.16, 1, 0.3, 1) 180ms;
+  overflow: hidden;
+}
+
+.is-maximized .flight-cs-container {
+  opacity: 1;
+}
+
+.flight-cs-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.flight-cs-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff24;
+  background: #171514f2;
+  backdrop-filter: blur(14px);
+  z-index: 10;
+}
+
+.flight-cs-hero {
+  min-height: min(820px, 100svh);
+  padding: 116px 4vw 72px;
+  display: grid;
+  grid-template-columns: 1.45fr .55fr;
+  gap: 7vw;
+  align-items: center;
+  background-image: linear-gradient(90deg, #ffffff09 1px, transparent 1px), linear-gradient(#ffffff08 1px, transparent 1px);
+  background-size: 25% 100%, 100% 20%;
+  box-sizing: border-box;
   flex: 1;
-  max-height: 380px;
-  border-radius: 12px !important;
-  background: rgba(23, 21, 20, 0.06) !important;
-  margin-bottom: 20px !important;
-  border: 1px dashed rgba(23, 21, 20, 0.15);
-  transition: all 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flight-hero-main h1 {
+  margin: 24px 0 28px;
+  font-size: clamp(76px, 12.5vw, 190px);
+  line-height: .72;
+  letter-spacing: -.085em;
+  font-family: var(--sans, 'Space Grotesk', sans-serif);
+  font-weight: 700;
+  color: var(--paper, #eee9df);
+}
+
+.flight-hero-main h1 em {
+  display: block;
+  color: var(--red, #ed3b24);
+  font-style: normal;
+}
+
+.flight-hero-main .cs-kicker {
+  font: 10px var(--mono, monospace);
+  letter-spacing: .08em;
+  color: var(--red, #ed3b24);
+  display: block;
+}
+
+.flight-hero-main .cs-lede {
+  max-width: 780px;
+  margin: 0;
+  font-size: clamp(18px, 2vw, 30px);
+  line-height: 1.25;
+  color: #d0c9c0;
+  font-family: var(--sans, 'Space Grotesk', sans-serif);
+}
+
+.flight-hero-side {
+  border-top: 1px solid #ffffff40;
+  padding-top: 22px;
+}
+
+.flight-hero-side .cs-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 44px;
+}
+
+.flight-hero-side .cs-meta span {
+  display: block;
+  color: #89817a;
+  font: 8px var(--mono, monospace);
+  letter-spacing: 0.05em;
+}
+
+.flight-hero-side .cs-meta strong {
+  display: block;
+  margin-top: 7px;
+  font-size: 13px;
+  font-family: var(--sans, 'Space Grotesk', sans-serif);
+  color: var(--paper, #eee9df);
+}
+
+.flight-hero-side .cs-button {
+  display: inline-block;
+  padding: 12px 16px;
+  border: 1px solid var(--red, #ed3b24);
+  background: var(--red, #ed3b24);
+  color: var(--ink, #171514);
+  font: 9px var(--mono, monospace);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 900px) {
+  .flight-cs-hero {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding-top: 96px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -70,6 +70,23 @@
     }, 240);
   }
 
+  function navigateSeamlessly(targetUrl) {
+    // Navigate without curtain flash because expanding card already matches the destination hero
+    sessionStorage.setItem('pt-seamless-nav', '1');
+    window.location.href = targetUrl;
+  }
+
+  // Check if arriving from seamless paper expansion
+  if (sessionStorage.getItem('pt-seamless-nav')) {
+    sessionStorage.removeItem('pt-seamless-nav');
+    if (curtain) {
+      curtain.style.display = 'none';
+      setTimeout(() => {
+        curtain.style.display = '';
+      }, 600);
+    }
+  }
+
   // Global link delegation
   document.addEventListener('click', (event) => {
     const a = event.target.closest('a');
@@ -81,7 +98,8 @@
     }
   }, { capture: true });
 
-  // Expose global helper for programmatic transitions (e.g. from certificate carousel or buttons)
+  // Expose global helpers for programmatic transitions
   window.navigateSmoothly = navigateSmoothly;
+  window.navigateSeamlessly = navigateSeamlessly;
 })();
 

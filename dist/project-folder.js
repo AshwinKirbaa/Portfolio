@@ -198,27 +198,67 @@
     {
       title: 'SafeBox AI',
       description: 'Adversarial AI testing & security',
-      url: 'projects/safebox-ai.html'
+      url: 'projects/safebox-ai.html',
+      kicker: 'PROJECT 01 / AI SECURITY',
+      titleHtml: 'SAFEBOX<em>AI</em>',
+      lede: 'An evidence-driven security lab for testing how AI systems respond to prompt injection, policy challenges, sensitive-data risks, and isolated execution.',
+      role: 'FULL-STACK / AI SECURITY',
+      year: '2026',
+      status: 'LIVE',
+      focus: 'ADVERSARIAL TESTING',
+      buttonText: 'OPEN LIVE PROJECT ↗'
     },
     {
       title: 'TwinEval AI',
       description: 'Smart handwritten answer evaluation',
-      url: 'projects/twineval-ai.html'
+      url: 'projects/twineval-ai.html',
+      kicker: 'PROJECT 02 / NATURAL LANGUAGE PROCESSING',
+      titleHtml: 'TWINEVAL<em>AI</em>',
+      lede: 'A semantic evaluation system that compares the meaning of written answers using sentence embeddings instead of relying only on exact keywords.',
+      role: 'AI / FULL-STACK',
+      year: '2026',
+      status: 'LIVE + PUBLISHED',
+      focus: 'IJRTI2610875',
+      buttonText: 'OPEN LIVE PROJECT ↗'
     },
     {
       title: 'Security Camera',
       description: 'Real-time face recognition system',
-      url: 'projects/ai-security-camera.html'
+      url: 'projects/ai-security-camera.html',
+      kicker: 'PROJECT 03 / COMPUTER VISION',
+      titleHtml: 'SECURITY<em>CAMERA</em>',
+      lede: 'A real-time recognition pipeline that detects faces, creates identity embeddings, and matches visitors against known records from a live camera feed.',
+      role: 'COMPUTER VISION',
+      year: '2026',
+      status: 'SOURCE AVAILABLE',
+      focus: 'FACE RECOGNITION',
+      buttonText: 'VIEW SOURCE ↗'
     },
     {
       title: 'Gesture Control',
       description: 'Touchless computer interaction',
-      url: 'projects/gesture-control.html'
+      url: 'projects/gesture-control.html',
+      kicker: 'PROJECT 04 / HUMAN–COMPUTER INTERACTION',
+      titleHtml: 'GESTURE<em>CONTROL</em>',
+      lede: 'A touchless input system that interprets hand landmarks and maps recognized gestures to useful computer actions.',
+      role: 'COMPUTER VISION',
+      year: '2026',
+      status: 'SOURCE AVAILABLE',
+      focus: 'TOUCHLESS INPUT',
+      buttonText: 'VIEW SOURCE ↗'
     },
     {
       title: 'Dexget',
       description: 'Local-first desktop assistant',
-      url: 'projects/dexget.html'
+      url: 'projects/dexget.html',
+      kicker: 'PROJECT 05 / WINDOWS + LOCAL AI',
+      titleHtml: 'DEX<em>GET</em>',
+      lede: 'A Windows 11 Dynamic Island and local-first desktop assistant for media, notifications, search, files, automations, clipboard history, and phone transfer.',
+      role: 'DESKTOP / AI / SYSTEMS',
+      year: '2026',
+      status: 'WINDOWS 11',
+      focus: 'LOCAL OLLAMA',
+      buttonText: 'VIEW SOURCE ↗'
     }
   ];
 
@@ -629,12 +669,59 @@
 
         const destUrl = el.getAttribute('href');
         const rect = el.getBoundingClientRect();
+        const itemData = entries[index] || {};
 
         // Create the expanding paper flyer
-        const flyer = el.cloneNode(true);
+        const flyer = document.createElement('div');
         flyer.className = 'folder-layer folder-item project-paper-flight-card';
-        flyer.removeAttribute('style');
-        flyer.removeAttribute('data-folder-item');
+
+        flyer.innerHTML = `
+          <!-- Mockup of the destination case-study page layout for a seamless morph -->
+          <div class="flight-paper-preview">
+            <span class="folder-doc-title">${itemData.title || ''}</span>
+            <span class="folder-doc-text">${itemData.description || ''}</span>
+            <span class="folder-doc-line" style="width: 92%"></span>
+            <span class="folder-doc-line" style="width: 84%"></span>
+          </div>
+
+          <div class="flight-cs-container">
+            <div class="flight-cs-noise"></div>
+            <header class="flight-cs-header">
+              <div class="cs-header-left">
+                <span class="cs-back-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                  </svg>
+                  <span>PORTFOLIO</span>
+                </span>
+                <span class="cs-brand">ASHWIN <span>KIRBAA</span></span>
+              </div>
+              <nav class="cs-nav">
+                <span>PROJECTS</span>
+                <span>ACHIEVEMENTS</span>
+                <span>CONTACT</span>
+              </nav>
+            </header>
+            <div class="flight-cs-hero">
+              <div class="flight-hero-main">
+                <span class="cs-kicker">${itemData.kicker || 'PROJECT CASE STUDY'}</span>
+                <h1>${itemData.titleHtml || itemData.title || ''}</h1>
+                <p class="cs-lede">${itemData.lede || itemData.description || ''}</p>
+              </div>
+              <aside class="flight-hero-side">
+                <div class="cs-meta">
+                  <div><span>ROLE</span><strong>${itemData.role || 'DEVELOPER'}</strong></div>
+                  <div><span>YEAR</span><strong>${itemData.year || '2026'}</strong></div>
+                  <div><span>STATUS</span><strong>${itemData.status || 'LIVE'}</strong></div>
+                  <div><span>FOCUS</span><strong>${itemData.focus || 'AI / SYSTEMS'}</strong></div>
+                </div>
+                <div class="cs-actions">
+                  <span class="cs-button primary">${itemData.buttonText || 'OPEN LIVE PROJECT ↗'}</span>
+                </div>
+              </aside>
+            </div>
+          </div>
+        `;
 
         Object.assign(flyer.style, {
           position: 'fixed',
@@ -655,14 +742,16 @@
           requestAnimationFrame(() => {
             flyer.classList.add('is-maximized');
             
-            // Allow the smooth, deliberate expansion animation to complete fully (820ms) before transitioning
+            // Allow the smooth, deliberate expansion animation to complete before navigating
             setTimeout(() => {
-              if (window.navigateSmoothly) {
+              if (window.navigateSeamlessly) {
+                window.navigateSeamlessly(destUrl);
+              } else if (window.navigateSmoothly) {
                 window.navigateSmoothly(destUrl);
               } else {
                 window.location.href = destUrl;
               }
-            }, 780);
+            }, 750);
           });
         });
       });
