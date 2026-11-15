@@ -8,6 +8,7 @@ const seedProjects = [
   ["camera", "AI SECURITY CAMERA", "COMPUTER VISION", "Real-time visitor identification using OpenCV, InsightFace, facial embeddings, and recognition workflows.", 2026, "/projects/ai-security-camera.html", 3],
   ["gesture", "GESTURE CONTROL", "HUMAN-COMPUTER INTERACTION", "Touchless computer controls built from hand-landmark tracking, gesture recognition, and configurable actions.", 2026, "/projects/gesture-control.html", 4],
   ["dexget", "DEXGET", "WINDOWS DESKTOP ASSISTANT", "A Windows 11 Dynamic Island and local-first assistant for search, controls, automations, clipboard history, and phone transfer.", 2026, "/projects/dexget.html", 5],
+  ["qpgen", "QPGEN", "QUESTION PAPER GENERATOR", "A question-bank-driven exam generator with deterministic constraint validation, multi-dimensional backtracking selection, and server-authoritative integrity.", 2026, "/projects/qpgen.html", 6],
 ];
 
 let initialized = false;

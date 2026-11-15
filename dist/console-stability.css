@@ -530,3 +530,145 @@ body.is-scrolled .topbar {
   -webkit-backdrop-filter: none !important;
 }
 
+/* QPGen Blueprint & Constraint Solver Live Preview */
+.qpgen-ui {
+  align-self: center;
+  min-height: 390px;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+}
+
+.qpgen-terminal {
+  width: min(100%, 690px);
+  min-height: 330px;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ffffff20;
+  background:
+    radial-gradient(circle at 50% 8%, rgba(237, 59, 36, 0.18), transparent 42%),
+    linear-gradient(135deg, #161819, #090a0b 70%);
+  box-shadow: inset 0 0 60px #000, 0 24px 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.qpgen-terminal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font: 8px var(--mono);
+  letter-spacing: .08em;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 18px;
+}
+
+.qpgen-terminal-top span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #f2eee8;
+  font-weight: 600;
+}
+
+.qpgen-terminal-top i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 10px var(--red);
+  display: inline-block;
+}
+
+.qpgen-terminal-top b {
+  color: #6aff71;
+  font-weight: 600;
+  background: rgba(106, 255, 113, 0.12);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(106, 255, 113, 0.25);
+}
+
+.qpgen-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  flex: 1;
+}
+
+.qpgen-blueprint-card,
+.qpgen-solver-card {
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #1c1f22, #111315);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.qpgen-blueprint-card small,
+.qpgen-solver-card small {
+  display: block;
+  color: var(--red);
+  font: 7.5px var(--mono);
+  letter-spacing: .12em;
+  margin-bottom: 6px;
+}
+
+.qpgen-blueprint-card strong {
+  display: block;
+  font-size: 20px;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.qpgen-splits {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font: 8.5px/1.4 var(--mono);
+  color: #a8a39d;
+}
+
+.qpgen-splits span {
+  padding: 5px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 2px solid var(--red);
+  border-radius: 0 4px 4px 0;
+}
+
+.qpgen-metric-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.qpgen-metric-row > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 8px var(--mono);
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.qpgen-metric-row span {
+  color: #8c857b;
+}
+
+.qpgen-metric-row b {
+  color: #f2eee8;
+}
+
+@media (max-width: 720px) {
+  .qpgen-ui { min-height: 310px; padding: 12px 0; }
+  .qpgen-terminal { min-height: 285px; padding: 16px 14px; }
+  .qpgen-grid { grid-template-columns: 1fr; }
+}
+
+

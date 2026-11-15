@@ -259,6 +259,19 @@
       status: 'WINDOWS 11',
       focus: 'LOCAL OLLAMA',
       buttonText: 'VIEW SOURCE ↗'
+    },
+    {
+      title: 'QPGen',
+      description: 'Secure AI question paper generator',
+      url: 'projects/qpgen.html',
+      kicker: 'PROJECT 06 / FULL-STACK AI & SYSTEMS',
+      titleHtml: 'QP<em>GEN</em>',
+      lede: 'A question-bank-driven exam paper generator with deterministic constraint validation, multi-dimensional backtracking selection, and server-authoritative integrity.',
+      role: 'FULL-STACK / SYSTEM ARCHITECTURE',
+      year: '2026',
+      status: 'SOURCE AVAILABLE',
+      focus: 'BACKTRACKING SOLVER',
+      buttonText: 'VIEW SOURCE ↗'
     }
   ];
 
