@@ -272,6 +272,19 @@
       status: 'SOURCE AVAILABLE',
       focus: 'FACE RECOGNITION',
       buttonText: 'VIEW SOURCE ↗'
+    },
+    {
+      title: 'Buy or Wait?',
+      description: 'Context-aware financial affordability engine',
+      url: 'projects/buy-or-wait.html',
+      kicker: 'PROJECT 07 / FINTECH & FULL-STACK SYSTEMS',
+      titleHtml: 'BUY OR<em>WAIT?</em>',
+      lede: 'A context-aware financial decision engine that evaluates major purchases and loan commitments against household income, debt load, and liquid runway.',
+      role: 'FULL-STACK / FINANCIAL LOGIC',
+      year: '2026',
+      status: 'LIVE',
+      focus: 'DETERMINISTIC SIMULATION',
+      buttonText: 'OPEN LIVE PROJECT ↗'
     }
   ];
 

@@ -672,3 +672,104 @@ body.is-scrolled .topbar {
 }
 
 
+
+
+/* ==========================================================================
+   07. Buy or Wait Preview UI for Homepage Project Stage
+   ========================================================================== */
+.buyorwait-ui {
+  align-self: center;
+  min-height: 380px;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  width: 100%;
+}
+
+.buyorwait-preview-card {
+  width: min(100%, 640px);
+  background: #181615;
+  border: 1px solid #332e2b;
+  border-radius: 8px;
+  padding: 22px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.buyorwait-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 600 11px var(--mono);
+  color: #8d867e;
+  border-bottom: 1px solid #2b2724;
+  padding-bottom: 10px;
+}
+
+.buyorwait-preview-header b {
+  color: var(--red);
+}
+
+.buyorwait-preview-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.buyorwait-preview-stat {
+  background: #110f0e;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border-left: 3px solid var(--red);
+  font: 11px var(--mono);
+}
+
+.buyorwait-preview-stat small {
+  display: block;
+  color: #8d867e;
+  font-size: 9px;
+  margin-bottom: 2px;
+}
+
+.buyorwait-preview-stat strong {
+  color: var(--paper);
+  font-size: 13px;
+}
+
+.buyorwait-preview-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.buyorwait-preview-bar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font: 10px var(--mono);
+  color: #a69f94;
+}
+
+.buyorwait-preview-bar-row .bar-track {
+  flex: 1;
+  height: 5px;
+  background: #2a2624;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.buyorwait-preview-bar-row .bar-track i {
+  display: block;
+  height: 100%;
+  background: #6aff71;
+}
+
+@media (max-width: 720px) {
+  .buyorwait-preview-stats {
+    grid-template-columns: 1fr;
+  }
+}

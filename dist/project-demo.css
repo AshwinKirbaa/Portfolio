@@ -693,12 +693,116 @@
   margin-top: 4px;
 }
 
+/* -------------------------------------------------------------
+   07. BUY OR WAIT? DEMO ENGINE
+   ------------------------------------------------------------- */
+.buyorwait-demo-board {
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 24px;
+}
+
+.buyorwait-card {
+  background: #181615;
+  border: 1px solid #332e2b;
+  border-radius: 6px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.buyorwait-card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 600 11px var(--mono);
+  color: #8d867e;
+  border-bottom: 1px solid #2b2724;
+  padding-bottom: 8px;
+}
+
+.buyorwait-card-title b {
+  color: var(--red);
+}
+
+.buyorwait-decision-pulse {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.buyorwait-metric {
+  display: flex;
+  justify-content: space-between;
+  font: 11px var(--mono);
+  padding: 8px 10px;
+  background: #110f0e;
+  border-radius: 4px;
+  border-left: 3px solid var(--red);
+}
+
+.buyorwait-metric b {
+  color: var(--paper);
+}
+
+.buyorwait-verdict-banner {
+  background: rgba(237, 59, 36, 0.12);
+  border: 1px solid rgba(237, 59, 36, 0.35);
+  border-radius: 4px;
+  padding: 10px;
+  font: 11px var(--mono);
+  color: #fca5a5;
+  line-height: 1.4;
+}
+
+.buyorwait-verdict-banner span {
+  font-weight: 700;
+  color: var(--red);
+}
+
+.buyorwait-scores {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.buyorwait-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font: 10px var(--mono);
+  color: #a69f94;
+}
+
+.buyorwait-bar {
+  height: 6px;
+  background: #2a2624;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.buyorwait-bar i {
+  display: block;
+  height: 100%;
+  background: #6aff71;
+  animation: barPulse 4s infinite ease-in-out;
+}
+
+@keyframes barPulse {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; filter: brightness(1.2); }
+}
+
 @media (max-width: 860px) {
   .twineval-demo-board,
   .qpgen-demo-board,
   .safebox-demo-board,
   .gesture-demo-board,
-  .camera-demo-board {
+  .camera-demo-board,
+  .buyorwait-demo-board {
     grid-template-columns: 1fr;
     gap: 20px;
   }
