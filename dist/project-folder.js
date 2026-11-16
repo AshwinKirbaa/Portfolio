@@ -236,10 +236,23 @@
       buttonText: 'OPEN LIVE PROJECT ↗'
     },
     {
+      title: 'Buy or Wait?',
+      description: 'Context-aware financial affordability engine',
+      url: 'projects/buy-or-wait.html',
+      kicker: 'PROJECT 04 / FINTECH & FULL-STACK SYSTEMS',
+      titleHtml: 'BUY OR<em>WAIT?</em>',
+      lede: 'A context-aware financial decision engine that evaluates major purchases and loan commitments against household income, debt load, and liquid runway.',
+      role: 'FULL-STACK / FINANCIAL LOGIC',
+      year: '2026',
+      status: 'LIVE',
+      focus: 'DETERMINISTIC SIMULATION',
+      buttonText: 'OPEN LIVE PROJECT ↗'
+    },
+    {
       title: 'Dexget',
       description: 'Local-first desktop assistant',
       url: 'projects/dexget.html',
-      kicker: 'PROJECT 04 / WINDOWS + LOCAL AI',
+      kicker: 'PROJECT 05 / WINDOWS + LOCAL AI',
       titleHtml: 'DEX<em>GET</em>',
       lede: 'A Windows 11 Dynamic Island and local-first desktop assistant for media, notifications, search, files, automations, clipboard history, and phone transfer.',
       role: 'DESKTOP / AI / SYSTEMS',
@@ -252,7 +265,7 @@
       title: 'AI Gesture Control',
       description: 'Touchless computer interaction',
       url: 'projects/gesture-control.html',
-      kicker: 'PROJECT 05 / HUMAN–COMPUTER INTERACTION',
+      kicker: 'PROJECT 06 / HUMAN–COMPUTER INTERACTION',
       titleHtml: 'GESTURE<em>CONTROL</em>',
       lede: 'A touchless input system that interprets hand landmarks and maps recognized gestures to useful computer actions.',
       role: 'COMPUTER VISION',
@@ -265,7 +278,7 @@
       title: 'AI Security Camera',
       description: 'Real-time face recognition system',
       url: 'projects/ai-security-camera.html',
-      kicker: 'PROJECT 06 / COMPUTER VISION',
+      kicker: 'PROJECT 07 / COMPUTER VISION',
       titleHtml: 'SECURITY<em>CAMERA</em>',
       lede: 'A real-time recognition pipeline that detects faces, creates identity embeddings, and matches visitors against known records from a live camera feed.',
       role: 'COMPUTER VISION',
@@ -273,19 +286,6 @@
       status: 'SOURCE AVAILABLE',
       focus: 'FACE RECOGNITION',
       buttonText: 'VIEW SOURCE ↗'
-    },
-    {
-      title: 'Buy or Wait?',
-      description: 'Context-aware financial affordability engine',
-      url: 'projects/buy-or-wait.html',
-      kicker: 'PROJECT 07 / FINTECH & FULL-STACK SYSTEMS',
-      titleHtml: 'BUY OR<em>WAIT?</em>',
-      lede: 'A context-aware financial decision engine that evaluates major purchases and loan commitments against household income, debt load, and liquid runway.',
-      role: 'FULL-STACK / FINANCIAL LOGIC',
-      year: '2026',
-      status: 'LIVE',
-      focus: 'DETERMINISTIC SIMULATION',
-      buttonText: 'OPEN LIVE PROJECT ↗'
     }
   ];
 
