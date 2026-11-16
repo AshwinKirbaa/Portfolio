@@ -4,9 +4,9 @@
 
   const TAU = Math.PI * 2;
   const STEP = 1 / 240;
-  const MAX_ITEMS = 6;
+  const MAX_ITEMS = 7;
 
-  const PILE_TURN = [0.5, -1.1, 1.5, -0.7, 1.2, -1.6];
+  const PILE_TURN = [0.5, -1.1, 1.5, -0.7, 1.2, -1.6, 0.9];
   const BOOK_REST = [
     { x: 0.14, y: -0.004, r: 1.4 },
     { x: 0.115, y: 0.008, r: -1.1 },
@@ -23,11 +23,12 @@
     { x: 0, rise: 0.21, r: 0.5 },
     { x: 0.24, rise: 0.18, r: 4.5 },
     { x: -0.24, rise: 0.19, r: -5 },
-    { x: 0.08, rise: 0.22, r: 1.5 }
+    { x: 0.08, rise: 0.22, r: 1.5 },
+    { x: -0.08, rise: 0.15, r: -2.5 }
   ];
-  const SPREAD_TURN = [4, -5, 3, -6, 5, -3];
-  const SPREAD_DROP = [0.03, -0.04, 0.05, -0.02, 0.04, -0.05];
-  const DROP_TURN = [-6, 4, -3, 7, -5, 3];
+  const SPREAD_TURN = [4, -5, 3, -6, 5, -3, 4];
+  const SPREAD_DROP = [0.03, -0.04, 0.05, -0.02, 0.04, -0.05, 0.02];
+  const DROP_TURN = [-6, 4, -3, 7, -5, 3, -4];
   const BOOK_ANGLES = { open: -180, receive: -24, peek: -13, rest: 0 };
   const FLAP_ANGLES = { open: -64, receive: -30, peek: -15, rest: 0 };
   const LAYERS = { out: 50, drag: 80, focus: 90 };
@@ -174,7 +175,7 @@
         };
       }
       const gap = 12 * g.scale;
-      const fit = Math.min(0.94, (g.w * 2.3 - gap * (count - 1)) / (count * g.docW));
+      const fit = Math.min(0.92, (g.w * 2.5 - gap * (count - 1)) / (count * g.docW));
       const step = g.docW * fit + gap;
       const tidy = layout === 'row';
       return {
