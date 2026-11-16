@@ -164,10 +164,10 @@
       const lift = g.tabH - g.h * 0.05;
       if (layout === 'stack') {
         const strip = Math.min(30 * g.scale, (g.h * 0.62) / Math.max(1, count - 1));
-        const fit = 1.04 - rank * 0.05;
+        const fit = 1.0;
         return {
           x: g.w / 2,
-          y: g.tabH + g.h * 0.1 - rank * strip - (g.docH * (1.04 - fit)) / 2,
+          y: g.tabH + g.h * 0.1 - rank * strip,
           z: -rank * 18 * g.scale,
           r: 0,
           ry: 0,
@@ -175,14 +175,15 @@
         };
       }
       const gap = 12 * g.scale;
-      const fit = Math.min(0.92, (g.w * 2.5 - gap * (count - 1)) / (count * g.docW));
-      const step = g.docW * fit + gap;
+      // Do not shrink papers when opening folder — maintain 100% full scale (1.0) so all text remains crisp and easily readable
+      const fit = 1.0;
+      const step = Math.max(90 * g.scale, Math.min(115 * g.scale, (g.w * 3.3) / Math.max(1, count - 1)));
       const tidy = layout === 'row';
       return {
         x: g.w / 2 + (rank - mid) * step,
-        y: lift + (tidy ? 0 : SPREAD_DROP[rank] * g.h * 0.7),
-        z: 0,
-        r: tidy ? 0 : SPREAD_TURN[rank] * 0.55,
+        y: lift + (tidy ? 0 : SPREAD_DROP[rank] * g.h * 0.4),
+        z: rank * 2,
+        r: tidy ? 0 : SPREAD_TURN[rank] * 0.35,
         ry: 0,
         s: fit
       };
@@ -605,14 +606,14 @@
 
         if (lead && active === 'open') {
           if (hover === index) {
-            target = { ...target, y: target.y - 6 * g.scale, r: target.r * 0.2, s: target.s * 1.05 };
+            target = { ...target, y: target.y - 12 * g.scale, r: 0, s: 1.06 };
             lift = 1;
             magnet = true;
           } else {
             const distance = target.x - lead.x;
             target = {
               ...target,
-              x: target.x + Math.sign(distance) * 12 * g.scale * Math.max(0, 1 - Math.abs(distance) / (g.w * 1.1))
+              x: target.x + Math.sign(distance) * 20 * g.scale * Math.max(0, 1 - Math.abs(distance) / (g.w * 1.4))
             };
             lift = 0.2;
           }
