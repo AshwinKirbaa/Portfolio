@@ -398,6 +398,426 @@
 }
 
 /* GitHub Authentic UI */
+.gh-view-container {
+  background: #0d1117;
+  color: #e6edf3;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.gh-tabs-header {
+  border-bottom: 1px solid #21262d;
+  background: #0d1117;
+  padding: 0 16px;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.gh-tab-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 4px 12px;
+  font-size: 12px;
+  color: #c9d1d9;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  cursor: pointer;
+}
+
+.gh-tab-item.active {
+  font-weight: 600;
+  color: #f0f6fc;
+  border-bottom-color: #fd8c73;
+}
+
+.gh-tab-item svg {
+  fill: #8b949e;
+}
+.gh-tab-item.active svg {
+  fill: #f0f6fc;
+}
+
+.gh-tab-counter {
+  background: rgba(110, 118, 129, 0.4);
+  color: #f0f6fc;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 0 6px;
+  line-height: 18px;
+}
+
+.gh-profile-grid {
+  display: flex;
+  padding: 16px 18px 28px;
+  gap: 20px;
+  max-width: 100%;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.gh-sidebar {
+  width: 190px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gh-avatar-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 190px;
+  aspect-ratio: 1 / 1;
+}
+
+.gh-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  object-fit: cover;
+  box-shadow: 0 0 0 1px #30363d;
+}
+
+.gh-status-badge {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #21262d;
+  border: 1px solid #30363d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.gh-identity {
+  margin-top: 2px;
+}
+
+.gh-display-name {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #f0f6fc;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.gh-username-line {
+  font-size: 13px;
+  color: #8b949e;
+  margin: 2px 0 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.gh-edit-profile-btn {
+  width: 100%;
+  padding: 5px 10px;
+  background: #21262d;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #c9d1d9;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  text-decoration: none;
+  box-sizing: border-box;
+  display: block;
+  transition: 0.15s;
+}
+
+.gh-edit-profile-btn:hover {
+  background: #30363d;
+  border-color: #8b949e;
+}
+
+.gh-follow-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: #8b949e;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.gh-follow-row strong {
+  color: #f0f6fc;
+}
+
+.gh-details-list {
+  list-style: none;
+  padding: 0;
+  margin: 2px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11px;
+  color: #f0f6fc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.gh-details-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gh-details-list svg {
+  flex-shrink: 0;
+}
+
+.gh-details-list a {
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gh-details-list a:hover {
+  color: #58a6ff;
+  text-decoration: underline;
+}
+
+.gh-sidebar-line {
+  height: 1px;
+  background: #21262d;
+  margin: 4px 0;
+}
+
+.gh-achievements-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #f0f6fc;
+  margin: 0 0 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.gh-badges-flex {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.gh-badge-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: contain;
+  transition: transform 0.2s;
+}
+
+.gh-badge-icon:hover {
+  transform: scale(1.08);
+}
+
+.gh-main-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gh-readme-box {
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  background: #0d1117;
+  overflow: hidden;
+}
+
+.gh-readme-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid #30363d;
+  background: #161b22;
+  font-size: 11.5px;
+  color: #8b949e;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.gh-readme-top strong {
+  color: #f0f6fc;
+}
+
+.gh-readme-body-wrap {
+  padding: 10px;
+  background: #000000;
+  display: flex;
+  justify-content: center;
+}
+
+.gh-readme-body-wrap img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gh-pinned-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.gh-pinned-header h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f0f6fc;
+  margin: 0;
+}
+
+.gh-customize-link {
+  font-size: 11px;
+  color: #58a6ff;
+  text-decoration: none;
+}
+.gh-customize-link:hover {
+  text-decoration: underline;
+}
+
+.gh-pinned-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.gh-repo-card {
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 12px 14px;
+  background: #0d1117;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 72px;
+  transition: border-color 0.15s;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.gh-repo-card:hover {
+  border-color: #58a6ff;
+}
+
+.gh-repo-card-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #58a6ff;
+}
+
+.gh-repo-card-badge {
+  margin-left: auto;
+  font-size: 10px;
+  color: #8b949e;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 0 6px;
+  font-weight: 400;
+}
+
+.gh-repo-card-desc {
+  font-size: 11px;
+  color: #8b949e;
+  margin: 4px 0 8px;
+  line-height: 1.35;
+}
+
+.gh-repo-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 11px;
+  color: #8b949e;
+  margin-top: auto;
+}
+
+.gh-lang-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gh-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.gh-stars-count {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.gh-contributions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.gh-contrib-card {
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  background: #0d1117;
+  overflow: hidden;
+  padding: 0;
+}
+
+.gh-contrib-graph-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 650px) {
+  .gh-profile-grid {
+    flex-direction: column;
+    padding: 12px;
+    gap: 16px;
+  }
+  .gh-sidebar {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+  .gh-avatar-wrapper {
+    max-width: 120px;
+  }
+  .gh-pinned-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .inlaptop-github-readme {
   background: #0d1117;
   border: 1px solid #30363d;
